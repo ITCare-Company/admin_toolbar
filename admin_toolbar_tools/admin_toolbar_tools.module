@@ -36,7 +36,7 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
     case 'help.page.admin_toolbar_tools':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Admin Toolbar Extra Tools module allows you to to add more fonctionalities to the default toolbar like flush caches, runnig cron.') . '</p>';
+      $output .= '<p>' . t('The Admin Toolbar Extra Tools module allows you to to add more functionalities to the default toolbar like flushing caches, running cron.') . '</p>';
 
       return $output;
   }
@@ -47,6 +47,7 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
  */
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
+
   $links['admin_toolbar_tools.help'] = array(
     'title' => t('Tools'),
     'route_name' => '<front>',
@@ -73,7 +74,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'weight' => -6
   );
   $links['system.modules_uninstall'] = array(
-    'title' => t('Uninstall'),
+    'title' => t('Uninstall module'),
     'route_name' => 'system.modules_uninstall',
     'parent' => 'system.modules_list',
   );
@@ -102,10 +103,10 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   );
   /**
    * Add  common links to entities if parent module exists.
-   * The common links for entities are :
-   * - Editing entity, Deleting entity,manage fields for entity
+   * The common links for entities are:
+   * - Editing entity, Deleting entity, manage fields for entity
    * manage form display for an entity, entity view display
-   * and others links relating to entity
+   * and others links related to entity.
    */
   foreach ($content_entities as $module_name => $entities) {
     if ($moduleHandler->moduleExists($module_name)) {
@@ -173,7 +174,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'route_name' => 'entity.user_role.collection',
     'parent' => 'entity.user.collection',
   );
-  $links['user.logoutt'] = array(
+  $links['user.logout'] = array(
     'title' => t('Logout'),
     'route_name' => 'user.logout',
     'parent' => 'admin_toolbar_tools.help',
@@ -332,7 +333,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'block.admin_display',
     );
   }
-  // If module contact is enabled.
+  // If module Contact is enabled.
   if ($moduleHandler->moduleExists('contact')) {
     $links['contact.form_add'] = array(
       'title' => t('Add contact form'),
