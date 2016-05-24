@@ -38,6 +38,14 @@ admin_toolbar_tools.flush_menu:
   requirements:
     _permission: 'access administration pages'
     _csrf_token: 'TRUE'
+admin_toolbar_tools.flush_rendercache:
+  path: '/admin/flush/rendercache'
+  defaults:
+    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::cacheRender'
+    _title: 'Render cache'
+  requirements:
+    _permission: 'access administration pages'
+    _csrf_token: 'TRUE'
 admin_toolbar_tools.drupalorg:
   path: '/admin/drupal8'
   defaults:

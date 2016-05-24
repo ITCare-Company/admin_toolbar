@@ -8,6 +8,7 @@
 
 namespace Drupal\admin_toolbar_tools\Controller;
 
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\CronInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,11 +30,11 @@ class ToolbarController extends ControllerBase {
    * @var $cron \Drupal\Core\CronInterface
    */
   protected $cron;
-
   protected $menuLinkManager;
   protected $contextualLinkManager;
   protected $localTaskLinkManager;
   protected $localActionLinkManager;
+  protected $cacheRender;
 
   /**
    * Constructs a CronController object.
@@ -45,12 +46,14 @@ class ToolbarController extends ControllerBase {
                               MenuLinkManager $menuLinkManager,
                               ContextualLinkManager $contextualLinkManager,
                               LocalTaskManager $localTaskLinkManager,
-                              LocalActionManager $localActionLinkManager) {
+                              LocalActionManager $localActionLinkManager,
+                              CacheBackendInterface $cacheRender) {
     $this->cron = $cron;
     $this->menuLinkManager = $menuLinkManager;
     $this->contextualLinkManager = $contextualLinkManager;
     $this->localTaskLinkManager = $localTaskLinkManager;
     $this->localActionLinkManager = $localActionLinkManager;
+    $this->cacheRender = $cacheRender;
   }
 
   /**
@@ -62,7 +65,8 @@ class ToolbarController extends ControllerBase {
       $container->get('plugin.manager.menu.link'),
       $container->get('plugin.manager.menu.contextual_link'),
       $container->get('plugin.manager.menu.local_task'),
-      $container->get('plugin.manager.menu.local_action')
+      $container->get('plugin.manager.menu.local_action'),
+      $container->get('cache.render')
     );
   }
 
@@ -141,6 +145,12 @@ class ToolbarController extends ControllerBase {
   public function runCron() {
     $this->cron->run();
     drupal_set_message($this->t('Cron ran successfully.'));
+    return new RedirectResponse($this->reload_page());
+  }
+
+  public function cacheRender() {
+    $this->cacheRender->invalidateAll();
+    drupal_set_message($this->t('Render cache flushed.'));
     return new RedirectResponse($this->reload_page());
   }
 

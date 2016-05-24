@@ -19,6 +19,10 @@ admin_toolbar_tools.flush_menu:
   title: 'Routing and links'
   route_name: admin_toolbar_tools.flush_menu
   parent: admin_toolbar_tools.flush
+admin_toolbar_tools.flush_rendercache:
+  title: 'Render cache'
+  route_name: admin_toolbar_tools.flush_rendercache
+  parent: admin_toolbar_tools.flush
 admin_toolbar_tools.drupalorg:
   title: 'Drupal.org'
   weight: -5
