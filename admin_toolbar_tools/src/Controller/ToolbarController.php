@@ -73,7 +73,12 @@ class ToolbarController extends ControllerBase {
   // Reload the previous page.
   public function reload_page() {
     $request = \Drupal::request();
-    return $request->server->get('HTTP_REFERER');
+    if($request->server->get('HTTP_REFERER')) {
+      return $request->server->get('HTTP_REFERER');
+    }
+    else{
+      return new RedirectResponse('/');
+    }
   }
 
   // Flushes all caches.
