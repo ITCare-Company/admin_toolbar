@@ -3,38 +3,47 @@ admin_toolbar_tools.flush:
   route_name: admin_toolbar_tools.flush
   weight: -9
   parent: admin_toolbar_tools.help
+  menu_name: admin
 admin_toolbar_tools.cssjs:
   title: 'CSS and Javascript'
   route_name: admin_toolbar_tools.cssjs
   parent: admin_toolbar_tools.flush
+  menu_name: admin
 admin_toolbar_tools.plugin:
   title: 'Plugins'
   route_name: admin_toolbar_tools.plugin
   parent: admin_toolbar_tools.flush
+  menu_name: admin
 admin_toolbar_tools.flush_static:
   title: 'Static caches'
   route_name: admin_toolbar_tools.flush_static
   parent: admin_toolbar_tools.flush
+  menu_name: admin
 admin_toolbar_tools.flush_menu:
   title: 'Routing and links'
   route_name: admin_toolbar_tools.flush_menu
   parent: admin_toolbar_tools.flush
+  menu_name: admin
 admin_toolbar_tools.flush_rendercache:
   title: 'Render cache'
   route_name: admin_toolbar_tools.flush_rendercache
   parent: admin_toolbar_tools.flush
+  menu_name: admin
 admin_toolbar_tools.drupalorg:
   title: 'Drupal.org'
   weight: -5
   route_name: admin_toolbar_tools.drupalorg
   parent: admin_toolbar_tools.help
+  menu_name: admin
 admin_toolbar_tools.listchanges:
   title: 'Change records for Drupal core'
   weight: -6
   route_name: admin_toolbar_tools.listchanges
   parent: admin_toolbar_tools.drupalorg
+  menu_name: admin
 admin_toolbar_tools.doc:
   title: 'D8 API documentation'
   weight: -5
   route_name: admin_toolbar_tools.doc
   parent: admin_toolbar_tools.drupalorg
+  menu_name: admin
