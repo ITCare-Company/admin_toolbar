@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\admin_toolbar_tools\Controller\ToolbarController.
- *
- */
-
 namespace Drupal\admin_toolbar_tools\Controller;
 
 use Drupal\Core\Cache\CacheBackendInterface;
