@@ -78,7 +78,7 @@ class ToolbarController extends ControllerBase {
   // Flushes all caches.
   public function flushAll() {
     drupal_flush_all_caches();
-    drupal_set_message($this->t('All cache cleared.'));
+    drupal_set_message($this->t('All caches cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -93,14 +93,14 @@ class ToolbarController extends ControllerBase {
   // Flushes plugins caches.
   public function flush_plugins() {
     \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
-    drupal_set_message($this->t('Plugin cache cleared.'));
+    drupal_set_message($this->t('Plugins cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
   // Resets all static caches.
   public function flush_static() {
     drupal_static_reset();
-    drupal_set_message($this->t('All static caches cleared.'));
+    drupal_set_message($this->t('Static cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -111,7 +111,7 @@ class ToolbarController extends ControllerBase {
     $this->contextualLinkManager->clearCachedDefinitions();
     $this->localTaskLinkManager->clearCachedDefinitions();
     $this->localActionLinkManager->clearCachedDefinitions();
-    drupal_set_message($this->t('All cached menu data cleared.'));
+    drupal_set_message($this->t('Routing and links cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -143,13 +143,13 @@ class ToolbarController extends ControllerBase {
 
   public function runCron() {
     $this->cron->run();
-    drupal_set_message($this->t('Cron ran successfully.'));
+    drupal_set_message($this->t('CRON ran successfully.'));
     return new RedirectResponse($this->reload_page());
   }
 
   public function cacheRender() {
     $this->cacheRender->invalidateAll();
-    drupal_set_message($this->t('Render cache flushed.'));
+    drupal_set_message($this->t('Render cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 

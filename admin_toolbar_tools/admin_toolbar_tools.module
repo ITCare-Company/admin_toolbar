@@ -49,42 +49,6 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
 
-  $links['admin_toolbar_tools.help'] = array(
-    'title' => t('Tools'),
-    'route_name' => '<front>',
-    'menu_name' => 'admin',
-    'parent' => 'system.admin',
-    'weight' => -100
-  );
-  // Add system links.
-  $links['system.admin_index'] = array(
-    'title' => t('Index'),
-    'route_name' => 'system.admin_index',
-    'menu_name' => 'admin',
-    'parent' => 'admin_toolbar_tools.help',
-    'weight' => -100,
-  );
-  $links['system.run_cron'] = array(
-    'title' => t('Run CRON'),
-    'route_name' => 'admin_toolbar.run.cron',
-    'menu_name' => 'admin',
-    'parent' => 'admin_toolbar_tools.help',
-    'weight' => -8
-  );
-  $links['system.db_update'] = array(
-    'title' => t('Run updates'),
-    'route_name' => 'system.db_update',
-    'menu_name' => 'admin',
-    'parent' => 'admin_toolbar_tools.help',
-    'weight' => -6
-  );
-  $links['system.modules_uninstall'] = array(
-    'title' => t('Uninstall module'),
-    'route_name' => 'system.modules_uninstall',
-    'menu_name' => 'admin',
-    'parent' => 'system.modules_list',
-  );
-
   // Defines the machine names for all core content entities.
   $content_entities = array(
     "block_content" => array(
