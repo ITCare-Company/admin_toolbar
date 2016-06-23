@@ -48,32 +48,9 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
  */
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
+  $entityTypeManager = \Drupal::entityTypeManager();
 
   // Defines the machine names for all core content entities.
-//  $content_entities = array(
-//    "block_content" => array(
-//      "content_entity" => "block_content",
-//      "config_entity" => "block_content_type"
-//    ),
-//    "comment" => array(
-//      "content_entity" => "comment",
-//      "config_entity" => "comment_type"
-//    ),
-//    "contact" => array(
-//      "content_entity" => "contact_message",
-//      "config_entity" => "contact_form"
-//    ),
-//    "node" => array(
-//      "content_entity" => "node",
-//      "config_entity" => "node_type"
-//    ),
-//    "taxonomy" => array(
-//      "content_entity" => "taxonomy_term",
-//      "config_entity" => "taxonomy_vocabulary"
-//    ),
-//  );
-
-  $entityTypeManager = \Drupal::entityTypeManager();
   $entityTypes = $entityTypeManager->getDefinitions();
   $content_entities = array();
   foreach ($entityTypes as $key => $entityType) {
@@ -84,10 +61,10 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       );
     }
   }
+  // Don't include the shortcut entity type.
+  unset($content_entities['shortcut']);
 
-  /**
-   * Adds common links to entities.
-   */
+  // Adds common links to entities.
   foreach ($content_entities as $module_name => $entities) {
     $config_entity = $entities['config_entity'];
     $content_entity = $entities['content_entity'];
@@ -99,13 +76,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         'parent' => "entity." . $config_entity . ".collection",
         'route_parameters' => array($config_entity => $machine_name),
       );
-      $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
-        'title' => t('Delete'),
-        'route_name' => "entity." . $config_entity . ".delete_form",
-        'menu_name' => 'admin',
-        'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-        'route_parameters' => array($config_entity => $machine_name),
-      );
       if ($moduleHandler->moduleExists('field_ui')) {
         $links["entity." . $content_entity . ".field_ui_fields" . $machine_name] = array(
           'title' => t('Manage fields'),
@@ -113,6 +83,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
           'menu_name' => 'admin',
           'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
           'route_parameters' => array($config_entity => $machine_name),
+          'weight' => 1,
         );
         $links["entity.entity_form_display." . $content_entity . ".default" . $machine_name] = array(
           'title' => t('Manage form display'),
@@ -120,6 +91,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
           'menu_name' => 'admin',
           'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
           'route_parameters' => array($config_entity => $machine_name),
+          'weight' => 2,
         );
         $links["entity.entity_view_display." . $content_entity . ".default" . $machine_name] = array(
           'title' => t('Manage display'),
@@ -127,6 +99,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
           'menu_name' => 'admin',
           'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
           'route_parameters' => array($config_entity => $machine_name),
+          'weight' => 3,
         );
       }
       if ($moduleHandler->moduleExists('devel')) {
@@ -135,11 +108,18 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
           'route_name' => "entity." . $config_entity . ".devel_load",
           'menu_name' => 'admin',
           'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-          'route_parameters' => array(
-            $config_entity => $machine_name,
-          ),
+          'route_parameters' => array($config_entity => $machine_name),
+          'weight' => 4,
         );
       }
+      $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
+        'title' => t('Delete'),
+        'route_name' => "entity." . $config_entity . ".delete_form",
+        'menu_name' => 'admin',
+        'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+        'route_parameters' => array($config_entity => $machine_name),
+        'weight' => 5,
+      );
     }
   }
 
@@ -221,6 +201,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       );
     }
   }
+
   if ($moduleHandler->moduleExists('node')) {
     $links['node.add_page']['parent'] = 'system.admin_content';
     $links['node.type_add'] = array(
@@ -241,6 +222,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       );
     }
   }
+
   if ($moduleHandler->moduleExists('field_ui')) {
     $links['field_ui.entity_form_mode_add'] = array(
       'title' => t('Add new form mode'),
@@ -264,15 +246,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'entity.taxonomy_vocabulary.collection',
       'weight' => -5,
     );
-    foreach (\Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->loadMultiple() as $machine_name => $bundle) {
-      $links['entity.taxonomy_term.add_form.' . $machine_name] = array(
-        'title' => $bundle->label(),
-        'route_name' => 'entity.taxonomy_term.add_form',
-        'menu_name' => 'admin',
-        'parent' => 'entity.taxonomy_vocabulary.edit_form',
-        'route_parameters' => array('taxonomy_vocabulary' => $machine_name),
-      );
-    }
   }
 
   if ($moduleHandler->moduleExists('menu_ui')) {
