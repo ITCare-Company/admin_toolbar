@@ -50,88 +50,95 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
 
   // Defines the machine names for all core content entities.
-  $content_entities = array(
-    "block_content" => array(
-      "content_entity" => "block_content",
-      "config_entity" => "block_content_type"
-    ),
-    "comment" => array(
-      "content_entity" => "comment",
-      "config_entity" => "comment_type"
-    ),
-    "contact" => array(
-      "content_entity" => "contact_message",
-      "config_entity" => "contact_form"
-    ),
-    "node" => array(
-      "content_entity" => "node",
-      "config_entity" => "node_type"
-    ),
-    "taxonomy" => array(
-      "content_entity" => "taxonomy_term",
-      "config_entity" => "taxonomy_vocabulary"
-    ),
-  );
+//  $content_entities = array(
+//    "block_content" => array(
+//      "content_entity" => "block_content",
+//      "config_entity" => "block_content_type"
+//    ),
+//    "comment" => array(
+//      "content_entity" => "comment",
+//      "config_entity" => "comment_type"
+//    ),
+//    "contact" => array(
+//      "content_entity" => "contact_message",
+//      "config_entity" => "contact_form"
+//    ),
+//    "node" => array(
+//      "content_entity" => "node",
+//      "config_entity" => "node_type"
+//    ),
+//    "taxonomy" => array(
+//      "content_entity" => "taxonomy_term",
+//      "config_entity" => "taxonomy_vocabulary"
+//    ),
+//  );
+
+  $entityTypeManager = \Drupal::entityTypeManager();
+  $entityTypes = $entityTypeManager->getDefinitions();
+  $content_entities = array();
+  foreach ($entityTypes as $key => $entityType) {
+    if ($entityType->getBundleEntityType()) {
+      $content_entities[$key] = array(
+        'content_entity' => $key,
+        'config_entity' => $entityType->getBundleEntityType(),
+      );
+    }
+  }
+
   /**
-   * Add  common links to entities if parent module exists.
-   * The common links for entities are:
-   * - Editing entity, Deleting entity, manage fields for entity
-   * manage form display for an entity, entity view display
-   * and others links related to entity.
+   * Adds common links to entities.
    */
   foreach ($content_entities as $module_name => $entities) {
-    if ($moduleHandler->moduleExists($module_name)) {
-      $config_entity = $entities['config_entity'];
-      $content_entity = $entities['content_entity'];
-      foreach (\Drupal::entityTypeManager()->getStorage($config_entity)->loadMultiple() as $machine_name => $bundle) {
-        $links["entity." . $config_entity . ".edit_form." . $machine_name] = array(
-          'title' => $bundle->label(),
-          'route_name' => "entity." . $config_entity . ".edit_form",
-          'menu_name' => 'admin',
-          'parent' => "entity." . $config_entity . ".collection",
-          'route_parameters' => array($config_entity => $machine_name),
-        );
-        $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
-          'title' => t('Delete'),
-          'route_name' => "entity." . $config_entity . ".delete_form",
+    $config_entity = $entities['config_entity'];
+    $content_entity = $entities['content_entity'];
+    foreach ($entityTypeManager->getStorage($config_entity)->loadMultiple() as $machine_name => $bundle) {
+      $links["entity." . $config_entity . ".edit_form." . $machine_name] = array(
+        'title' => $bundle->label(),
+        'route_name' => "entity." . $config_entity . ".edit_form",
+        'menu_name' => 'admin',
+        'parent' => "entity." . $config_entity . ".collection",
+        'route_parameters' => array($config_entity => $machine_name),
+      );
+      $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
+        'title' => t('Delete'),
+        'route_name' => "entity." . $config_entity . ".delete_form",
+        'menu_name' => 'admin',
+        'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+        'route_parameters' => array($config_entity => $machine_name),
+      );
+      if ($moduleHandler->moduleExists('field_ui')) {
+        $links["entity." . $content_entity . ".field_ui_fields" . $machine_name] = array(
+          'title' => t('Manage fields'),
+          'route_name' => "entity." . $content_entity . ".field_ui_fields",
           'menu_name' => 'admin',
           'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
           'route_parameters' => array($config_entity => $machine_name),
         );
-        if ($moduleHandler->moduleExists('field_ui')) {
-          $links["entity." . $content_entity . ".field_ui_fields" . $machine_name] = array(
-            'title' => t('Manage fields'),
-            'route_name' => "entity." . $content_entity . ".field_ui_fields",
-            'menu_name' => 'admin',
-            'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-            'route_parameters' => array($config_entity => $machine_name),
-          );
-          $links["entity.entity_form_display." . $content_entity . ".default" . $machine_name] = array(
-            'title' => t('Manage form display'),
-            'route_name' => "entity.entity_form_display." . $content_entity . ".default",
-            'menu_name' => 'admin',
-            'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-            'route_parameters' => array($config_entity => $machine_name),
-          );
-          $links["entity.entity_view_display." . $content_entity . ".default" . $machine_name] = array(
-            'title' => t('Manage display'),
-            'route_name' => "entity.entity_view_display." . $content_entity . ".default",
-            'menu_name' => 'admin',
-            'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-            'route_parameters' => array($config_entity => $machine_name),
-          );
-        }
-        if ($moduleHandler->moduleExists('devel')) {
-          $links["entity.$config_entity.devel_load." . $machine_name] = array(
-            'title' => t('Devel'),
-            'route_name' => "entity." . $config_entity . ".devel_load",
-            'menu_name' => 'admin',
-            'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-            'route_parameters' => array(
-              $config_entity => $machine_name,
-            ),
-          );
-        }
+        $links["entity.entity_form_display." . $content_entity . ".default" . $machine_name] = array(
+          'title' => t('Manage form display'),
+          'route_name' => "entity.entity_form_display." . $content_entity . ".default",
+          'menu_name' => 'admin',
+          'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+          'route_parameters' => array($config_entity => $machine_name),
+        );
+        $links["entity.entity_view_display." . $content_entity . ".default" . $machine_name] = array(
+          'title' => t('Manage display'),
+          'route_name' => "entity.entity_view_display." . $content_entity . ".default",
+          'menu_name' => 'admin',
+          'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+          'route_parameters' => array($config_entity => $machine_name),
+        );
+      }
+      if ($moduleHandler->moduleExists('devel')) {
+        $links["entity.$config_entity.devel_load." . $machine_name] = array(
+          'title' => t('Devel'),
+          'route_name' => "entity." . $config_entity . ".devel_load",
+          'menu_name' => 'admin',
+          'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+          'route_parameters' => array(
+            $config_entity => $machine_name,
+          ),
+        );
       }
     }
   }
