@@ -20,8 +20,7 @@ function admin_toolbar_tools_toolbar() {
         'class' => array('toolbar-icon', 'toolbar-icon-admin-toolbar-tools-help'),
       ),
     ),
-    '#attached' => array(
-      'library' => array('admin_toolbar_tools/toolbar.icon'),
+    '#attached' => array('library' => array('admin_toolbar_tools/toolbar.icon'),
     ),
   );
 
@@ -50,19 +49,17 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $moduleHandler = \Drupal::moduleHandler();
   $entityTypeManager = \Drupal::entityTypeManager();
 
-  // Defines the machine names for all core content entities.
+  // Retrieves the machine names for all content entities.
   $entityTypes = $entityTypeManager->getDefinitions();
   $content_entities = array();
   foreach ($entityTypes as $key => $entityType) {
-    if ($entityType->getBundleEntityType()) {
+    if ($entityType->getBundleEntityType() && ($entityType->get('field_ui_base_route') != '')) {
       $content_entities[$key] = array(
         'content_entity' => $key,
         'config_entity' => $entityType->getBundleEntityType(),
       );
     }
   }
-  // Don't include the shortcut entity type.
-  unset($content_entities['shortcut']);
 
   // Adds common links to entities.
   foreach ($content_entities as $module_name => $entities) {
