@@ -347,61 +347,61 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'admin_toolbar_tools.help',
       'weight' => '-8',
     );
-    $links['devel.admin_settings'] = array(
+    $links['admin_toolbar_tools.devel.admin_settings'] = array(
       'title' => t('Devel settings'),
       'route_name' => 'devel.admin_settings',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
       'weight' => '-1',
     );
-    $links['devel.configs_list'] = array(
+    $links['admin_toolbar_tools.devel.configs_list'] = array(
       'title' => t('Config editor'),
       'route_name' => 'devel.configs_list',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.reinstall'] = array(
+    $links['admin_toolbar_tools.devel.reinstall'] = array(
       'title' => t('Reinstall modules'),
       'route_name' => 'devel.reinstall',
       'parent' => 'admin_development',
     );
-    $links['devel.menu_rebuild'] = array(
+    $links['admin_toolbar_tools.devel.menu_rebuild'] = array(
       'title' => t('Rebuild menu'),
       'route_name' => 'devel.menu_rebuild',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.state_system_page'] = array(
+    $links['admin_toolbar_tools.devel.state_system_page'] = array(
       'title' => t('State editor'),
       'route_name' => 'devel.state_system_page',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.theme_registry'] = array(
+    $links['admin_toolbar_tools.devel.theme_registry'] = array(
       'title' => t('Theme registry'),
       'route_name' => 'devel.theme_registry',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.entity_info_page'] = array(
+    $links['admin_toolbar_tools.devel.entity_info_page'] = array(
       'title' => t('Entity Info'),
       'route_name' => 'devel.entity_info_page',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.execute_php'] = array(
+    $links['admin_toolbar_tools.devel.execute_php'] = array(
       'title' => t('Execute PHP Code'),
       'route_name' => 'devel.execute_php',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.session'] = array(
+    $links['admin_toolbar_tools.devel.session'] = array(
       'title' => t('Session viewer'),
       'route_name' => 'devel.session',
       'menu_name' => 'admin',
       'parent' => 'admin_development',
     );
-    $links['devel.elements_page'] = array(
+    $links['admin_toolbar_tools.devel.elements_page'] = array(
       'title' => t('Form API field types'),
       'route_name' => 'devel.elements_page',
       'menu_name' => 'admin',
