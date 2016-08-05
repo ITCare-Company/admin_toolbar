@@ -48,7 +48,7 @@
 }
 .toolbar-tray-horizontal ul li.menu-item--expanded ul li.menu-item--expanded {
     background-position: center right;
-    background-image: url('/core/misc/icons/0074bd/chevron-right.svg');
+    background-image: url('../misc/icons/0074bd/chevron-right.svg');
     background-repeat: no-repeat;
 }
 .toolbar-tray-horizontal ul li.menu-item--expanded .menu-item:hover ul {
@@ -88,6 +88,6 @@
 [dir="rtl"] .toolbar-tray-horizontal ul li.menu-item--expanded .menu-item:hover ul{margin: -40px 197px 0 0;}
 [dir="rtl"] .toolbar-tray-horizontal ul li.menu-item--expanded ul li.menu-item--expanded {
     background-position: center left;
-    background-image: url('/core/misc/icons/0074bd/chevron-left.svg');
+    background-image: url('../misc/icons/0074bd/chevron-left.svg');
     background-repeat: no-repeat;
 }
