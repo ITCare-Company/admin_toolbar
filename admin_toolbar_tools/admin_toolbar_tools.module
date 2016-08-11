@@ -60,6 +60,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       );
     }
   }
+  unset($content_entities['group_content']);
+  unset($content_entities['field_collection_item']);
 
   // Adds common links to entities.
   foreach ($content_entities as $module_name => $entities) {
