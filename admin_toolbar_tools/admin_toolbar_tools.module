@@ -60,8 +60,9 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       );
     }
   }
-  unset($content_entities['group_content']);
-  unset($content_entities['field_collection_item']);
+  if (isset($content_entities['group_content'])) {
+    unset($content_entities['group_content']);
+  }
 
   // Adds common links to entities.
   foreach ($content_entities as $module_name => $entities) {
@@ -111,14 +112,18 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
           'weight' => 4,
         );
       }
-      $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
-        'title' => t('Delete'),
-        'route_name' => "entity." . $config_entity . ".delete_form",
-        'menu_name' => 'admin',
-        'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
-        'route_parameters' => array($config_entity => $machine_name),
-        'weight' => 5,
-      );
+      // Do not add delete link for field_collection entity type because it does not exist!
+      if ($config_entity != 'field_collection') {
+        $links["entity." . $config_entity . ".delete_form." . $machine_name] = array(
+          'title' => t('Delete'),
+          'route_name' => "entity." . $config_entity . ".delete_form",
+          'menu_name' => 'admin',
+          'parent' => "entity." . $config_entity . ".edit_form." . $machine_name,
+          'route_parameters' => array($config_entity => $machine_name),
+          'weight' => 5,
+        );
+      }
+
     }
   }
 
