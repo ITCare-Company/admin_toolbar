@@ -5,6 +5,7 @@ namespace Drupal\admin_toolbar_tools\Controller;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\CronInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Menu\ContextualLinkManager;
@@ -117,7 +118,7 @@ class ToolbarController extends ControllerBase {
 
   // Links to drupal.org home page.
   public function drupal_org() {
-    $response = new RedirectResponse("https://www.drupal.org");
+    $response = new TrustedRedirectResponse("https://www.drupal.org");
     $response->send();
     return $response;
   }
@@ -129,14 +130,14 @@ class ToolbarController extends ControllerBase {
 
   // Access to Drupal 8 changes (list changes of the different versions of drupal core).
   public function list_changes() {
-    $response = new RedirectResponse("https://www.drupal.org/list-changes");
+    $response = new TrustedRedirectResponse("https://www.drupal.org/list-changes");
     $response->send();
     return $response;
   }
 
   // Adds a link to the Drupal 8 documentation.
   public function documentation() {
-    $response = new RedirectResponse("https://api.drupal.org/api/drupal/8");
+    $response = new TrustedRedirectResponse("https://api.drupal.org/api/drupal/8");
     $response->send();
     return $response;
   }
