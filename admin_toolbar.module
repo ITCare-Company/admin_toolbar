@@ -13,7 +13,7 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function admin_toolbar_toolbar_alter(&$items) {
-  $items['administration']['tray']['toolbar_administration']['#pre_render'] = array('admin_toolbar_prerender_toolbar_administration_tray');
+  $items['administration']['tray']['toolbar_administration']['#pre_render'] = ['admin_toolbar_prerender_toolbar_administration_tray'];
   $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
 }
 
@@ -52,11 +52,11 @@ function admin_toolbar_prerender_toolbar_administration_tray(array $element) {
   $parameters = new MenuTreeParameters();
   $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4)->onlyEnabledLinks();
   $tree = $menu_tree->load(NULL, $parameters);
-  $manipulators = array(
-    array('callable' => 'menu.default_tree_manipulators:checkAccess'),
-    array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
-    array('callable' => 'toolbar_tools_menu_navigation_links'),
-  );
+  $manipulators = [
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+    ['callable' => 'toolbar_tools_menu_navigation_links'],
+  ];
   $tree = $menu_tree->transform($tree, $manipulators);
   $element['administration_menu'] = $menu_tree->build($tree);
 
@@ -83,7 +83,7 @@ function toolbar_tools_menu_navigation_links(array $tree) {
     $definition = $link->getPluginDefinition();
 
     $element->options['attributes']['class'][] = 'toolbar-icon';
-    $element->options['attributes']['class'][] = 'toolbar-icon-' . strtolower(str_replace(array('.', ' ', '_'), array('-', '-', '-'), $definition['id']));
+    $element->options['attributes']['class'][] = 'toolbar-icon-' . strtolower(str_replace(['.', ' ', '_'], ['-', '-', '-'], $definition['id']));
     $element->options['attributes']['title'] = $link->getDescription();
   }
   return $tree;
