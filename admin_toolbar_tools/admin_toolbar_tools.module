@@ -395,7 +395,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     ];
     if ($moduleHandler->moduleExists('webprofiler')) {
       $links['admin_menu_tools.devel.webprofiler'] = [
-        'title' => t('Webprofiler settings'),
+        'title' => t('Web Profiler settings'),
         'route_name' => 'webprofiler.settings',
         'menu_name' => 'admin',
         'parent' => 'admin_development',
