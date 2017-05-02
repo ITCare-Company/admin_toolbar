@@ -393,6 +393,14 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'admin_development',
       'weight' => '-1',
     ];
+    if ($moduleHandler->moduleExists('webprofiler')) {
+      $links['admin_menu_tools.devel.webprofiler'] = [
+        'title' => t('Webprofiler settings'),
+        'route_name' => 'webprofiler.settings',
+        'menu_name' => 'admin',
+        'parent' => 'admin_development',
+      ];
+    }
     $links['admin_toolbar_tools.devel.configs_list'] = [
       'title' => t('Config editor'),
       'route_name' => 'devel.configs_list',
