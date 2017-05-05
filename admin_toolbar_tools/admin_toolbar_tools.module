@@ -474,6 +474,14 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'parent' => 'system.themes_page',
   ];
 
+  if ($moduleHandler->moduleExists('webprofiler')) {
+    $links['admin_menu_tools.devel.webprofiler'] = [
+      'title' => t('Webprofiler settings'),
+      'route_name' => 'webprofiler.settings',
+      'menu_name' => 'admin',
+      'parent' => 'admin_development',
+    ];
+  }
   if ($moduleHandler->moduleExists('update')) {
     $links['update.theme_install_'] = [
       'title' => t('Install new theme'),
