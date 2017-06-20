@@ -518,11 +518,12 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
  *   An array of friendly theme names, keyed by the machine name.
  */
 function admin_toolbar_tools_installed_themes() {
-  $all_themes = \Drupal::service('theme_handler')->listInfo();
+  $themeHandler = \Drupal::service('theme_handler');
+  $all_themes = $themeHandler->listInfo();
   $themes_installed = [];
   foreach ($all_themes as $key_theme => $theme) {
-    if (\Drupal::service('theme_handler')->hasUi($key_theme)) {
-      $themes_installed[$key_theme] = $theme->getName();
+    if ($themeHandler->hasUi($key_theme)) {
+      $themes_installed[$key_theme] = $themeHandler->getName($key_theme);
     }
   }
 
