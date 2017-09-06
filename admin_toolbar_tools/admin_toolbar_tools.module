@@ -75,7 +75,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         // Some bundles have an overview/list form that make a better root link.
         $content_entity_bundle_root = 'entity.' . $content_entity_bundle . '.overview_form.' . $machine_name;
         $links[$content_entity_bundle_root] = [
-          'title' => $bundle->label(),
+          'title' => t($bundle->label()),
           'route_name' => 'entity.' . $content_entity_bundle . '.overview_form',
           'menu_name' => 'admin',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
@@ -85,7 +85,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       if (in_array('entity.' . $content_entity_bundle . '.edit_form', $routes)) {
         $key = 'entity.' . $content_entity_bundle . '.edit_form.' . $machine_name;
         $links[$key] = [
-          'title' => $bundle->label(),
+          'title' => t($bundle->label()),
           'route_name' => 'entity.' . $content_entity_bundle . '.edit_form',
           'menu_name' => 'admin',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
@@ -208,7 +208,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   }
   foreach (user_roles() as $role) {
     $links['entity.user_role.edit_form.' . $role->id()] = [
-      'title' => $role->label(),
+      'title' => t($role->label()),
       'route_name' => 'entity.user_role.edit_form',
       'menu_name' => 'admin',
       'parent' => 'entity.user_role.collection',
@@ -240,7 +240,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   }
 
   if ($moduleHandler->moduleExists('node')) {
-    $links['node.add_page']['parent'] = 'system.admin_content';
+    $links['admin_toolbar_tools.add_content'] = $links['node.add_page'];
+    $links['admin_toolbar_tools.add_content']['parent'] = 'system.admin_content';
     $links['node.type_add'] = [
       'title' => t('Add content type'),
       'route_name' => 'node.type_add',
@@ -253,7 +254,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       $links['node.add.' . $type->id()] = [
         'title' => t($type->label()),
         'route_name' => 'node.add',
-        'parent' => 'node.add_page',
+        'parent' => 'admin_toolbar_tools.add_content',
         'route_parameters' => ['node_type' => $type->id()],
       ];
     }
@@ -295,7 +296,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     // Adds links to /admin/structure/menu.
     foreach (menu_ui_get_menus() as $machine_name => $label) {
       $links['entity.menu.edit_form.' . $machine_name] = [
-        'title' => $label,
+        'title' => t($label),
         'route_name' => 'entity.menu.edit_form',
         'menu_name' => 'admin',
         'parent' => 'entity.menu.collection',
