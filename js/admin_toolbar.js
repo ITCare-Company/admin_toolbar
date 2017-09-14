@@ -12,7 +12,7 @@
       out: function () {
         $(this).removeClass('hover-intent');
       },
-      timeout: 500
+      timeout: 250
     });
   });
 })(jQuery);
