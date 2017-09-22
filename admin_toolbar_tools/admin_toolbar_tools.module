@@ -5,7 +5,9 @@
  * Provides extra menu links for the core drupal toolbar.
  */
 
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_toolbar().
@@ -32,10 +34,21 @@ function admin_toolbar_tools_toolbar() {
 function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.admin_toolbar_tools':
+      $url = Url::fromUri('https://www.drupal.org/project/admin_toolbar');
+      $external_link = Link::fromTextAndUrl(t('Admin Toolbar'), $url);
+      $external_link2 = Link::fromTextAndUrl(t('Toolbar'), $url);
+      $url = Url::fromUri('https://www.drupal.org/node/2713693');
+      $external_link3 = Link::fromTextAndUrl(t('online documentation for Admin Toolbar'), $url);
       $output = '';
-      $output .= '<p>' . t('The Admin Toolbar Extra Tools module comes packaged with the <a href="https://www.drupal.org/project/admin_toolbar"> Admin Toolbar</a> module and adds functionality to it. The additional functionality is accessed thru extra links on the main administration <a href="https://www.drupal.org/project/toolbar">Toolbar</a>.  Some links to Admin Toolbar Extra Tools administration pages are located at the bottom of this page. For more information, see the <a href="https://www.drupal.org/node/2713693">online documentation for Admin Toolbar</a>') . '</p>';
+      $output .= '<p>';
+      $output .= t('The Admin Toolbar Extra Tools module comes packaged with the :link module and adds functionality to it. The additional functionality is accessed thru extra links on the main administration :link2.  Some links to Admin Toolbar Extra Tools administration pages are located at the bottom of this page. For more information, see the :link3', [
+        ':link' => $external_link,
+        ':link2' => $external_link2,
+        ':link3' => $external_link3,
+      ]);
+      $output .= '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
-      $output .= '<p>' . t('To use Admin Toolbar Extra Tools just install it like any other module.  There is no other configuration required. The Admin Toolbar functionality can be further extended by installing complimentary modules.  See <a href="https://www.drupal.org/project/admin_toolbar">Admin Toolbar</a> for a complete listing of these complimentary modules.') . '</p>';
+      $output .= '<p>' . t('To use Admin Toolbar Extra Tools just install it like any other module.  There is no other configuration required. The Admin Toolbar functionality can be further extended by installing complimentary modules.  See :link for a complete listing of these complimentary modules.', [':link' => $external_link]) . '</p>';
 
       return $output;
   }
@@ -68,14 +81,15 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   foreach ($content_entities as $module_name => $entities) {
     $content_entity_bundle = $entities['content_entity_bundle'];
     $content_entity = $entities['content_entity'];
-    foreach ($entityTypeManager->getStorage($content_entity_bundle)->loadMultiple() as $machine_name => $bundle) {
+    foreach ($entityTypeManager->getStorage($content_entity_bundle)
+               ->loadMultiple() as $machine_name => $bundle) {
       // Normally, the edit form for the bundle would be its root link.
       $content_entity_bundle_root = NULL;
       if (in_array('entity.' . $content_entity_bundle . '.overview_form', $routes)) {
         // Some bundles have an overview/list form that make a better root link.
         $content_entity_bundle_root = 'entity.' . $content_entity_bundle . '.overview_form.' . $machine_name;
         $links[$content_entity_bundle_root] = [
-          'title' => t($bundle->label()),
+          'title' => $bundle->label(),
           'route_name' => 'entity.' . $content_entity_bundle . '.overview_form',
           'menu_name' => 'admin',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
@@ -85,7 +99,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       if (in_array('entity.' . $content_entity_bundle . '.edit_form', $routes)) {
         $key = 'entity.' . $content_entity_bundle . '.edit_form.' . $machine_name;
         $links[$key] = [
-          'title' => t($bundle->label()),
+          'title' => $bundle->label(),
           'route_name' => 'entity.' . $content_entity_bundle . '.edit_form',
           'menu_name' => 'admin',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
@@ -208,7 +222,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   }
   foreach (user_roles() as $role) {
     $links['entity.user_role.edit_form.' . $role->id()] = [
-      'title' => t($role->label()),
+      'title' => $role->label(),
       'route_name' => 'entity.user_role.edit_form',
       'menu_name' => 'admin',
       'parent' => 'entity.user_role.collection',
@@ -250,9 +264,11 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => -5,
     ];
     // Add node links for each content type.
-    foreach (\Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple() as $type) {
+    foreach (\Drupal::entityTypeManager()
+               ->getStorage('node_type')
+               ->loadMultiple() as $type) {
       $links['node.add.' . $type->id()] = [
-        'title' => t($type->label()),
+        'title' => $type->label(),
         'route_name' => 'node.add',
         'parent' => 'admin_toolbar_tools.add_content',
         'route_parameters' => ['node_type' => $type->id()],
@@ -296,7 +312,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     // Adds links to /admin/structure/menu.
     foreach (menu_ui_get_menus() as $machine_name => $label) {
       $links['entity.menu.edit_form.' . $machine_name] = [
-        'title' => t($label),
+        'title' => $label,
         'route_name' => 'entity.menu.edit_form',
         'menu_name' => 'admin',
         'parent' => 'entity.menu.collection',
@@ -500,7 +516,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     $installed_themes = admin_toolbar_tools_installed_themes();
     foreach ($installed_themes as $key_theme => $label_theme) {
       $links['system.theme_settings_theme.' . $key_theme] = [
-        'title' => t($label_theme),
+        'title' => $label_theme,
         'route_name' => 'system.theme_settings_theme',
         'menu_name' => 'admin',
         'parent' => 'system.theme_settings_',
