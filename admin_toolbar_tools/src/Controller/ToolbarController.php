@@ -10,7 +10,7 @@ use Drupal\Core\Menu\ContextualLinkManager;
 use Drupal\Core\Menu\LocalActionManager;
 use Drupal\Core\Menu\LocalTaskManager;
 use Drupal\Core\Menu\MenuLinkManager;
-use Drupal\Core\Plugin\CachedDiscoveryClearer;
+use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -82,7 +82,7 @@ class ToolbarController extends ControllerBase {
   /**
    * A plugin cache clear instance.
    *
-   * @var \Drupal\Core\Plugin\CachedDiscoveryClearer
+   * @var \Drupal\Core\Plugin\CachedDiscoveryClearerInterface
    */
   protected $pluginCacheClearer;
 
@@ -102,7 +102,7 @@ class ToolbarController extends ControllerBase {
                               CacheBackendInterface $cacheRender,
                               Time $time,
                               RequestStack $request_stack,
-                              CachedDiscoveryClearer $plugin_cache_clearer) {
+                              CachedDiscoveryClearerInterface $plugin_cache_clearer) {
     $this->cron = $cron;
     $this->menuLinkManager = $menuLinkManager;
     $this->contextualLinkManager = $contextualLinkManager;
