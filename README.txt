@@ -1,6 +1,6 @@
 ---SUMMARY---
 
-Admin Toolbar intends to improve the default Drupal Toolbar to transformit into
+Admin Toolbar intends to improve the default Drupal Toolbar to transform it into
 a drop-down menu, providing a fast and full access to all administration links.
 
 For a full description visit project page:
@@ -28,6 +28,16 @@ the 'Save Configuration' button at the bottom.
 
 For help regarding installation, visit:
 https://www.drupal.org/documentation/install/modules-themes/modules-8
+
+
+--CONFIGURATION--
+
+
+Admin toolbar uses the jQuery hover intent plugin by default.
+To disable this and fall back to using jQuery hover(), add the following
+to your settings.local.php file:
+
+$settings['admin_toolbar_disable_intent'] = TRUE;
 
 
 ---CONTACT---
