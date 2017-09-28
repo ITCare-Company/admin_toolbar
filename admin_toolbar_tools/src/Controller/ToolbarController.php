@@ -190,6 +190,15 @@ class ToolbarController extends ControllerBase {
   }
 
   /**
+   * Clears all cached views data.
+   */
+  public function flushViews() {
+    views_invalidate_cache();
+    drupal_set_message($this->t('Views cache cleared.'));
+    return new RedirectResponse($this->reloadPage());
+  }
+
+  /**
    * Links to drupal.org home page.
    */
   public function drupalOrg() {

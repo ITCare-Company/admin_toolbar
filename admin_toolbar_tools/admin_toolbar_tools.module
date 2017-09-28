@@ -77,6 +77,16 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     }
   }
 
+  // Adding a menu link to clean the Views cache.
+  if ($moduleHandler->moduleExists('views')) {
+    $links['admin_toolbar_tools.flush_views'] = [
+      'title' => t('Flush views cache'),
+      'route_name' => 'admin_toolbar_tools.flush_views',
+      'menu_name' => 'admin',
+      'parent' => 'admin_toolbar_tools.flush',
+    ];
+  }
+
   // Adds common links to entities.
   foreach ($content_entities as $module_name => $entities) {
     $content_entity_bundle = $entities['content_entity_bundle'];

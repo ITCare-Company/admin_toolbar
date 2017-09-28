@@ -46,6 +46,14 @@ admin_toolbar_tools.flush_rendercache:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+admin_toolbar_tools.flush_views:
+  path: '/admin/flush/views'
+  defaults:
+    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::flushViews'
+    _title: 'Views'
+  requirements:
+    _permission: 'administer site configuration'
+    _csrf_token: 'TRUE'
 admin_toolbar_tools.drupalorg:
   path: '/admin/drupal8'
   defaults:
