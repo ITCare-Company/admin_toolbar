@@ -87,12 +87,7 @@ class ToolbarController extends ControllerBase {
   protected $pluginCacheClearer;
 
   /**
-   * Constructs a CronController object.
-   *
-   * @param \Drupal\Core\CronInterface $cron
-   *   The cron service.
-   *
-   * {@inheritdoc}.
+   * {@inheritdoc}
    */
   public function __construct(CronInterface $cron,
                               MenuLinkManager $menuLinkManager,

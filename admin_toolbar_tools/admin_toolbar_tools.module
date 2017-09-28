@@ -81,8 +81,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   foreach ($content_entities as $module_name => $entities) {
     $content_entity_bundle = $entities['content_entity_bundle'];
     $content_entity = $entities['content_entity'];
-    foreach ($entityTypeManager->getStorage($content_entity_bundle)
-               ->loadMultiple() as $machine_name => $bundle) {
+    foreach ($entityTypeManager->getStorage($content_entity_bundle)->loadMultiple() as $machine_name => $bundle) {
       // Normally, the edit form for the bundle would be its root link.
       $content_entity_bundle_root = NULL;
       if (in_array('entity.' . $content_entity_bundle . '.overview_form', $routes)) {
@@ -264,9 +263,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => -5,
     ];
     // Add node links for each content type.
-    foreach (\Drupal::entityTypeManager()
-               ->getStorage('node_type')
-               ->loadMultiple() as $type) {
+    foreach (\Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple() as $type) {
       $links['node.add.' . $type->id()] = [
         'title' => $type->label(),
         'route_name' => 'node.add',
