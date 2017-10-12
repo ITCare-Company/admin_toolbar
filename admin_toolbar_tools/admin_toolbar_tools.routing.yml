@@ -61,7 +61,6 @@ admin_toolbar_tools.drupalorg:
     _title: 'Drupal'
   requirements:
     _permission: 'access administration pages'
-    _csrf_token: 'TRUE'
 admin_toolbar_tools.listchanges:
   path: '/admin/drupal/list-changes'
   defaults:
@@ -69,7 +68,6 @@ admin_toolbar_tools.listchanges:
     _title: 'List changes'
   requirements:
     _permission: 'access administration pages'
-    _csrf_token: 'TRUE'
 admin_toolbar_tools.doc:
   path: '/admin/drupal/documentation'
   defaults:
@@ -77,7 +75,6 @@ admin_toolbar_tools.doc:
     _title: 'Documentation D8'
   requirements:
     _permission: 'access administration pages'
-    _csrf_token: 'TRUE'
 admin_development:
   path: '/admin/development'
   defaults:
@@ -85,7 +82,6 @@ admin_development:
     _title: 'Development'
   requirements:
     _permission: 'administer site configuration'
-    _csrf_token: 'TRUE'
 admin_toolbar.run.cron:
   path: '/run-cron'
   defaults:
