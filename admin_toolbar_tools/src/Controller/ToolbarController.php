@@ -208,13 +208,6 @@ class ToolbarController extends ControllerBase {
   }
 
   /**
-   * Displays the administration link Development.
-   */
-  public function development() {
-    return new RedirectResponse('/admin/structure/menu/');
-  }
-
-  /**
    * Access to Drupal 8 changes.
    *
    * (List changes of the different versions of drupal core).

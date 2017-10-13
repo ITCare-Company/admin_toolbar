@@ -6,6 +6,7 @@ admin_toolbar_tools.flush:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.cssjs:
   path: '/admin/flush/cssjs'
   defaults:
@@ -14,6 +15,7 @@ admin_toolbar_tools.cssjs:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.plugin:
   path: '/admin/flush/plugin'
   defaults:
@@ -22,6 +24,7 @@ admin_toolbar_tools.plugin:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.flush_static:
   path: '/admin/flush/static-caches'
   defaults:
@@ -30,6 +33,7 @@ admin_toolbar_tools.flush_static:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.flush_menu:
   path: '/admin/flush/menu'
   defaults:
@@ -38,6 +42,7 @@ admin_toolbar_tools.flush_menu:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.flush_rendercache:
   path: '/admin/flush/rendercache'
   defaults:
@@ -46,6 +51,7 @@ admin_toolbar_tools.flush_rendercache:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.flush_views:
   path: '/admin/flush/views'
   defaults:
@@ -54,6 +60,7 @@ admin_toolbar_tools.flush_views:
   requirements:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
+
 admin_toolbar_tools.drupalorg:
   path: '/admin/drupal8'
   defaults:
@@ -61,6 +68,7 @@ admin_toolbar_tools.drupalorg:
     _title: 'Drupal'
   requirements:
     _permission: 'access administration pages'
+
 admin_toolbar_tools.listchanges:
   path: '/admin/drupal/list-changes'
   defaults:
@@ -68,6 +76,7 @@ admin_toolbar_tools.listchanges:
     _title: 'List changes'
   requirements:
     _permission: 'access administration pages'
+
 admin_toolbar_tools.doc:
   path: '/admin/drupal/documentation'
   defaults:
@@ -75,13 +84,7 @@ admin_toolbar_tools.doc:
     _title: 'Documentation D8'
   requirements:
     _permission: 'access administration pages'
-admin_development:
-  path: '/admin/development'
-  defaults:
-    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::development'
-    _title: 'Development'
-  requirements:
-    _permission: 'administer site configuration'
+
 admin_toolbar.run.cron:
   path: '/run-cron'
   defaults:
