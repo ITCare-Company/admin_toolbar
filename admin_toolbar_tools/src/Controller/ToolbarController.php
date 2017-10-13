@@ -11,7 +11,6 @@ use Drupal\Core\Menu\LocalActionManager;
 use Drupal\Core\Menu\LocalTaskManager;
 use Drupal\Core\Menu\MenuLinkManager;
 use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
-use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -196,35 +195,6 @@ class ToolbarController extends ControllerBase {
     views_invalidate_cache();
     drupal_set_message($this->t('Views cache cleared.'));
     return new RedirectResponse($this->reloadPage());
-  }
-
-  /**
-   * Links to drupal.org home page.
-   */
-  public function drupalOrg() {
-    $response = new TrustedRedirectResponse("https://www.drupal.org");
-    $response->send();
-    return $response;
-  }
-
-  /**
-   * Access to Drupal 8 changes.
-   *
-   * (List changes of the different versions of drupal core).
-   */
-  public function listChanges() {
-    $response = new TrustedRedirectResponse("https://www.drupal.org/list-changes");
-    $response->send();
-    return $response;
-  }
-
-  /**
-   * Adds a link to the Drupal 8 documentation.
-   */
-  public function documentation() {
-    $response = new TrustedRedirectResponse("https://api.drupal.org/api/drupal/8");
-    $response->send();
-    return $response;
   }
 
   /**

@@ -61,30 +61,6 @@ admin_toolbar_tools.flush_views:
     _permission: 'administer site configuration'
     _csrf_token: 'TRUE'
 
-admin_toolbar_tools.drupalorg:
-  path: '/admin/drupal8'
-  defaults:
-    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::drupalOrg'
-    _title: 'Drupal'
-  requirements:
-    _permission: 'access administration pages'
-
-admin_toolbar_tools.listchanges:
-  path: '/admin/drupal/list-changes'
-  defaults:
-    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::listChanges'
-    _title: 'List changes'
-  requirements:
-    _permission: 'access administration pages'
-
-admin_toolbar_tools.doc:
-  path: '/admin/drupal/documentation'
-  defaults:
-    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::documentation'
-    _title: 'Documentation D8'
-  requirements:
-    _permission: 'access administration pages'
-
 admin_toolbar.run.cron:
   path: '/run-cron'
   defaults:
