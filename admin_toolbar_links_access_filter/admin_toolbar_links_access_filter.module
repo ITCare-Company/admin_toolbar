@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * This module don't show menu links that you don't have access permission for.
+ */
+
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\user\Entity\Role;
@@ -12,11 +17,9 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
  */
 function admin_toolbar_links_access_filter_preprocess_menu(&$variables) {
   if (empty($variables['items'])) {
-    /**
-     * Additional empty check to prevent exotic situations, where the preprocess
-     * function is entered even without items.
-     * @see https://www.drupal.org/node/2833885
-     */
+    // Additional empty check to prevent exotic situations, where the preprocess
+    // function is entered even without items.
+    // @see https://www.drupal.org/node/2833885
     return;
   }
   // Ensure that menu_name exists.
@@ -37,7 +40,7 @@ function admin_toolbar_links_access_filter_preprocess_menu(&$variables) {
 }
 
 /**
- * Helper function, hides links from admin menu, if user doesn't have access rights.
+ * Hides links from admin menu, if user doesn't have access rights.
  */
 function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$items) {
   foreach ($items as $route => &$item) {
@@ -64,14 +67,13 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
         admin_toolbar_links_access_filter_filter_non_accessible_links($items[$route]['below']);
       }
       if (empty($items[$route]['below']) && \Drupal::moduleHandler()->moduleExists('admin_toolbar')) {
-        /*
-         * Every child item has been cleared out.
-         * Now check, if the given route represents an overview page only,
-         * without having functionality on its own. In this case, we can safely
-         * unset this item, as there aren't any children left.
-         * This assumption is only valid, when the admin_toolbar module is
-         * installed because otherwise we won't have child items at all.
-         */
+
+        // Every child item has been cleared out.
+        // Now check, if the given route represents an overview page only,
+        // without having functionality on its own. In this case, we can safely
+        // unset this item, as there aren't any children left.
+        // This assumption is only valid, when the admin_toolbar module is
+        // installed because otherwise we won't have child items at all.
         if (admin_toolbar_links_access_filter_is_overview_page($route)) {
           unset($items[$route]);
         }
@@ -99,12 +101,16 @@ function admin_toolbar_links_access_filter_admin_block_content(&$variables) {
         unset($variables['content'][$key]);
       }
 
-      // The key is structured in the form: "ID title route", concatenated with spaces.
+      // The key is structured in the form: "ID title route",
+      // concatenated with spaces.
       $key_parts = explode(' ', $key);
       $route = end($key_parts);
 
-      // Special handling for Views pages, as they are not defined system routes.
-      // @todo check the permission for Views + find a generic way for similar cases. Best way would be to get the link entity somehow to properly check permissions.
+      // Special handling for Views pages, as they are not defined
+      // system routes.
+      // @TODO check the permission for Views + find a generic way for similar
+      // cases. Best way would be to get the link entity somehow to properly
+      // check permissions.
       if (strpos($route, 'views_view:') === 0) {
         continue;
       }
@@ -118,7 +124,9 @@ function admin_toolbar_links_access_filter_admin_block_content(&$variables) {
 }
 
 /**
- * Checks, if the given route name matches a pure (admin) overview page that can
+ * Checks if the given route name is an overview page.
+ *
+ * Checks if the given route name matches a pure (admin) overview page that can
  * be skipped, if there are no child items set. The typical example are routes
  * having the SystemController::systemAdminMenuBlockPage() function as their
  * controller callback set.
@@ -131,7 +139,7 @@ function admin_toolbar_links_access_filter_admin_block_content(&$variables) {
  *   FALSE otherwise.
  */
 function admin_toolbar_links_access_filter_is_overview_page($route_name) {
-  /** @var \Drupal\Core\Routing\RouteProviderInterface $route_provider */
+  // @var \Drupal\Core\Routing\RouteProviderInterface $route_provider.
   $route_provider = \Drupal::service('router.route_provider');
   $overview_page_controllers = [
     '\Drupal\system\Controller\AdminController::index',
@@ -143,7 +151,8 @@ function admin_toolbar_links_access_filter_is_overview_page($route_name) {
     $controller = $route->getDefault('_controller');
     return !empty($controller) && in_array($controller, $overview_page_controllers);
   }
-  catch (RouteNotFoundException $ex) { }
+  catch (RouteNotFoundException $ex) {
+  }
   return FALSE;
 }
 
@@ -152,6 +161,7 @@ function admin_toolbar_links_access_filter_is_overview_page($route_name) {
  *
  * @param \Drupal\Core\Session\AccountInterface $account
  *   The account to check.
+ *
  * @return bool
  *   TRUE, if the given user account has at least one role with admin rights
  *   assigned, FALSE otherwise.
