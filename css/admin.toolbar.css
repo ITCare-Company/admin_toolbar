@@ -1,7 +1,4 @@
 /*---------------------- menu horizontal hover---- Krout Fethi FrontEnd Developer-----*/
-#toolbar-bar {
-  z-index: 502;
-}
 .toolbar-tray-horizontal .menu-item:hover {
   background: #fff;
 }
