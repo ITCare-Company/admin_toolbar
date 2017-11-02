@@ -2,6 +2,8 @@ Admin Toolbar 8.1.21, 2017-XX-XX
 --------------------------------
 Changes since 8.1.20:
 
+- #2873228 by smustgrave, adriancid, flocondetoile: Toolbar menu accessible and
+  navigable with keyboard.
 - #2919775 by adriancid: Create the CHANGELOG.txt file.
 - #2919772 by adriancid: Use the README.txt template.
 - #2919769 by adriancid: Use the README.txt template for the admin_toolbar_tools
