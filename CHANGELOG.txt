@@ -2,6 +2,7 @@ Admin Toolbar 8.1.21, 2017-XX-XX
 --------------------------------
 Changes since 8.1.20:
 
+- #2920793: Change the user TAKTAK by matio89 in the CHANGELOG.txt file.
 - #2873228 by smustgrave, adriancid, flocondetoile: Toolbar menu accessible and
   navigable with keyboard.
 - #2919775 by adriancid: Create the CHANGELOG.txt file.
@@ -129,7 +130,7 @@ Changes since 8.1.15:
   admin_toolbar_tools/admin_toolbar_tools.links.menu.yml file.
 - #2735153 by Kionn: InvalidArgumentException: Cannot redirect to an empty URL.
   в Symfony\Component\HttpFoundation\RedirectResponse->setTargetUrl().
-- by TAKTAK: correction InvalidArgumentException: Cannot redirect to an empty
+- by matio89: correction InvalidArgumentException: Cannot redirect to an empty
   URL. в Symfony\Component\HttpFoundation\RedirectResponse->setTargetUrl().
 - by romainj: Add a new Render Cache shortcut on the admin menu.
 - by romainj: Fixes issue #2731663 by canceling the move of the Logout menu
@@ -139,7 +140,7 @@ Admin Toolbar 8.1.15, 2016-05-23
 --------------------------------
 Changes since 8.1.14:
 
-- by TAKTAK: add RTL in admin.toolbar.css.
+- by matio89: add RTL in admin.toolbar.css.
 - by romainj: Changes Devel menu item titles.
 - by romainj: Fixes issue #2713899.
 - by romainj: Minor code/typo cleaning.
@@ -162,25 +163,25 @@ Admin Toolbar 8.1.14, 2016-02-08
 --------------------------------
 Changes since 8.1.13:
 
-- by TAKTAK: Correction differents bugs(problem white page when installing a new
+- by matio89: Correction differents bugs(problem white page when installing a new
   module).
 - #2643648 by Lord_of_Codes: Proposed README.txt file for Admin Toolbar.
-- by TAKTAK: resolving the dependecies problem(dependencies of others modules).
-- by TAKTAK: Correction route of entities.
+- by matio89: resolving the dependecies problem(dependencies of others modules).
+- by matio89: Correction route of entities.
 
 Admin Toolbar 8.1.13, 2016-02-02
 --------------------------------
 Changes since 8.1.12:
 
-- by TAKTAK: Admin toolbar is compatible with 8.0.2.
-- by TAKTAK: Commmit dev version compatible with drupal 8.0.2.
-- by TAKTAK: New version of admin toolbar compatible with 8.0.2.
+- by matio89: Admin toolbar is compatible with 8.0.2.
+- by matio89: Commmit dev version compatible with drupal 8.0.2.
+- by matio89: New version of admin toolbar compatible with 8.0.2.
 
 Admin Toolbar 8.1.12, 2016-01-15
 --------------------------------
 Changes since 8.1.11:
 
-- by TAKTAK: Correction AdminToolbaToolsAlterTest.
+- by matio89: Correction AdminToolbaToolsAlterTest.
 - #2493037 by mimran: Empty elements in #toolbar-bar.
 - #2598136 by mimran, felribeiro: Menu items duplicated.
 - #2635154 by Lukas von Blarer: Too general CSS selectors.
@@ -200,10 +201,10 @@ Changes since 8.1.10:
 - #2612694 by chegor: Add new view.
 - #2627918 by joe_carvajal: Version in info.yml files does Update Manager try to
   update.
-- by TAKTAK: correction collapsible behaviour in vertical menu layout.
+- by matio89: correction collapsible behaviour in vertical menu layout.
 - #2582825 by Ben Coleman: Installing Admin Toolbar Tools loses anonymous user
   login link.
-- by TAKTAK: Correction the login link on the site when in a logged-out state.
+- by matio89: Correction the login link on the site when in a logged-out state.
 
 Admin Toolbar 8.1.10, 2015-08-07
 --------------------------------
@@ -218,7 +219,7 @@ Changes since 8.1.8:
 - #2537016 by matio89: Removing dependance for user & system.
 - #2533420 by Dave Reid, twistor: Chase HEAD changes in toolbar.
 - #2537016 by twistor: Rewrite admin_toolbar_tools.module
-- by TAKTAK: Correction all bugs and add new security features.
+- by matio89: Correction all bugs and add new security features.
 
 Admin Toolbar 8.1.8, 2015-06-22
 -------------------------------
@@ -240,47 +241,47 @@ Admin Toolbar 8.1.6, 2015-06-03
 -------------------------------
 Changes since 8.1.5:
 
-- by TAKTAK: correction admin_toolbar.
+- by matio89: correction admin_toolbar.
 
 Admin Toolbar 8.1.5, 2015-06-03
 -------------------------------
 Changes since 8.1.4:
 
-- by TAKTAK: test if module update exist or no to display install and update
+- by matio89: test if module update exist or no to display install and update
   module.
 - by fethi: Change the colors used to match the Seven styleguide.
-- by TAKTAK: compatibility with Drupal 8 béta 11.
+- by matio89: compatibility with Drupal 8 béta 11.
 - by  fethi: Change the colors used to match the Seven styleguide.
 
 Admin Toolbar 8.1.4, 2015-05-20
 -------------------------------
 Changes since 8.1.3:
 
-- by TAKTAK: correction add/node.
+- by matio89: correction add/node.
 
 Admin Toolbar 8.1.3, 2015-05-19
 -------------------------------
 Changes since 8.1.2:
 
-- by TAKTAK: add new functionalities.
-- by TAKTAK: add administration devel link.
-- by TAKTAK: correction reload page.
-- by TAKTAK: correction redirect to the same page.
+- by matio89: add new functionalities.
+- by matio89: add administration devel link.
+- by matio89: correction reload page.
+- by matio89: correction redirect to the same page.
 
 Admin Toolbar 8.1.2, 2015-05-19
 -------------------------------
 Changes since 8.1.1:
 
-- by TAKTAK: add new functionalities.
-- by TAKTAK: add administration devel link.
-- by TAKTAK: correction reload page.
-- by TAKTAK: correction redirect to the same page.
+- by matio89: add new functionalities.
+- by matio89: add administration devel link.
+- by matio89: correction reload page.
+- by matio89: correction redirect to the same page.
 
 Admin Toolbar 8.1.1, 2015-05-19
 -------------------------------
 Changes since 8.1.0:
 
-- by TAKTAK: add new functionalities.
+- by matio89: add new functionalities.
 
 Admin Toolbar 8.1.0, 2015-05-07
 -------------------------------
