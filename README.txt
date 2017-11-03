@@ -50,11 +50,7 @@ INSTALLATION
 CONFIGURATION
 -------------
 
-Admin toolbar uses the jQuery hover intent plugin by default.
-To disable this and fall back to using jQuery hover(), add the following
-to your settings.local.php file:
-
-$settings['admin_toolbar_disable_intent'] = TRUE;
+No configuration is needed.
 
 
 MAINTAINERS

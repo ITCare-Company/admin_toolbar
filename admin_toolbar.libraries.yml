@@ -3,19 +3,7 @@ toolbar.tree:
     theme:
       css/admin.toolbar.css: {}
   js:
-    js/admin_toolbar.js: {}
-  dependencies:
-    - core/jquery
-
-toolbar.tree.hoverintent:
-  js:
     js/jquery.hoverIntent.js: {}
-    js/admin_toolbar.hoverintent.js: {}
-  dependencies:
-    - core/jquery
-
-toolbar.tree.hover:
-  js:
-    js/admin_toolbar.hover.js: {}
+    js/admin_toolbar.js: {}
   dependencies:
     - core/jquery

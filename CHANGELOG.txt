@@ -31,8 +31,6 @@ Changes since 8.1.20:
   not translated.
 - #2909710 by adriancid, Musa.thomas: Fix coding standard format.
 - #2910934 by adriancid, romainj: Error trying to clean the cache.
-- #2908747 by rjjakes, eme, Kopin, adriancid: Add a config to disable the
-  hoverintent functionality.
 - #2910892 by adriancid: Delete the LICENSE.txt.
 - #2909637 by bapi_22, Musa.thomas, adriancid: Avoid static call inside class
   method.

@@ -8,7 +8,6 @@
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Site\Settings;
 
 /**
  * Implements hook_toolbar_alter().
@@ -16,15 +15,6 @@ use Drupal\Core\Site\Settings;
 function admin_toolbar_toolbar_alter(&$items) {
   $items['administration']['tray']['toolbar_administration']['#pre_render'] = ['admin_toolbar_prerender_toolbar_administration_tray'];
   $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
-
-  if (Settings::get('admin_toolbar_disable_intent') === TRUE) {
-    // Use jQuery hover() effect.
-    $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hover';
-  }
-  else {
-    // User hoverIntent plugin.
-    $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hoverintent';
-  }
 }
 
 /**
