@@ -2,7 +2,10 @@ Admin Toolbar 8.1.21, 2017-XX-XX
 --------------------------------
 Changes since 8.1.20:
 
-- #2920793: Change the user TAKTAK by matio89 in the CHANGELOG.txt file.
+- #2731369 by stefan.r, DuneBL, Berdir, kbasarab, joachim, adriancid: Local 
+  tasks don't show in the toolbar.
+- #2920793 by adriancid: Change the user TAKTAK by matio89 in the CHANGELOG.txt
+  file.
 - #2873228 by smustgrave, adriancid, flocondetoile: Toolbar menu accessible and
   navigable with keyboard.
 - #2919775 by adriancid: Create the CHANGELOG.txt file.
@@ -163,8 +166,8 @@ Admin Toolbar 8.1.14, 2016-02-08
 --------------------------------
 Changes since 8.1.13:
 
-- by matio89: Correction differents bugs(problem white page when installing a new
-  module).
+- by matio89: Correction differents bugs(problem white page when installing a
+  new module).
 - #2643648 by Lord_of_Codes: Proposed README.txt file for Admin Toolbar.
 - by matio89: resolving the dependecies problem(dependencies of others modules).
 - by matio89: Correction route of entities.
