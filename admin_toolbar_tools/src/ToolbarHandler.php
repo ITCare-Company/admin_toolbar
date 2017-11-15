@@ -62,16 +62,18 @@ class ToolbarHandler implements ContainerInjectionInterface {
     $this->arrayInsert($tools_menu, 1, $menu_render_array);
 
     // Adding the submenus to 'Flush all caches' menu.
-    $tools_sub_menu = &$tools_menu['admin_toolbar_tools.flush']['below'];
-    $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.cssjs', $this->t('Flush CSS and Javascript'));
-    $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.plugin', $this->t('Flush plugins cache'));
-    $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_static', $this->t('Flush static cache'));
-    $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_menu', $this->t('Flush routing and links  cache'));
-    $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_rendercache', $this->t('Flush render cache'));
+    if (!empty($tools_menu['admin_toolbar_tools.flush'])) {
+      $tools_sub_menu = &$tools_menu['admin_toolbar_tools.flush']['below'];
+      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.cssjs', $this->t('Flush CSS and Javascript'));
+      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.plugin', $this->t('Flush plugins cache'));
+      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_static', $this->t('Flush static cache'));
+      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_menu', $this->t('Flush routing and links  cache'));
+      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_rendercache', $this->t('Flush render cache'));
 
-    // Adding a menu link to clean the Views cache.
-    if ($this->moduleHandler->moduleExists('views')) {
-      $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_views', $this->t('Flush views cache'));
+      // Adding a menu link to clean the Views cache.
+      if ($this->moduleHandler->moduleExists('views')) {
+        $tools_sub_menu += $this->createMenuRenderArray('admin_toolbar_tools.flush_views', $this->t('Flush views cache'));
+      }
     }
 
     // Adding the 'Run Cron' menu in the correct place.

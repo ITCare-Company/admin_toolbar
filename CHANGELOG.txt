@@ -2,6 +2,8 @@ Admin Toolbar 8.1.21, 2017-XX-XX
 --------------------------------
 Changes since 8.1.20:
 
+- #2923580 by sylus, adriancid: Unsupported operand types in 
+  ToolbarHandler::lazyBuilder().
 - #2731369 by stefan.r, DuneBL, Berdir, kbasarab, joachim, adriancid: Local 
   tasks don't show in the toolbar.
 - #2920793 by adriancid: Change the user TAKTAK by matio89 in the CHANGELOG.txt
