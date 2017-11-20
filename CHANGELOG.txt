@@ -1,4 +1,4 @@
-Admin Toolbar 8.1.21, 2017-XX-XX
+Admin Toolbar 8.1.21, 2017-11-20
 --------------------------------
 Changes since 8.1.20:
 
