@@ -596,7 +596,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       // "Content>Comment" also has "File" as a tab then we decide to
       // set this one as parent of the added link if not the current tab
       // will be the parent.
-      if (!empty($link['parent'])) {
+      if (!empty($link['parent']) && isset($links[$link['parent']])) {
         $parentlink = $links[$link['parent']];
         $parentlink_route = $parentlink['route_name'];
         $parent_primary = $manager->getLocalTasks($parentlink_route, 0);

@@ -2,6 +2,9 @@ Admin Toolbar 8.1.22, 2017-XX-XX
 --------------------------------
 Changes since 8.1.21:
 
+- #2922046 by mikejw, adriancid, Berdir, BrianLewisDesign: Notice: Undefined
+  index: entity.eform_type.collection in 
+  admin_toolbar_tools_menu_links_discovered_alter.
 - #2925128 by adriancid: Create the module help page for the Admin Toolbar Links
   Access Filter submodule.
 
