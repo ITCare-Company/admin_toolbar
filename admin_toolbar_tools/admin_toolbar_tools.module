@@ -539,12 +539,38 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   $manager = \Drupal::service('plugin.manager.menu.local_task');
   foreach ($links as $key => $link) {
 
-    // Ignore menu links that have no route name or are not in the admin menu.
-    // @todo Use configuration for admin menu name once added in
-    //   https://www.drupal.org/node/1869638.
-    if (empty($link['route_name']) || !isset($link['menu_name']) || $link['menu_name'] !== 'admin') {
+    // Ignore menu links that have no route name.
+    if (empty($link['route_name'])) {
       continue;
     }
+
+    // Ignore links that are not in the admin menu, include parents in the
+    // check as they inherit the menu name from the parent if not set.
+    $link_to_check = $link;
+    do {
+      // @todo Use configuration for admin menu name once added in
+      // https://www.drupal.org/node/1869638.
+      if (isset($link_to_check['menu_name'])) {
+        // If the link belongs to the admin menu, then skip this loop and
+        // look for local tasks.
+        if ($link_to_check['menu_name'] === 'admin') {
+          break;
+        }
+        else {
+          // If it is explicitly not in the admin menu, skip.
+          continue 2;
+        }
+      }
+
+      if (!empty($link_to_check['parent']) && isset($links[$link_to_check['parent']])) {
+        $link_to_check = $links[$link_to_check['parent']];
+      }
+      else {
+        // No parent and we found no menu_name, skip.
+        continue 2;
+      }
+    } while ($link_to_check);
+
     $route = $link['route_name'];
     $route_local_tasks = $manager->getLocalTasksForRoute($route);
     if (empty($route_local_tasks[0])) {
