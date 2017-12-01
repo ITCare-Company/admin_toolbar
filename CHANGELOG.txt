@@ -2,6 +2,7 @@ Admin Toolbar 8.1.22, 2017-XX-XX
 --------------------------------
 Changes since 8.1.21:
 
+- #2927914 by adriancid: Parameter comment indentation must be 3 spaces.
 - #2927911 by adriancid: Remove unused variables.
 - #2927905 by adriancid: All dependencies must be prefixed with the project 
   name.

@@ -87,11 +87,11 @@ class ToolbarHandler implements ContainerInjectionInterface {
    * Create the menu render array.
    *
    * @param string $route
-   *    The route.
+   *   The route.
    * @param string $title
-   *    The menu title.
+   *   The menu title.
    * @param bool $submenu
-   *    Specify if the current menu element have a submenu.
+   *   Specify if the current menu element have a submenu.
    *
    * @return array
    *   A renderable array as expected by the renderer service.
@@ -117,11 +117,11 @@ class ToolbarHandler implements ContainerInjectionInterface {
    * Insert an array in a given position of another array.
    *
    * @param array $array
-   *    The array where we need to insert new elements.
+   *   The array where we need to insert new elements.
    * @param int $position
-   *    The position where we will add the new array.
+   *   The position where we will add the new array.
    * @param array $insert_array
-   *    The array that will be inserted.
+   *   The array that will be inserted.
    *
    * @see http://php.net/manual/en/function.array-splice.php#56794
    */
