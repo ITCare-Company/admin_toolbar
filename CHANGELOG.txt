@@ -2,6 +2,9 @@ Admin Toolbar 8.1.22, 2017-XX-XX
 --------------------------------
 Changes since 8.1.21:
 
+- #2929061 by romainj, dsnopek, adriancid: admin_toolbar_links_access_filter
+  doesn't do anything unless admin_toolbar is enabled.
+- #2928836 by eme: One extra pixel line under the admin toolbar.
 - #2925501 by eme, adriancid, RumyanaRuseva: Menu does not take changes into
   account (caching issue).
 - #2927914 by adriancid: Parameter comment indentation must be 3 spaces.

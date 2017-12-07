@@ -4,3 +4,6 @@ package: Administration
 
 type: module
 core: 8.x
+
+dependencies:
+  - admin_toolbar:admin_toolbar
