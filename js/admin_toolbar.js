@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, Drupal) {
   Drupal.behaviors.adminToolbar = {
     attach: function (context, settings) {
 
@@ -50,4 +50,4 @@
 
     }
   };
-})(jQuery);
+})(jQuery, Drupal);
