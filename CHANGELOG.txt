@@ -1,7 +1,19 @@
-Admin Toolbar 8.1.22, 2017-XX-XX
+Admin Toolbar 8.1.23, 2018-XX-XX
+--------------------------------
+Changes since 8.1.22:
+
+- #2935449: Add the release information for the 1.22 version in the 
+  CHANGELOG.txt.
+- #2932476 by romainj: toolbar.tree library should have a dependency to the
+  core/drupal library.
+- #2931503 by K3vin_nl: Admin toolbar generates invalid class names.
+
+Admin Toolbar 8.1.22, 2018-01-02
 --------------------------------
 Changes since 8.1.21:
 
+- #2929053 by kkuhnen, eme, adriancid: admin_toolbar.js should use Drupal
+  behaviors.
 - #2929061 by romainj, dsnopek, adriancid: admin_toolbar_links_access_filter
   doesn't do anything unless admin_toolbar is enabled.
 - #2928836 by eme: One extra pixel line under the admin toolbar.
