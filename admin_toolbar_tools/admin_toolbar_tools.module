@@ -273,7 +273,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => -5,
     ];
     // Add node links for each content type.
-    foreach (\Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple() as $type) {
+    foreach ($entityTypeManager->getStorage('node_type')->loadMultiple() as $type) {
       $links['node.add.' . $type->id()] = [
         'title' => t($type->label()),
         'route_name' => 'node.add',
