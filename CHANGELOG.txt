@@ -2,9 +2,11 @@ Admin Toolbar 8.1.23, 2018-XX-XX
 --------------------------------
 Changes since 8.1.22:
 
+- #2932873 by vaplas, saravanaprasanth, adriancid: Horizontal mode only works if
+  the page is loaded in horizontal mode.
 - #2935311 by romainj, adriancid: Use the $entityTypeManager variable instead of
   the \Drupal::entityTypeManager service.
-- #2935449: Add the release information for the 1.22 version in the 
+- #2935449 by adriancid: Add the release information for the 1.22 version in the 
   CHANGELOG.txt.
 - #2932476 by romainj: toolbar.tree library should have a dependency to the
   core/drupal library.
