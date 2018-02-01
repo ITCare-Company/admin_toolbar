@@ -2,6 +2,8 @@ Admin Toolbar 8.1.23, 2018-XX-XX
 --------------------------------
 Changes since 8.1.22:
 
+- #2941184 by daniel.nitsche, adriancid: Remove unwanted comment from
+  admin.toolbar.css.
 - #2912503 by Amsteri, m.abdulqader: Right to left language direction support.
 - #2937982 by romainj, adriancid: Auto-generation of menu links conflicts with
   other modules.
