@@ -2,6 +2,8 @@ Admin Toolbar 8.1.23, 2018-XX-XX
 --------------------------------
 Changes since 8.1.22:
 
+- #2937982 by romainj, adriancid: Auto-generation of menu links conflicts with
+  other modules.
 - #2932873 by vaplas, saravanaprasanth, adriancid: Horizontal mode only works if
   the page is loaded in horizontal mode.
 - #2935311 by romainj, adriancid: Use the $entityTypeManager variable instead of
