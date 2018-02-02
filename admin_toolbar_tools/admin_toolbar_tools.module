@@ -560,12 +560,21 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
   // If module Media enabled.
   if ($moduleHandler->moduleExists('media')) {
-    $links['admin_toolbar_tools.media.list'] = [
-      'title' => t('Media'),
-      'route_name' => 'view.media.media_page_list',
+    $links['admin_toolbar_tools.add_media'] = [
+      'title' => t('Add media'),
+      'route_name' => 'entity.media.add_page',
       'menu_name' => 'admin',
       'parent' => 'system.admin_content',
     ];
+    // Add node links for each media type.
+    foreach (\Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple() as $type) {
+      $links['node.add.' . $type->id()] = [
+        'title' => t($type->label()),
+        'route_name' => 'entity.media.add_form',
+        'parent' => 'admin_toolbar_tools.add_media',
+        'route_parameters' => ['media_type' => $type->id()],
+      ];
+    }
   }
 
   // If module Config enabled.
