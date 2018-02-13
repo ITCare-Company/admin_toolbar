@@ -31,6 +31,5 @@
   "support": {
     "issues": "https://www.drupal.org/project/issues/admin_toolbar",
     "source": "http://cgit.drupalcode.org/admin_toolbar"
-  },
-  "minimum-stability": "stable"    
+  }
 }
