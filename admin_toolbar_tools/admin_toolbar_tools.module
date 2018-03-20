@@ -86,7 +86,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'admin_toolbar_tools.flush',
     ];
     // Adding a menu link to Files.
-    if ($moduleHandler->moduleExists('file')) {
+    if ($moduleHandler->moduleExists('file') && in_array('view.files.page_1', $routes)) {
       $links['admin_toolbar_tools.view.files'] = [
         'title' => t('Files'),
         'route_name' => 'view.files.page_1',
