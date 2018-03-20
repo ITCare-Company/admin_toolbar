@@ -85,6 +85,15 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'menu_name' => 'admin',
       'parent' => 'admin_toolbar_tools.flush',
     ];
+    // Adding a menu link to Files.
+    if ($moduleHandler->moduleExists('file')) {
+      $links['admin_toolbar_tools.view.files'] = [
+        'title' => t('Files'),
+        'route_name' => 'view.files.page_1',
+        'menu_name' => 'admin',
+        'parent' => 'system.admin_content',
+      ];
+    }
   }
 
   // Adds common links to entities.
