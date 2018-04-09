@@ -2,6 +2,8 @@ Admin Toolbar 8.1.24, 2018-XX-XX
 --------------------------------
 Changes since 8.1.23:
 
+- #2959647 by adriancid: Use interfaces instead of classes to inject 
+  dependencies.
 - #2952643 by romainj, if-jds, adriancid: Add Item for Files under Content Menu.
 - #2944463 by adriancid: Update the composer.json file.
 
