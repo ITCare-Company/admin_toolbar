@@ -2,6 +2,8 @@ Admin Toolbar 8.1.24, 2018-XX-XX
 --------------------------------
 Changes since 8.1.23:
 
+- #2961450 by adriancid: Convert the AdminToolbarAlterTest test class to
+  PHPUnit.
 - #2961445 by adriancid: Convert the AdminToolbarToolsAlterTest test class to
   PHPUnit.
 - #2959684 by adriancid: Remove recommended modules section from README.txt.

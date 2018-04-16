@@ -1,22 +1,26 @@
 <?php
 
-namespace Drupal\admin_toolbar\Tests;
+namespace Drupal\Tests\admin_toolbar\Functional;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test the existence of Admin Toolbar module.
  *
  * @group admin_toolbar
  */
-class AdminToolbarAlterTest extends WebTestBase {
+class AdminToolbarAlterTest extends BrowserTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['toolbar', 'breakpoint', 'admin_toolbar'];
+  protected static $modules = [
+    'toolbar',
+    'breakpoint',
+    'admin_toolbar',
+  ];
 
   /**
    * A test user with permission to access the administrative toolbar.
