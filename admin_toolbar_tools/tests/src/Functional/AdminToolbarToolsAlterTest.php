@@ -16,7 +16,11 @@ class AdminToolbarToolsAlterTest extends BrowserTestBase {
    *
    * @var array
    */
-  protected static $modules = ['toolbar', 'admin_toolbar', 'admin_toolbar_tools'];
+  protected static $modules = [
+    'toolbar',
+    'admin_toolbar',
+    'admin_toolbar_tools',
+  ];
 
   /**
    * A test user with permission to access the administrative toolbar.
