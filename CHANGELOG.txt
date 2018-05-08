@@ -2,6 +2,7 @@ Admin Toolbar 8.x-1.24, 2018-XX-XX
 ----------------------------------
 Changes since 8.x-1.23:
 
+- #2971398 by adriancid: Add the docblock to the ToolbarController constructor.
 - #2969686 by adriancid, Vidushi Mehta: Add a menu link to clean the twig cache.
 - #2969325 by adriancid: Fix the module version in the CHANGELOG.txt.
 - #2961450 by adriancid: Convert the AdminToolbarAlterTest test class to

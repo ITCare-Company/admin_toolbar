@@ -87,7 +87,26 @@ class ToolbarController extends ControllerBase {
   protected $pluginCacheClearer;
 
   /**
-   * {@inheritdoc}
+   * Constructs a ToolbarController object.
+   *
+   * @param \Drupal\Core\CronInterface $cron
+   *   A cron instance.
+   * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menuLinkManager
+   *   A menu link manager instance.
+   * @param \Drupal\Core\Menu\ContextualLinkManagerInterface $contextualLinkManager
+   *   A context link manager instance.
+   * @param \Drupal\Core\Menu\LocalTaskManagerInterface $localTaskLinkManager
+   *   A local task manager instance.
+   * @param \Drupal\Core\Menu\LocalActionManagerInterface $localActionLinkManager
+   *   A local action manager instance.
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheRender
+   *   A cache backend interface instance.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   A date time instance.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   A request stack symfony instance.
+   * @param \Drupal\Core\Plugin\CachedDiscoveryClearerInterface $plugin_cache_clearer
+   *   A plugin cache clear instance.
    */
   public function __construct(CronInterface $cron,
                               MenuLinkManagerInterface $menuLinkManager,
