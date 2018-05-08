@@ -14,6 +14,7 @@ use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\Core\PhpStorage\PhpStorageFactory;
 
 /**
  * Class ToolbarController.
@@ -194,6 +195,17 @@ class ToolbarController extends ControllerBase {
   public function flushViews() {
     views_invalidate_cache();
     drupal_set_message($this->t('Views cache cleared.'));
+    return new RedirectResponse($this->reloadPage());
+  }
+
+  /**
+   * Clears the twig cache.
+   */
+  public function flushTwig() {
+    // @todo Update once Drupal 8.6 will be released.
+    // @see https://www.drupal.org/node/2908461
+    PhpStorageFactory::get('twig')->deleteAll();
+    drupal_set_message($this->t('Twig cache cleared.'));
     return new RedirectResponse($this->reloadPage());
   }
 
