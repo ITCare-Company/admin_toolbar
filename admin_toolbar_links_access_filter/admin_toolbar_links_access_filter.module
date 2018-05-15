@@ -184,10 +184,17 @@ function admin_toolbar_links_access_filter_is_overview_page($route_name) {
  *   assigned, FALSE otherwise.
  */
 function admin_toolbar_links_access_filter_user_has_admin_role(AccountInterface $account) {
-  foreach ($account->getRoles() as $role_id) {
-    if (Role::load($role_id)->isAdmin()) {
-      return TRUE;
+  static $user_has_admin_role = [];
+  $uid = $account->id();
+  if (!isset($user_has_admin_role[$uid])) {
+    $roles = Role::loadMultiple($account->getRoles());
+    foreach ($roles as $role) {
+      if ($role->isAdmin()) {
+        $user_has_admin_role[$uid] = TRUE;
+        break;
+      }
+      $user_has_admin_role[$uid] = FALSE;
     }
   }
-  return FALSE;
+  return $user_has_admin_role[$uid];
 }
