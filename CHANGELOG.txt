@@ -2,6 +2,8 @@ Admin Toolbar 8.x-1.24, 2018-XX-XX
 ----------------------------------
 Changes since 8.x-1.23:
 
+- #2971466 by recrit, adriancid, acbramley: Add media links incorrectly set to
+  "node.add.".
 - #2972553 by dww, adriancid: Add static cache to speed up
   admin_toolbar_links_access_filter_user_has_admin_role().
 - #2971435 by adriancid: Module help page for Admin Toolbar Extra Tools module 
