@@ -2,6 +2,7 @@ Admin Toolbar 8.x-1.24, 2018-XX-XX
 ----------------------------------
 Changes since 8.x-1.23:
 
+- #2975170 by adriancid: Add composer.json file to submodules.
 - #2975165 by Gamewalker, adriancid: datetime.time services is not found in
   ToolbarController.
 - #2971466 by recrit, adriancid, acbramley: Add media links incorrectly set to
