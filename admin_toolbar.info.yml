@@ -1,5 +1,5 @@
 name: Admin Toolbar
-description: Provides a drop-down menu interface to the core Drupal Toolbar.
+description: Provides a drop-down menu interface to the site Toolbar.
 package: Administration
 
 type: module
