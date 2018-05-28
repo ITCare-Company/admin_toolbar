@@ -1,4 +1,4 @@
-Admin Toolbar 8.x-1.24, 2018-XX-XX
+Admin Toolbar 8.x-1.24, 2018-05-28
 ----------------------------------
 Changes since 8.x-1.23:
 
