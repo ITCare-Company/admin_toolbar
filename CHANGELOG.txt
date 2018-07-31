@@ -2,6 +2,7 @@ Admin Toolbar 8.x-1.25, 2018-XX-XX
 ----------------------------------
 Changes since 8.x-1.24:
 
+- #2989281 by JKerschner, adriancid: Consistently use $entityTypeManager.
 - #2985106 by Eli-T, adriancid, eme: Add ability to hide Drupal.org links
   exposed by admin_toolbar_tools from certain users.
 - #2938884 by Spurlos, bdanin, romainj, purdy_nc, adriancid: A non-existent 
