@@ -1,5 +1,5 @@
 name: Admin Toolbar
-description: Provides a drop-down menu interface to the site Toolbar.
+description: Provides an improved drop-down menu interface to the site Toolbar.
 package: Administration
 
 type: module
