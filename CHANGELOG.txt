@@ -2,6 +2,8 @@ Admin Toolbar 8.x-1.25, 2018-XX-XX
 ----------------------------------
 Changes since 8.x-1.24:
 
+- #3012102 by tikaszvince, Jody Lynn, adriancid, grahl, jigarius: Provider
+  property missing on link definition.
 - #3010451 by epowelljr, adriancid: Improve the admin_toolbar module
   description.
 - #2958415 by adriancid, romainj, Prashant.c, harshita29: Replace usages of the
