@@ -48,6 +48,10 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
  * Implements hook_menu_links_discovered_alter().
  */
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
+  $languageManager = \Drupal::languageManager();
+  $config_override_language = $languageManager->getConfigOverrideLanguage();
+  $languageManager->setConfigOverrideLanguage($languageManager->getLanguage('en'));
+
   $moduleHandler = \Drupal::moduleHandler();
   $entityTypeManager = \Drupal::entityTypeManager();
   $routeProvider = \Drupal::service('router.route_provider');
@@ -655,6 +659,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => 2,
     ];
   }
+
+  $languageManager->setConfigOverrideLanguage($config_override_language);
 }
 
 /**
