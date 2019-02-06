@@ -1,3 +1,22 @@
+Admin Toolbar 8.x-1.27, 2019-XX-XX
+----------------------------------
+Changes since 8.x-1.26:
+
+- #3031107 by adriancid: Update the CHANGELOG.txt.
+
+Admin Toolbar 8.x-1.26, 2019-02-03
+----------------------------------
+Changes since 8.x-1.25:
+
+- #3009193 by oknate, jonnyeom, DYdave, DuneBL, romainj, Pasqualle, thejacer87,
+  DuaelFr, thalles, cobenash, webdrips, acrosman, kumkum29, PCate, Grimreaper,
+  azovsky, arturopanetta, s-jack, tirler, CProfessionals, jjmackow, littlecrab,
+  jl_cs, superlolo95, geraldito, Kaelfaz, andrey_semenoff, Renrhaf, lyalyuk,
+  abramm, xlith, adriancid: Error because devel module has removed the execute
+  php feature.
+- #3019298 by hayashi, romainj: Menu items for content entity show in wrong
+  language.
+
 Admin Toolbar 8.x-1.25, 2018-11-22
 ----------------------------------
 Changes since 8.x-1.24:
