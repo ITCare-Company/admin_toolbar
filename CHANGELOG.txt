@@ -2,6 +2,8 @@ Admin Toolbar 8.x-1.27, 2019-XX-XX
 ----------------------------------
 Changes since 8.x-1.26:
 
+- #3026337 by thalles, mpp, adriancid, Gábor Hojtsy: Config labels are not
+  properly translated.
 - #3003678 by adriancid, romainj: New method to invalidate twig templates.
 - #3027542 by i-trokhanenko, adriancid, thalles: menu_cache_clear_all is
   deprecated.
