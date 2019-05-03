@@ -87,6 +87,13 @@ class ToolbarController extends ControllerBase {
   protected $pluginCacheClearer;
 
   /**
+   * The cache menu instance.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
+  protected $cacheMenu;
+
+  /**
    * Constructs a ToolbarController object.
    *
    * @param \Drupal\Core\CronInterface $cron
@@ -107,6 +114,8 @@ class ToolbarController extends ControllerBase {
    *   A request stack symfony instance.
    * @param \Drupal\Core\Plugin\CachedDiscoveryClearerInterface $plugin_cache_clearer
    *   A plugin cache clear instance.
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_menu
+   *   A cache menu instance.
    */
   public function __construct(CronInterface $cron,
                               MenuLinkManagerInterface $menuLinkManager,
@@ -116,7 +125,8 @@ class ToolbarController extends ControllerBase {
                               CacheBackendInterface $cacheRender,
                               TimeInterface $time,
                               RequestStack $request_stack,
-                              CachedDiscoveryClearerInterface $plugin_cache_clearer) {
+                              CachedDiscoveryClearerInterface $plugin_cache_clearer,
+                              CacheBackendInterface $cache_menu) {
     $this->cron = $cron;
     $this->menuLinkManager = $menuLinkManager;
     $this->contextualLinkManager = $contextualLinkManager;
@@ -126,6 +136,7 @@ class ToolbarController extends ControllerBase {
     $this->time = $time;
     $this->requestStack = $request_stack;
     $this->pluginCacheClearer = $plugin_cache_clearer;
+    $this->cacheMenu = $cache_menu;
   }
 
   /**
@@ -141,7 +152,8 @@ class ToolbarController extends ControllerBase {
       $container->get('cache.render'),
       $container->get('datetime.time'),
       $container->get('request_stack'),
-      $container->get('plugin.cache_clearer')
+      $container->get('plugin.cache_clearer'),
+      $container->get('cache.menu')
     );
   }
 
@@ -199,7 +211,7 @@ class ToolbarController extends ControllerBase {
    * Clears all cached menu data.
    */
   public function flushMenu() {
-    menu_cache_clear_all();
+    $this->cacheMenu->invalidateAll();
     $this->menuLinkManager->rebuild();
     $this->contextualLinkManager->clearCachedDefinitions();
     $this->localTaskLinkManager->clearCachedDefinitions();
