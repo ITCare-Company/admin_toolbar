@@ -2,6 +2,12 @@ Admin Toolbar 8.x-1.27, 2019-XX-XX
 ----------------------------------
 Changes since 8.x-1.26:
 
+- #2986082 by oknate, Bobík, adriancid: Add search for menu items.
+- #3026337 by thalles, mpp, adriancid, Gábor Hojtsy: Config labels are not
+  properly translated
+- #3027542 by i-trokhanenko, adriancid, thalles: menu_cache_clear_all is
+  deprecated.
+- #3003678 by adriancid, romainj: New method to invalidate twig templates.
 - #3031310 by akshay_d, abhisekmazumdar, adriancid: Replace deprecated method
   assertRaw.
 - #3031107 by adriancid: Update the CHANGELOG.txt.
