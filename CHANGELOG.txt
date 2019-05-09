@@ -2,6 +2,8 @@ Admin Toolbar 8.x-1.27, 2019-XX-XX
 ----------------------------------
 Changes since 8.x-1.26:
 
+- #3026216 by adriancid, oknate, sunlix, joachim: Add media link to content
+  menu in toolbar.
 - #3051676 by Amsteri, rollingnet, adriancid: Menu items with no link miss of
   CSS.
 - #3026302 by idebr, adriancid: Admin toolbar icon width/height changes for
