@@ -636,6 +636,15 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
   // If module Media enabled.
   if ($moduleHandler->moduleExists('media')) {
+      // Displays media link in toolbar.
+      $links['admin_toolbar_tools.media_page'] = [
+          'title' => t('Media'),
+          'provider' => 'admin_toolbar_tools',
+          'route_name' => 'entity.media.collection',
+          'menu_name' => 'admin',
+          'parent' => 'system.admin_content',
+      ];
+
     $links['admin_toolbar_tools.add_media'] = [
       'title' => t('Add media'),
       'provider' => 'admin_toolbar_tools',
