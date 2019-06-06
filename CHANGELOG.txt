@@ -1,10 +1,3 @@
-Admin Toolbar 8.x-1.28, 2019-XX-XX
-----------------------------------
-Changes since 8.x-1.27:
-
-- #3056856 by jigarius, jurgenhaas, adriancid, oknate, eme: Create a keyboard
-  shortcut to toggle access the search functionality.
-
 Admin Toolbar 8.x-1.27, 2019-05-22
 ----------------------------------
 Changes since 8.x-1.26:

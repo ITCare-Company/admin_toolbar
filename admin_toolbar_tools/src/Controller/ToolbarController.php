@@ -14,7 +14,6 @@ use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\Core\PhpStorage\PhpStorageFactory;
 use Drupal\Core\Template\TwigEnvironment;
 
 /**
