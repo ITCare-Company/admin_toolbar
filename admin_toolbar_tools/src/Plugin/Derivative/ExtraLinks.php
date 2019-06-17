@@ -94,9 +94,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       $content_entity_bundle = $entities['content_entity_bundle'];
       $content_entity = $entities['content_entity'];
       // We do not display more than 10 different bundles per entity type.
-      $bundles = $this->entityTypeManager->getStorage($content_entity_bundle)->loadMultiple();
-      if (count($bundles) > self::MAX_BUNDLE_NUMBER) {
-        $bundles = array_slice($bundles, 0, self::MAX_BUNDLE_NUMBER);
+      $content_entity_bundle_storage = $this->entityTypeManager->getStorage($content_entity_bundle);
+      $bundles_ids = $content_entity_bundle_storage->getQuery()->pager(self::MAX_BUNDLE_NUMBER)->execute();
+      $bundles = $this->entityTypeManager->getStorage($content_entity_bundle)->loadMultiple($bundles_ids);
+      if (count($bundles) == self::MAX_BUNDLE_NUMBER) {
         $links[$content_entity_bundle . '.collection'] = [
           'title' => $this->t('All types'),
           'route_name' => 'entity.' . $content_entity_bundle . '.collection',
