@@ -5,6 +5,8 @@ Changes since 8.x-1.27:
 - #3061853 by romainj, adriancid: Do not load more than 10 bundles per entity
   type.
 - #3061832 by romainj, adriancid: Missing required keys (core).
+- #3056856 by jigarius, jurgenhaas, adriancid, oknate, eme: Create a keyboard
+  shortcut to toggle access the search functionality.
 
 Admin Toolbar 8.x-1.27, 2019-05-22
 ----------------------------------
