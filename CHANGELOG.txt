@@ -1,3 +1,9 @@
+Admin Toolbar 8.x-2.0, 2019-XX-XX
+---------------------------------
+Changes since 8.x-1.27:
+
+- #3061832 by romainj, adriancid: Missing required keys (core).
+
 Admin Toolbar 8.x-1.27, 2019-05-22
 ----------------------------------
 Changes since 8.x-1.26:
