@@ -315,10 +315,22 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'title' => $this->t('Add menu'),
         'route_name' => 'entity.menu.add_form',
         'parent' => 'entity.menu.collection',
-        'weight' => -50,
+        'weight' => -2,
       ] + $base_plugin_definition;
       // Adds links to /admin/structure/menu.
-      foreach ($this->entityTypeManager->getStorage('menu')->loadMultiple() as $menu_id => $menu) {
+      // We do not display more than 10 different menus.
+      $menu_ids = $this->entityTypeManager->getStorage('menu')->getQuery()->pager(self::MAX_BUNDLE_NUMBER)->execute();
+      $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple($menu_ids);
+      if (count($menus) == self::MAX_BUNDLE_NUMBER) {
+        $menus = array_slice($menus, 0, self::MAX_BUNDLE_NUMBER);
+        $links['entity.menu.collection'] = [
+            'title' => $this->t('All menus'),
+            'route_name' => 'entity.menu.collection',
+            'parent' => 'entity.menu.collection',
+            'weight' => -1
+          ] + $base_plugin_definition;
+      }
+      foreach ($menus as $menu_id => $menu) {
         $links['entity.menu.edit_form.' . $menu_id] = [
           'title' => $menu->label(),
           'route_name' => 'entity.menu.edit_form',
