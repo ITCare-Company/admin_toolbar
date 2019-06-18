@@ -17,6 +17,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 function admin_toolbar_toolbar_alter(&$items) {
   $items['administration']['tray']['toolbar_administration']['#pre_render'] = ['admin_toolbar_prerender_toolbar_administration_tray'];
   $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
+  $admin_toolbar_tools = \Drupal::service('module_handler')
+    ->moduleExists('admin_toolbar_tools');
   $items['administration_search'] = [
     "#type" => "toolbar_item",
     'tab' => [
@@ -43,6 +45,11 @@ function admin_toolbar_toolbar_alter(&$items) {
     '#attached' => [
       'library' => [
         'admin_toolbar/search',
+      ],
+      'drupalSettings' => [
+        'adminToolbarSearch' => [
+          'loadExtraLinks' => $admin_toolbar_tools,
+        ],
       ],
     ],
     '#wrapper_attributes' => [

@@ -8,6 +8,10 @@
   'use strict';
 
   Drupal.behaviors.adminToolbarSearch = {
+
+    // If extra links have been fetched.
+    extraFetched: false,
+
     attach: function (context) {
       if (context != document) {
         return;
@@ -32,12 +36,29 @@
         minLength: 2,
         source: function (request, response) {
           var data = $self.handleAutocomplete(request.term);
-          response(data);
+          if (!$self.extraFetched && drupalSettings.adminToolbarSearch.loadExtraLinks) {
+            $.getJSON( "/admin/admin-toolbar-search", function( data ) {
+              $(data).each(function() {
+                var item = this;
+                item.label = this.labelRaw + ' ' + this.value;
+                $self.links.push(item);
+              });
+
+              $self.extraFetched = true;
+
+              var results = $self.handleAutocomplete(request.term);
+              response(results);
+            });
+          }
+          else {
+            response(data);
+          }
         },
         open: function () {
           var zIndex = $('#toolbar-item-administration-search-tray')
             .css("z-index") + 1;
           $(this).autocomplete('widget').css('z-index', zIndex);
+
           return false;
         },
         select: function (event, ui) {
