@@ -36,6 +36,7 @@ function admin_toolbar_toolbar_alter(&$items) {
         '#size' => 60,
         '#attributes' => [
           'id' => 'admin-toolbar-search-input',
+          'aria-labelledby' => 'toolbar-item-administration-search',
         ],
       ],
     ],
