@@ -2,6 +2,8 @@ Admin Toolbar 8.x-2.0, 2019-XX-XX
 ---------------------------------
 Changes since 8.x-1.27:
 
+- #3062611 by oknate, adriancid: Search link selector can result in duplicate
+  results.
 - #3062346 by oknate, adriancid: Restore in search feature bundles and menus
   removed for performance reasons.
 - #3062148 by lhridley, oknate, adriancid: Search element is not accessible.

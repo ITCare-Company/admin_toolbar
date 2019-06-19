@@ -21,7 +21,7 @@
       var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
       var $self = this;
       this.links = [];
-      $('a[data-drupal-link-system-path]').each(function () {
+      $('.toolbar-tray a[data-drupal-link-system-path]').each(function () {
         if (this.href != baseUrl) {
           var label = $self.getItemLabel(this);
           $self.links.push({
