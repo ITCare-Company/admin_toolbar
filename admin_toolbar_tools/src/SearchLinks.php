@@ -83,6 +83,7 @@ class SearchLinks {
     }
 
     $links = [];
+    $cache_tags = [];
 
     $entity_types = $this->entityTypeManager->getDefinitions();
     $content_entities = [];
@@ -107,6 +108,7 @@ class SearchLinks {
           ->getStorage($content_entity_bundle)
           ->loadMultiple($bundles_ids);
         foreach ($bundles as $machine_name => $bundle) {
+          $cache_tags = Cache::mergeTags($cache_tags, $bundle->getEntityType()->getListCacheTags());
           $tparams = [
             '@entity_type' => $bundle->getEntityType()->getLabel(),
             '@bundle' => $bundle->label(),
@@ -190,6 +192,7 @@ class SearchLinks {
         ->getStorage('menu')
         ->loadMultiple($menu_ids);
 
+      $cache_tags = Cache::mergeTags($cache_tags, ['config:menu_list']);
       foreach ($menus as $menu_id => $menu) {
         $route_name = 'entity.menu.edit_form';
         $params = ['menu' => $menu_id];
@@ -238,7 +241,7 @@ class SearchLinks {
       }
     }
 
-    $this->toolbarCache->set($cid, $links, Cache::PERMANENT);
+    $this->toolbarCache->set($cid, $links, Cache::PERMANENT, $cache_tags);
 
     return $links;
   }

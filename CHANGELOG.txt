@@ -2,6 +2,8 @@ Admin Toolbar 8.x-2.0, 2019-XX-XX
 ---------------------------------
 Changes since 8.x-1.27:
 
+- #3062729 by oknate, adriancid: Search Extra Links json caching: Add cache
+  tags.
 - #3062611 by oknate, adriancid: Search link selector can result in duplicate
   results.
 - #3062346 by oknate, adriancid: Restore in search feature bundles and menus
