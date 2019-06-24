@@ -9,6 +9,7 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\system\Entity\Menu;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -319,10 +320,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       ] + $base_plugin_definition;
       // Adds links to /admin/structure/menu.
       // We do not display more than 10 different menus.
-      $menu_ids = $this->entityTypeManager->getStorage('menu')->getQuery()->pager(self::MAX_BUNDLE_NUMBER)->execute();
-      $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple($menu_ids);
+      $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
+      uasort($menus, [Menu::class, 'sort']);
+      $menus = array_slice($menus, 0, self::MAX_BUNDLE_NUMBER);
       if (count($menus) == self::MAX_BUNDLE_NUMBER) {
-        $menus = array_slice($menus, 0, self::MAX_BUNDLE_NUMBER);
         $links['entity.menu.collection'] = [
             'title' => $this->t('All menus'),
             'route_name' => 'entity.menu.collection',
@@ -330,12 +331,14 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
             'weight' => -1
           ] + $base_plugin_definition;
       }
+      $weight = 0;
       foreach ($menus as $menu_id => $menu) {
         $links['entity.menu.edit_form.' . $menu_id] = [
           'title' => $menu->label(),
           'route_name' => 'entity.menu.edit_form',
           'parent' => 'entity.menu.collection',
           'route_parameters' => ['menu' => $menu_id],
+          'weight' => $weight,
         ] + $base_plugin_definition;
         $links['entity.menu.add_link_form.' . $menu_id] = [
             'title' => $this->t('Add link'),
@@ -361,6 +364,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
             'route_parameters' => ['menu' => $menu_id],
           ] + $base_plugin_definition;
         }
+        $weight++;
       }
     }
 

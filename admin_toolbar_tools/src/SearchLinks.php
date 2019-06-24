@@ -183,14 +183,9 @@ class SearchLinks {
     // Add menu links.
     if ($this->moduleHandler->moduleExists('menu_ui')) {
 
-      $menu_ids = $this->entityTypeManager
-        ->getStorage('menu')
-        ->getQuery()
-        ->range(self::BUNDLE_OFFSET)
-        ->execute();
-      $menus = $this->entityTypeManager
-        ->getStorage('menu')
-        ->loadMultiple($menu_ids);
+      $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
+      uasort($menus, [Menu::class, 'sort']);
+      $menus = array_slice($menus, self::MAX_BUNDLE_NUMBER);
 
       $cache_tags = Cache::mergeTags($cache_tags, ['config:menu_list']);
       foreach ($menus as $menu_id => $menu) {
