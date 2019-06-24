@@ -14,8 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a default implementation for menu link plugins.
- *
- *
  */
 class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
 
@@ -103,7 +101,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'title' => $this->t('All types'),
           'route_name' => 'entity.' . $content_entity_bundle . '.collection',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
-          'weight' => -1
+          'weight' => -1,
         ] + $base_plugin_definition;
       }
       foreach ($bundles as $machine_name => $bundle) {
@@ -250,11 +248,11 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       ] + $base_plugin_definition;
       if ($role->id() != 'anonymous' && $role->id() != 'authenticated') {
         $links['entity.user_role.delete_form.' . $role->id()] = [
-            'title' => $this->t('Delete'),
-            'route_name' => 'entity.user_role.delete_form',
-            'parent' => $base_plugin_definition['id'] . ':entity.user_role.edit_form.' . $role->id(),
-            'route_parameters' => ['user_role' => $role->id()],
-          ] + $base_plugin_definition;
+          'title' => $this->t('Delete'),
+          'route_name' => 'entity.user_role.delete_form',
+          'parent' => $base_plugin_definition['id'] . ':entity.user_role.edit_form.' . $role->id(),
+          'route_parameters' => ['user_role' => $role->id()],
+        ] + $base_plugin_definition;
       }
       if ($this->moduleHandler->moduleExists('devel')) {
         $links['entity.user_role.devel_load.' . $role->id()] = [
@@ -271,12 +269,12 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'title' => $this->t('Add content type'),
         'route_name' => 'node.type_add',
         'parent' => 'entity.node_type.collection',
-        'weight' => -2
+        'weight' => -2,
       ] + $base_plugin_definition;
       $links['node.add'] = [
-          'title' => $this->t('Add content'),
-          'route_name' => 'node.add_page',
-          'parent' => 'system.admin_content',
+        'title' => $this->t('Add content'),
+        'route_name' => 'node.add_page',
+        'parent' => 'system.admin_content',
       ] + $base_plugin_definition;
       // Adds node links for each content type.
       foreach ($this->entityTypeManager->getStorage('node_type')->loadMultiple() as $type) {
@@ -325,11 +323,11 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       $menus = array_slice($menus, 0, self::MAX_BUNDLE_NUMBER);
       if (count($menus) == self::MAX_BUNDLE_NUMBER) {
         $links['entity.menu.collection'] = [
-            'title' => $this->t('All menus'),
-            'route_name' => 'entity.menu.collection',
-            'parent' => 'entity.menu.collection',
-            'weight' => -1
-          ] + $base_plugin_definition;
+          'title' => $this->t('All menus'),
+          'route_name' => 'entity.menu.collection',
+          'parent' => 'entity.menu.collection',
+          'weight' => -1,
+        ] + $base_plugin_definition;
       }
       $weight = 0;
       foreach ($menus as $menu_id => $menu) {
@@ -341,20 +339,20 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'weight' => $weight,
         ] + $base_plugin_definition;
         $links['entity.menu.add_link_form.' . $menu_id] = [
-            'title' => $this->t('Add link'),
-            'route_name' => 'entity.menu.add_link_form',
-            'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
-            'route_parameters' => ['menu' => $menu_id],
-          ] + $base_plugin_definition;
+          'title' => $this->t('Add link'),
+          'route_name' => 'entity.menu.add_link_form',
+          'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
+          'route_parameters' => ['menu' => $menu_id],
+        ] + $base_plugin_definition;
         // Un-deletable menus.
         $menus = ['admin', 'devel', 'footer', 'main', 'tools', 'account'];
         if (!in_array($menu_id, $menus)) {
           $links['entity.menu.delete_form.' . $menu_id] = [
-              'title' => $this->t('Delete'),
-              'route_name' => 'entity.menu.delete_form',
-              'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
-              'route_parameters' => ['menu' => $menu_id],
-            ] + $base_plugin_definition;
+            'title' => $this->t('Delete'),
+            'route_name' => 'entity.menu.delete_form',
+            'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
+            'route_parameters' => ['menu' => $menu_id],
+          ] + $base_plugin_definition;
         }
         if ($this->moduleHandler->moduleExists('devel') && $this->routeExists('entity.menu.devel_load')) {
           $links['entity.menu.devel_load.' . $menu_id] = [
@@ -405,19 +403,19 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'parent' => 'system.modules_list',
       ] + $base_plugin_definition;
       $links['update.module_update'] = [
-          'title' => $this->t('Update'),
-          'route_name' => 'update.module_update',
-          'parent' => 'system.modules_list',
+        'title' => $this->t('Update'),
+        'route_name' => 'update.module_update',
+        'parent' => 'system.modules_list',
       ] + $base_plugin_definition;
       $links['update.theme_install'] = [
-          'title' => $this->t('Install new theme'),
-          'route_name' => 'update.theme_install',
-          'parent' => 'system.themes_page',
+        'title' => $this->t('Install new theme'),
+        'route_name' => 'update.theme_install',
+        'parent' => 'system.themes_page',
       ] + $base_plugin_definition;
       $links['update.theme_update'] = [
-          'title' => $this->t('Update'),
-          'route_name' => 'update.theme_update',
-          'parent' => 'system.themes_page',
+        'title' => $this->t('Update'),
+        'route_name' => 'update.theme_update',
+        'parent' => 'system.themes_page',
       ] + $base_plugin_definition;
     }
 
@@ -482,18 +480,18 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       ] + $base_plugin_definition;
       if ($this->moduleHandler->moduleExists('webprofiler')) {
         $links['devel.webprofiler'] = [
-            'title' => $this->t('Webprofiler settings'),
-            'route_name' => 'webprofiler.settings',
-            'parent' => $base_plugin_definition['id'] . ':devel',
+          'title' => $this->t('Webprofiler settings'),
+          'route_name' => 'webprofiler.settings',
+          'parent' => $base_plugin_definition['id'] . ':devel',
         ] + $base_plugin_definition;
       }
       // If module Devel PHP is enabled.
       if ($this->moduleHandler->moduleExists('devel_php') && $this->routeExists('devel_php.execute_php')) {
         $links['devel.devel_php.execute_php'] = [
-            'title' => $this->t('Execute PHP Code'),
-            'route_name' => 'devel_php.execute_php',
-            'parent' => $base_plugin_definition['id'] . ':devel',
-          ] + $base_plugin_definition;
+          'title' => $this->t('Execute PHP Code'),
+          'route_name' => 'devel_php.execute_php',
+          'parent' => $base_plugin_definition['id'] . ':devel',
+        ] + $base_plugin_definition;
       }
     }
 
@@ -521,10 +519,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
     $installed_themes = $this->installedThemes();
     foreach ($installed_themes as $key_theme => $label_theme) {
       $links['system.theme_settings_theme.' . $key_theme] = [
-          'title' => $label_theme,
-          'route_name' => 'system.theme_settings_theme',
-          'parent' => $base_plugin_definition['id'] . ':system.theme_settings',
-          'route_parameters' => ['theme' => $key_theme],
+        'title' => $label_theme,
+        'route_name' => 'system.theme_settings_theme',
+        'parent' => $base_plugin_definition['id'] . ':system.theme_settings',
+        'route_parameters' => ['theme' => $key_theme],
       ] + $base_plugin_definition;
     }
 
@@ -536,10 +534,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'parent' => 'entity.configurable_language.collection',
       ] + $base_plugin_definition;
       $links['language.add'] = [
-          'title' => $this->t('Add language'),
-          'route_name' => 'language.add',
-          'parent' => 'entity.configurable_language.collection',
-        ] + $base_plugin_definition;
+        'title' => $this->t('Add language'),
+        'route_name' => 'language.add',
+        'parent' => 'entity.configurable_language.collection',
+      ] + $base_plugin_definition;
     }
 
     // If module Media enabled.
@@ -548,7 +546,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'title' => $this->t('Add media type'),
         'route_name' => 'entity.media_type.add_form',
         'parent' => 'entity.media_type.collection',
-        'weight' => -2
+        'weight' => -2,
       ] + $base_plugin_definition;
       // Displays media link in toolbar.
       $links['media_page'] = [
@@ -591,17 +589,17 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
     // Adds a menu link to clear Views cache.
     if ($this->moduleHandler->moduleExists('views')) {
       $links['flush_views'] = [
-          'title' => $this->t('Flush views cache'),
-          'route_name' => 'admin_toolbar_tools.flush_views',
-          'parent' => 'admin_toolbar_tools.flush',
-        ] + $base_plugin_definition;
+        'title' => $this->t('Flush views cache'),
+        'route_name' => 'admin_toolbar_tools.flush_views',
+        'parent' => 'admin_toolbar_tools.flush',
+      ] + $base_plugin_definition;
       // Adding a menu link to Files.
       if ($this->moduleHandler->moduleExists('file') && $this->routeExists('view.files.page_1')) {
         $links['view.files'] = [
-            'title' => $this->t('Files'),
-            'route_name' => 'view.files.page_1',
-            'parent' => 'system.admin_content',
-          ] + $base_plugin_definition;
+          'title' => $this->t('Files'),
+          'route_name' => 'view.files.page_1',
+          'parent' => 'system.admin_content',
+        ] + $base_plugin_definition;
       }
     }
 
