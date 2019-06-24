@@ -68,7 +68,13 @@ class SearchLinks {
   }
 
   /**
-   * {@inheritdoc}
+   * Get extra links for admin toolbar search feature.
+   *
+   * @return array
+   *   An array of link data.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function getLinks() {
     $additional_keys = $this->cacheContextManager->convertTokensToKeys([
@@ -84,17 +90,7 @@ class SearchLinks {
 
     $links = [];
     $cache_tags = [];
-
-    $entity_types = $this->entityTypeManager->getDefinitions();
-    $content_entities = [];
-    foreach ($entity_types as $key => $entity_type) {
-      if ($entity_type->getBundleEntityType() && ($entity_type->get('field_ui_base_route') != '')) {
-        $content_entities[$key] = [
-          'content_entity' => $key,
-          'content_entity_bundle' => $entity_type->getBundleEntityType(),
-        ];
-      }
-    }
+    $content_entities = $this->getBundleableEntitiesList();
 
     // Adds common links to entities.
     foreach ($content_entities as $entities) {
@@ -116,7 +112,8 @@ class SearchLinks {
           $label_base = $this->t('@entity_type > @bundle', $tparams);
           $params = [$content_entity_bundle => $machine_name];
           if ($this->routeExists('entity.' . $content_entity_bundle . '.overview_form')) {
-            // Some bundles have an overview/list form that make a better root link.
+            // Some bundles have an overview/list form that make a better root
+            // link.
             $url = Url::fromRoute('entity.' . $content_entity_bundle . '.overview_form', $params);
             $url_string = $url->toString();
             $links[] = [
@@ -242,9 +239,42 @@ class SearchLinks {
   }
 
   /**
+   * Get a list of content entities.
+   *
+   * @return array
+   *   An array of metadata about content entities.
+   */
+  protected function getBundleableEntitiesList() {
+    $entity_types = $this->entityTypeManager->getDefinitions();
+    $content_entities = [];
+    foreach ($entity_types as $key => $entity_type) {
+      if ($entity_type->getBundleEntityType() && ($entity_type->get('field_ui_base_route') != '')) {
+        $content_entities[$key] = [
+          'content_entity' => $key,
+          'content_entity_bundle' => $entity_type->getBundleEntityType(),
+        ];
+      }
+    }
+    return $content_entities;
+  }
+
+  /**
+   * Get an array of entity types that should trigger a menu rebuild.
+   *
+   * @return array
+   *   An array of entity machine names.
+   */
+  public function getRebuildEntityTypes() {
+    $types = ['menu'];
+    $content_entities = $this->getBundleableEntitiesList();
+    $types = array_merge($types, array_column($content_entities, 'content_entity_bundle'));
+    return $types;
+  }
+
+  /**
    * Determine if a route exists by name.
    *
-   * @param $route_name
+   * @param string $route_name
    *   The name of the route to check.
    *
    * @return bool

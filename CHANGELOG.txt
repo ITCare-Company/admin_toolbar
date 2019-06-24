@@ -2,6 +2,8 @@ Admin Toolbar 8.x-2.0, 2019-XX-XX
 ---------------------------------
 Changes since 8.x-1.27:
 
+- #3063356 by oknate, adriancid: Admin toolbar doesn't update when menus or
+  bundles change
 - #3063502 by oknate, adriancid: Fix coding standard issues.
 - #3062573 by oknate, adriancid: The menus are sorted by machine name and not by
   label.

@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_toolbar().
@@ -40,5 +41,35 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<p>' . t('To use Admin Toolbar Extra Tools just install it like any other module. There is no other configuration required.') . '</p>';
       return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function admin_toolbar_tools_entity_insert(EntityInterface $entity) {
+  $entities = \Drupal::service('admin_toolbar_tools.search_links')->getRebuildEntityTypes();
+  if (in_array($entity->getEntityTypeId(), $entities)) {
+    \Drupal::service('plugin.manager.menu.link')->rebuild();
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function admin_toolbar_tools_entity_update(EntityInterface $entity) {
+  $entities = \Drupal::service('admin_toolbar_tools.search_links')->getRebuildEntityTypes();
+  if (in_array($entity->getEntityTypeId(), $entities)) {
+    \Drupal::service('plugin.manager.menu.link')->rebuild();
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function admin_toolbar_tools_entity_delete(EntityInterface $entity) {
+  $entities = \Drupal::service('admin_toolbar_tools.search_links')->getRebuildEntityTypes();
+  if (in_array($entity->getEntityTypeId(), $entities)) {
+    \Drupal::service('plugin.manager.menu.link')->rebuild();
   }
 }

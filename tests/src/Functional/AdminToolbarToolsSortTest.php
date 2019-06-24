@@ -2,15 +2,16 @@
 
 namespace Drupal\Tests\admin_toolbar\Functional;
 
+use Drupal\media\Entity\MediaType;
 use Drupal\system\Entity\Menu;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test Admin Toolbar Extra Tools module.
+ * Tests Admin Toolbar tools functionality.
  *
  * @group admin_toolbar
  */
-class AdminToolbarToolsSortTest extends BrowserTestBase {
+class AdminToolbarToolsTest extends BrowserTestBase {
 
   /**
    * Modules to enable.
@@ -20,9 +21,11 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
   protected static $modules = [
     'toolbar',
     'breakpoint',
-    'menu_ui',
     'admin_toolbar',
     'admin_toolbar_tools',
+    'menu_ui',
+    'media',
+    'field_ui',
   ];
 
   /**
@@ -37,6 +40,78 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
    */
   protected function setUp() {
     parent::setUp();
+  }
+
+  /**
+   * Tests that menu updates on entity add/update/delete.
+   */
+  public function testMenuUpdate() {
+
+    // Create and log in an administrative user.
+    $this->adminUser = $this->drupalCreateUser([
+      'access toolbar',
+      'access administration pages',
+      'administer site configuration',
+      'administer menu',
+      'access media overview',
+      'administer media',
+      'administer media fields',
+      'administer media form display',
+      'administer media display',
+      'administer media types',
+    ]);
+    $this->drupalLogin($this->adminUser);
+
+    $menu = Menu::create([
+      'id' => 'armadillo',
+      'label' => 'Armadillo',
+    ]);
+    $menu->save();
+
+    $this->container->get('plugin.manager.menu.link')->rebuild();
+    $this->drupalGet('/admin');
+
+    // Assert that special menu items are present in the HTML.
+    $this->assertSession()->responseContains('class="toolbar-icon toolbar-icon-admin-toolbar-tools-flush"');
+
+    // Assert that adding a media type adds it to the admin toolbar.
+    $chinchilla_media_type = MediaType::create([
+      'id' => 'chinchilla',
+      'label' => 'Chinchilla',
+      'source' => 'image',
+    ]);
+    $chinchilla_media_type->save();
+    $this->drupalGet('/admin');
+    $this->assertMenuHasHref('/admin/structure/media/manage/chinchilla');
+
+    // Assert that adding a menu adds it to the admin toolbar.
+    $menu = Menu::create([
+      'id' => 'chupacabra',
+      'label' => 'Chupacabra',
+    ]);
+    $menu->save();
+    $this->drupalGet('/admin');
+    $this->assertMenuHasHref('/admin/structure/menu/manage/chupacabra');
+
+    // Assert that deleting a menu removes it from the admin toolbar.
+    $this->assertMenuHasHref('/admin/structure/menu/manage/armadillo');
+    $menu = Menu::load('armadillo');
+    $menu->delete();
+    $this->drupalGet('/admin');
+    $this->assertMenuDoesNotHaveHref('/admin/structure/menu/manage/armadillo');
+
+    // Assert that deleting a content entity bundle removes it from admin menu.
+    $this->assertMenuHasHref('/admin/structure/media/manage/chinchilla');
+    $chinchilla_media_type = MediaType::load('chinchilla');
+    $chinchilla_media_type->delete();
+    $this->drupalGet('/admin');
+    $this->assertMenuDoesNotHaveHref('/admin/structure/media/manage/chinchilla');
+  }
+
+  /**
+   * Tests sorting of menus by label rather than machine name.
+   */
+  public function testMenuSorting() {
 
     // Create and log in an administrative user.
     $this->adminUser = $this->drupalCreateUser([
@@ -69,14 +144,7 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
       $menu->save();
     }
 
-
     $this->drupalLogin($this->adminUser);
-  }
-
-  /**
-   * Tests sorting of menus by label rather than machine name.
-   */
-  public function testMenuSorting() {
 
     $this->container->get('plugin.manager.menu.link')->rebuild();
     $this->drupalGet('/admin');
@@ -123,6 +191,32 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
       // Using assert contains because prefaces the urls with "/subdirectory".
       $this->assertContains($expected[$key], $link);
     }
+  }
+
+  /**
+   * Checks that there is a link with the specified url in the admin toolbar.
+   *
+   * @param string $url
+   *   The url to assert exists in the admin menu.
+   *
+   * @throws \Behat\Mink\Exception\ElementNotFoundException
+   */
+  protected function assertMenuHasHref($url) {
+    $this->assertSession()
+      ->elementExists('xpath', '//div[@id="toolbar-item-administration-tray"]//a[contains(@href, "' . $url . '")]');
+  }
+
+  /**
+   * Checks that there is no link with the specified url in the admin toolbar.
+   *
+   * @param string $url
+   *   The url to assert exists in the admin menu.
+   *
+   * @throws \Behat\Mink\Exception\ExpectationException
+   */
+  protected function assertMenuDoesNotHaveHref($url) {
+    $this->assertSession()
+      ->elementNotExists('xpath', '//div[@id="toolbar-item-administration-tray"]//a[contains(@href, "' . $url . '")]');
   }
 
 }
