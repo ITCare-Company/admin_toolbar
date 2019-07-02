@@ -2,6 +2,7 @@
 
 namespace Drupal\admin_toolbar_tools;
 
+use Drupal\admin_toolbar_tools\Plugin\Derivative\ExtraLinks;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Cache\Context\CacheContextsManager;
@@ -11,6 +12,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\system\Entity\Menu;
 
 /**
  * Extra search links.
@@ -18,8 +20,6 @@ use Drupal\Core\Url;
 class SearchLinks {
 
   use StringTranslationTrait;
-
-  const BUNDLE_OFFSET = 10;
 
   /**
    * The entity type manager.
@@ -98,7 +98,7 @@ class SearchLinks {
       $content_entity = $entities['content_entity'];
       // Start at offset 10, since the toolbar has already loaded the first 10.
       $content_entity_bundle_storage = $this->entityTypeManager->getStorage($content_entity_bundle);
-      $bundles_ids = $content_entity_bundle_storage->getQuery()->range(self::BUNDLE_OFFSET)->execute();
+      $bundles_ids = $content_entity_bundle_storage->getQuery()->range(ExtraLinks::MAX_BUNDLE_NUMBER)->execute();
       if (!empty($bundles_ids)) {
         $bundles = $this->entityTypeManager
           ->getStorage($content_entity_bundle)
@@ -182,7 +182,7 @@ class SearchLinks {
 
       $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
       uasort($menus, [Menu::class, 'sort']);
-      $menus = array_slice($menus, self::MAX_BUNDLE_NUMBER);
+      $menus = array_slice($menus, ExtraLinks::MAX_BUNDLE_NUMBER);
 
       $cache_tags = Cache::mergeTags($cache_tags, ['config:menu_list']);
       foreach ($menus as $menu_id => $menu) {

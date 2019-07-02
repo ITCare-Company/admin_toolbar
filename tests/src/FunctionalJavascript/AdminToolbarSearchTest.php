@@ -4,6 +4,7 @@ namespace Drupal\Tests\admin_toolbar\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\media\Entity\MediaType;
+use Drupal\system\Entity\Menu;
 use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 
 /**
@@ -24,6 +25,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     'node',
     'media',
     'field_ui',
+    'menu_ui',
     'block',
   ];
 
@@ -33,6 +35,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
    * @var \Drupal\user\UserInterface
    */
   protected $adminUser;
+
 
   /**
    * {@inheritdoc}
@@ -75,6 +78,44 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
       ]);
     }
 
+    $baby_names = [
+      'ada' => 'Ada',
+      'amara' => 'Amara',
+      'amelia' => 'Amelia',
+      'arabella' => 'Arabella',
+      'asher' => 'Asher',
+      'astrid' => 'Astrid',
+      'atticus' => 'Atticus',
+      'aurora' => 'Aurora',
+      'ava' => 'Ava',
+      'cora' => 'Cora',
+      'eleanor' => 'Eleanor',
+      'eloise' => 'Eloise',
+      'felix' => 'Felix',
+      'freya' => 'Freya',
+      'genevieve' => 'Genevieve',
+      'isla' => 'Isla',
+      'jasper' => 'Jasper',
+      'luna' => 'Luna',
+      'maeve' => 'Maeve',
+      'milo' => 'Milo',
+      'nora' => 'Nora',
+      'olivia' => 'Olivia',
+      'ophelia' => 'Ophelia',
+      'posie' => 'Posie',
+      'rose' => 'Rose',
+      'silas' => 'Silas',
+      'soren' => 'Soren',
+    ];
+
+    foreach ($baby_names as $id => $label) {
+      $menu = Menu::create([
+        'id' => $id,
+        'label' => $label,
+      ]);
+      $menu->save();
+    }
+
     $this->drupalPlaceBlock('local_tasks_block');
 
     $this->adminUser = $this->drupalCreateUser([
@@ -111,6 +152,60 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
 
     // Rebuild menu items.
     drupal_flush_all_caches();
+
+    // Test that the route admin_toolbar.search returns expected json.
+    $this->drupalGet('/admin/admin-toolbar-search');
+
+    $search_menus = [
+      'cora',
+      'eleanor',
+      'eloise',
+      'felix',
+      'freya',
+      'genevieve',
+      'isla',
+      'jasper',
+      'luna',
+      'maeve',
+      'milo',
+      'nora',
+      'olivia',
+      'ophelia',
+      'posie',
+      'rose',
+      'silas',
+      'soren',
+    ];
+
+    $toolbar_menus = [
+      'ada',
+      'amara',
+      'amelia',
+      'arabella',
+      'asher',
+      'astrid',
+      'atticus',
+      'aurora',
+      'ava',
+    ];
+
+    foreach ($search_menus as $menu_id) {
+      $this->assertSession()->responseContains('\/admin\/structure\/menu\/manage\/' . $menu_id);
+    }
+
+    foreach ($toolbar_menus as $menu_id) {
+      $this->assertSession()->responseNotContains('\/admin\/structure\/menu\/manage\/' . $menu_id);
+    }
+
+    $this->drupalGet('/admin');
+
+    foreach ($search_menus as $menu_id) {
+      $this->assertMenuDoesNotHaveHref('/admin/structure/menu/manage/' . $menu_id);
+    }
+
+    foreach ($toolbar_menus as $menu_id) {
+      $this->assertMenuHasHref('/admin/structure/menu/manage/' . $menu_id);
+    }
 
     $this->drupalGet('admin/structure/types/manage/article/fields');
     $this->assertSession()->waitForElementVisible('css', $search_tray);
@@ -154,6 +249,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     $this->getSession()->reload();
     $this->assertSession()->waitForElementVisible('css', $search_tray);
     $this->assertSuggestionNotContains('toby', $toby_url);
+
   }
 
   /**
@@ -209,6 +305,32 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === FALSE);
     });
+  }
+
+  /**
+   * Checks that there is a link with the specified url in the admin toolbar.
+   *
+   * @param string $url
+   *   The url to assert exists in the admin menu.
+   *
+   * @throws \Behat\Mink\Exception\ElementNotFoundException
+   */
+  protected function assertMenuHasHref($url) {
+    $this->assertSession()
+      ->elementExists('xpath', '//div[@id="toolbar-item-administration-tray"]//a[contains(@href, "' . $url . '")]');
+  }
+
+  /**
+   * Checks that there is no link with the specified url in the admin toolbar.
+   *
+   * @param string $url
+   *   The url to assert exists in the admin menu.
+   *
+   * @throws \Behat\Mink\Exception\ExpectationException
+   */
+  protected function assertMenuDoesNotHaveHref($url) {
+    $this->assertSession()
+      ->elementNotExists('xpath', '//div[@id="toolbar-item-administration-tray"]//a[contains(@href, "' . $url . '")]');
   }
 
 }

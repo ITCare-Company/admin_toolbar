@@ -2,6 +2,7 @@ Admin Toolbar 8.x-2.0, 2019-XX-XX
 ---------------------------------
 Changes since 8.x-1.27:
 
+- #3065013 by oknate, adriancid:  Undefined class constant 'MAX_BUNDLE_NUMBER'.
 - #3063356 by oknate, adriancid: Admin toolbar doesn't update when menus or
   bundles change
 - #3063502 by oknate, adriancid: Fix coding standard issues.
