@@ -1,4 +1,4 @@
-Admin Toolbar 8.x-2.0, 2019-XX-XX
+Admin Toolbar 8.x-2.0, 2019-07-04
 ---------------------------------
 Changes since 8.x-1.27:
 
