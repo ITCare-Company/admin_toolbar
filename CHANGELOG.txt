@@ -1,5 +1,5 @@
-Admin Toolbar 8.x-2.0, 2019-07-04
----------------------------------
+Admin Toolbar 8.x-2.0-beta1, 2019-07-04
+---------------------------------------
 Changes since 8.x-1.27:
 
 - #3065013 by oknate, adriancid:  Undefined class constant 'MAX_BUNDLE_NUMBER'.
