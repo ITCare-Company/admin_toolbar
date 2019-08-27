@@ -2,6 +2,8 @@ Admin Toolbar 8.x-2.0-XXXXX, 2019-XX-XX
 ---------------------------------------
 Changes since 8.x-2.0-beta1:
 
+- #3077435 by super_romeo, adriancid: Final curly brace missin in the
+  admin_toolbar_links_access_filter_filter_non_accessible_links function.
 - #3026731 by Al Munnings, romainj, idebr, adriancid: The implementation of the
   template_preprocess_admin_block_content hook is not needed.
 

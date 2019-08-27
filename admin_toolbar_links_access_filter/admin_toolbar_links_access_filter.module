@@ -74,7 +74,8 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
     }
 
     // Check, if user has access rights to the route.
-    if (!\Drupal::accessManager()->checkNamedRoute($route_name, $route_params)) {
+    if (!\Drupal::accessManager()
+      ->checkNamedRoute($route_name, $route_params)) {
       unset($items[$route]);
     }
     else {
@@ -82,7 +83,8 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
         // Recursively call this function for the child items.
         admin_toolbar_links_access_filter_filter_non_accessible_links($items[$route]['below']);
       }
-      if (empty($items[$route]['below']) && \Drupal::moduleHandler()->moduleExists('admin_toolbar')) {
+      if (empty($items[$route]['below']) && \Drupal::moduleHandler()
+          ->moduleExists('admin_toolbar')) {
 
         // Every child item has been cleared out.
         // Now check, if the given route represents an overview page only,
@@ -100,6 +102,7 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
       }
     }
   }
+}
 
 /**
  * Checks if the given route name is an overview page.
