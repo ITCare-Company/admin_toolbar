@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Url;
 use Drupal\user\Entity\Role;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -84,7 +83,7 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
         admin_toolbar_links_access_filter_filter_non_accessible_links($items[$route]['below']);
       }
       if (empty($items[$route]['below']) && \Drupal::moduleHandler()
-          ->moduleExists('admin_toolbar')) {
+        ->moduleExists('admin_toolbar')) {
 
         // Every child item has been cleared out.
         // Now check, if the given route represents an overview page only,

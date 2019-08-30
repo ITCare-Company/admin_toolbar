@@ -11,7 +11,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group admin_toolbar
  */
-class AdminToolbarToolsTest extends BrowserTestBase {
+class AdminToolbarToolsSortTest extends BrowserTestBase {
 
   /**
    * Modules to enable.

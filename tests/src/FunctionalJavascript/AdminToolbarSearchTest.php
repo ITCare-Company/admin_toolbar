@@ -36,7 +36,6 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
    */
   protected $adminUser;
 
-
   /**
    * {@inheritdoc}
    */
@@ -215,7 +214,8 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     $suggestions = $this->assertSession()
       ->waitForElementVisible('css', 'ul.ui-autocomplete');
 
-    // Assert there is only one suggestion with a link to /admin/structure/types/manage/article/fields.
+    // Assert there is only one suggestion with a link to
+    // /admin/structure/types/manage/article/fields.
     $count = count($suggestions->findAll('xpath', '//span[contains(text(), "/admin/structure/types/manage/article/fields")]'));
     $this->assertEquals(1, $count);
 
@@ -253,7 +253,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
   }
 
   /**
-   * Assert that the search suggestions contain a given string with a given input.
+   * Assert that the search suggestions contain a given string with given input.
    *
    * @param string $search
    *   The string to search for.
@@ -272,7 +272,10 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
   }
 
   /**
-   * Assert that the search suggestions does not contain a given string with a given input.
+   * Assert that the search suggestions does not contain a given string.
+   *
+   * Assert that the search suggestions does not contain a given string with a
+   * given input.
    *
    * @param string $search
    *   The string to search for.

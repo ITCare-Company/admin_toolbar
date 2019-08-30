@@ -108,7 +108,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         // Normally, the edit form for the bundle would be its root link.
         $content_entity_bundle_root = NULL;
         if ($this->routeExists('entity.' . $content_entity_bundle . '.overview_form')) {
-          // Some bundles have an overview/list form that make a better root link.
+          // Some bundles have an overview/list form that make a better root
+          // link.
           $content_entity_bundle_root = 'entity.' . $content_entity_bundle . '.overview_form.' . $machine_name;
           $links[$content_entity_bundle_root] = [
             'title' => $this->t($bundle->label()),
@@ -609,7 +610,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
   /**
    * Determine if a route exists by name.
    *
-   * @param $route_name
+   * @param string $route_name
    *   The name of the route to check.
    *
    * @return bool
