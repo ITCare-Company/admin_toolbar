@@ -30,6 +30,11 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * The admin user for tests.
    *
    * @var \Drupal\user\UserInterface
@@ -264,6 +269,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     $this->resetSearch();
     $page = $this->getSession()->getPage();
     $page->fillField('admin-toolbar-search-input', $search);
+    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-input"]', ' ');
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === TRUE);
     });
@@ -286,6 +292,7 @@ class AdminToolbarSearchTest extends WebDriverTestBase {
     $this->resetSearch();
     $page = $this->getSession()->getPage();
     $page->fillField('admin-toolbar-search-input', $search);
+    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-input"]', ' ');
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === TRUE);
     });
