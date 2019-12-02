@@ -130,7 +130,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
             $content_entity_bundle_root = $key;
           }
           else {
-            $links[$key]['parent'] = $content_entity_bundle_root;
+            $links[$key]['parent'] = $base_plugin_definition['id'] . ':' . $content_entity_bundle_root;
             $links[$key]['title'] = t('Edit');
           }
         }
