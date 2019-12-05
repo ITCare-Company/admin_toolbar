@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Template\TwigEnvironment;
+use Drupal\Core\Theme\Registry;
 
 /**
  * Class ToolbarController.
@@ -110,6 +111,13 @@ class ToolbarController extends ControllerBase {
   protected $links;
 
   /**
+   * The search theme.registry service.
+   *
+   * @var \Drupal\Core\Theme\Registry
+   */
+  protected $themeRegistry;
+
+  /**
    * Constructs a ToolbarController object.
    *
    * @param \Drupal\Core\CronInterface $cron
@@ -136,19 +144,24 @@ class ToolbarController extends ControllerBase {
    *   A TwigEnvironment instance.
    * @param \Drupal\admin_toolbar_tools\SearchLinks $links
    *   The search links service.
+   * @param \Drupal\Core\Theme\Registry $theme_registry
+   *   The theme.registry service.
    */
-  public function __construct(CronInterface $cron,
-                              MenuLinkManagerInterface $menuLinkManager,
-                              ContextualLinkManagerInterface $contextualLinkManager,
-                              LocalTaskManagerInterface $localTaskLinkManager,
-                              LocalActionManagerInterface $localActionLinkManager,
-                              CacheBackendInterface $cacheRender,
-                              TimeInterface $time,
-                              RequestStack $request_stack,
-                              CachedDiscoveryClearerInterface $plugin_cache_clearer,
-                              CacheBackendInterface $cache_menu,
-                              TwigEnvironment $twig,
-                              SearchLinks $links) {
+  public function __construct(
+    CronInterface $cron,
+    MenuLinkManagerInterface $menuLinkManager,
+    ContextualLinkManagerInterface $contextualLinkManager,
+    LocalTaskManagerInterface $localTaskLinkManager,
+    LocalActionManagerInterface $localActionLinkManager,
+    CacheBackendInterface $cacheRender,
+    TimeInterface $time,
+    RequestStack $request_stack,
+    CachedDiscoveryClearerInterface $plugin_cache_clearer,
+    CacheBackendInterface $cache_menu,
+    TwigEnvironment $twig,
+    SearchLinks $links,
+    Registry $theme_registry
+  ) {
     $this->cron = $cron;
     $this->menuLinkManager = $menuLinkManager;
     $this->contextualLinkManager = $contextualLinkManager;
@@ -161,6 +174,7 @@ class ToolbarController extends ControllerBase {
     $this->cacheMenu = $cache_menu;
     $this->twig = $twig;
     $this->links = $links;
+    $this->themeRegistry = $theme_registry;
   }
 
   /**
@@ -179,7 +193,8 @@ class ToolbarController extends ControllerBase {
       $container->get('plugin.cache_clearer'),
       $container->get('cache.menu'),
       $container->get('twig'),
-      $container->get('admin_toolbar_tools.search_links')
+      $container->get('admin_toolbar_tools.search_links'),
+      $container->get('theme.registry')
     );
   }
 
@@ -287,6 +302,15 @@ class ToolbarController extends ControllerBase {
    */
   public function search() {
     return new JsonResponse($this->links->getLinks());
+  }
+
+  /**
+   * Rebuild the theme registry.
+   */
+  public function themeRebuild() {
+    $this->themeRegistry->reset();
+    $this->messenger()->addMessage($this->t('Theme registry rebuilded.'));
+    return new RedirectResponse($this->reloadPage());
   }
 
 }
