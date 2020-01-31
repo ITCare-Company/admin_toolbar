@@ -52,7 +52,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct($base_plugin_id, EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, RouteProviderInterface $route_provider, ThemeHandlerInterface $theme_handler) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, RouteProviderInterface $route_provider, ThemeHandlerInterface $theme_handler) {
     $this->entityTypeManager = $entity_type_manager;
     $this->moduleHandler = $module_handler;
     $this->routeProvider = $route_provider;
@@ -64,7 +64,6 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
     return new static(
-      $base_plugin_id,
       $container->get('entity_type.manager'),
       $container->get('module_handler'),
       $container->get('router.route_provider'),
