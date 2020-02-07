@@ -130,7 +130,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           }
           else {
             $links[$key]['parent'] = $base_plugin_definition['id'] . ':' . $content_entity_bundle_root;
-            $links[$key]['title'] = t('Edit');
+            $links[$key]['title'] = $this->t('Edit');
           }
         }
         if ($this->moduleHandler->moduleExists('field_ui')) {
@@ -190,23 +190,23 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       'parent' => 'entity.user.collection',
     ] + $base_plugin_definition;
     $links['user.admin_permissions'] = [
-      'title' => t('Permissions'),
+      'title' => $this->t('Permissions'),
       'route_name' => 'user.admin_permissions',
       'parent' => 'entity.user.collection',
     ] + $base_plugin_definition;
     $links['entity.user_role.collection'] = [
-      'title' => t('Roles'),
+      'title' => $this->t('Roles'),
       'route_name' => 'entity.user_role.collection',
       'parent' => 'entity.user.collection',
     ] + $base_plugin_definition;
     $links['user.logout'] = [
-      'title' => t('Logout'),
+      'title' => $this->t('Logout'),
       'route_name' => 'user.logout',
       'parent' => 'admin_toolbar_tools.help',
       'weight' => 10,
     ] + $base_plugin_definition;
     $links['user.role_add'] = [
-      'title' => t('Add role'),
+      'title' => $this->t('Add role'),
       'route_name' => 'user.role_add',
       'parent' => $base_plugin_definition['id'] . ':entity.user_role.collection',
       'weight' => -5,
