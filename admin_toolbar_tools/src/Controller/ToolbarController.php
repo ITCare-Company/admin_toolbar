@@ -7,9 +7,9 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\CronInterface;
-use Drupal\Core\Menu\ContextualLinkManagerInterface;
-use Drupal\Core\Menu\LocalActionManagerInterface;
-use Drupal\Core\Menu\LocalTaskManagerInterface;
+use Drupal\Core\Menu\ContextualLinkManager;
+use Drupal\Core\Menu\LocalActionManager;
+use Drupal\Core\Menu\LocalTaskManager;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -43,21 +43,21 @@ class ToolbarController extends ControllerBase {
   /**
    * A context link manager instance.
    *
-   * @var \Drupal\Core\Menu\ContextualLinkManagerInterface
+   * @var \Drupal\Core\Menu\ContextualLinkManager
    */
   protected $contextualLinkManager;
 
   /**
    * A local task manager instance.
    *
-   * @var \Drupal\Core\Menu\LocalTaskManagerInterface
+   * @var \Drupal\Core\Menu\LocalTaskManager
    */
   protected $localTaskLinkManager;
 
   /**
    * A local action manager instance.
    *
-   * @var \Drupal\Core\Menu\LocalActionManagerInterface
+   * @var \Drupal\Core\Menu\LocalActionManager
    */
   protected $localActionLinkManager;
 
@@ -124,11 +124,11 @@ class ToolbarController extends ControllerBase {
    *   A cron instance.
    * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menuLinkManager
    *   A menu link manager instance.
-   * @param \Drupal\Core\Menu\ContextualLinkManagerInterface $contextualLinkManager
+   * @param \Drupal\Core\Menu\ContextualLinkManager $contextualLinkManager
    *   A context link manager instance.
-   * @param \Drupal\Core\Menu\LocalTaskManagerInterface $localTaskLinkManager
+   * @param \Drupal\Core\Menu\LocalTaskManager $localTaskLinkManager
    *   A local task manager instance.
-   * @param \Drupal\Core\Menu\LocalActionManagerInterface $localActionLinkManager
+   * @param \Drupal\Core\Menu\LocalActionManager $localActionLinkManager
    *   A local action manager instance.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cacheRender
    *   A cache backend interface instance.
@@ -150,9 +150,9 @@ class ToolbarController extends ControllerBase {
   public function __construct(
     CronInterface $cron,
     MenuLinkManagerInterface $menuLinkManager,
-    ContextualLinkManagerInterface $contextualLinkManager,
-    LocalTaskManagerInterface $localTaskLinkManager,
-    LocalActionManagerInterface $localActionLinkManager,
+    ContextualLinkManager $contextualLinkManager,
+    LocalTaskManager $localTaskLinkManager,
+    LocalActionManager $localActionLinkManager,
     CacheBackendInterface $cacheRender,
     TimeInterface $time,
     RequestStack $request_stack,
