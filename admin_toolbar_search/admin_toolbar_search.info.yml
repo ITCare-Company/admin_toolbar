@@ -1,0 +1,9 @@
+name: Admin Toolbar Search
+description: Provides search of admin toolbar items.
+package: Administration
+
+type: module
+core: 8.x
+
+dependencies:
+  - admin_toolbar:admin_toolbar

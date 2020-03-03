@@ -2,7 +2,6 @@
 
 namespace Drupal\admin_toolbar_tools\Controller;
 
-use Drupal\admin_toolbar_tools\SearchLinks;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
@@ -13,7 +12,6 @@ use Drupal\Core\Menu\LocalTaskManager;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Template\TwigEnvironment;
@@ -104,13 +102,6 @@ class ToolbarController extends ControllerBase {
   protected $twig;
 
   /**
-   * The search links service.
-   *
-   * @var \Drupal\admin_toolbar_tools\SearchLinks
-   */
-  protected $links;
-
-  /**
    * The search theme.registry service.
    *
    * @var \Drupal\Core\Theme\Registry
@@ -142,8 +133,6 @@ class ToolbarController extends ControllerBase {
    *   A cache menu instance.
    * @param \Drupal\Core\Template\TwigEnvironment $twig
    *   A TwigEnvironment instance.
-   * @param \Drupal\admin_toolbar_tools\SearchLinks $links
-   *   The search links service.
    * @param \Drupal\Core\Theme\Registry $theme_registry
    *   The theme.registry service.
    */
@@ -159,7 +148,6 @@ class ToolbarController extends ControllerBase {
     CachedDiscoveryClearerInterface $plugin_cache_clearer,
     CacheBackendInterface $cache_menu,
     TwigEnvironment $twig,
-    SearchLinks $links,
     Registry $theme_registry
   ) {
     $this->cron = $cron;
@@ -173,7 +161,6 @@ class ToolbarController extends ControllerBase {
     $this->pluginCacheClearer = $plugin_cache_clearer;
     $this->cacheMenu = $cache_menu;
     $this->twig = $twig;
-    $this->links = $links;
     $this->themeRegistry = $theme_registry;
   }
 
@@ -193,7 +180,6 @@ class ToolbarController extends ControllerBase {
       $container->get('plugin.cache_clearer'),
       $container->get('cache.menu'),
       $container->get('twig'),
-      $container->get('admin_toolbar_tools.search_links'),
       $container->get('theme.registry')
     );
   }
@@ -295,13 +281,6 @@ class ToolbarController extends ControllerBase {
     $this->cacheRender->invalidateAll();
     $this->messenger()->addMessage($this->t('Render cache cleared.'));
     return new RedirectResponse($this->reloadPage());
-  }
-
-  /**
-   * Return additional search links.
-   */
-  public function search() {
-    return new JsonResponse($this->links->getLinks());
   }
 
   /**
