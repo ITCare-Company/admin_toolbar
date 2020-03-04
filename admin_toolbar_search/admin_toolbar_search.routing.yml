@@ -3,4 +3,4 @@ admin_toolbar.search:
   defaults:
     _controller: '\Drupal\admin_toolbar_search\Controller\AdminToolbarSearchController::search'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'use admin toolbar search'

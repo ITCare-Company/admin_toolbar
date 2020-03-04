@@ -31,11 +31,18 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
   ];
 
   /**
-   * The admin user for tests.
+   *  A user with the 'Use Admin Toolbar search' permission.
    *
    * @var \Drupal\user\UserInterface
    */
-  protected $adminUser;
+  protected $userWithAccess;
+
+  /**
+   * A test user without the 'Use Admin Toolbar search' permission..
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $noAccessUser;
 
   /**
    * {@inheritdoc}
@@ -83,13 +90,16 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
 
     $this->drupalPlaceBlock('local_tasks_block');
 
-    $this->adminUser = $this->drupalCreateUser([
+    $permissions = [
       'access toolbar',
       'administer menu',
       'access administration pages',
       'administer site configuration',
       'administer content types',
-    ]);
+    ];
+    $this->noAccessUser = $this->drupalCreateUser($permissions);
+    $permissions[] = 'use admin toolbar search';
+    $this->userWithAccess = $this->drupalCreateUser($permissions);
   }
 
   /**

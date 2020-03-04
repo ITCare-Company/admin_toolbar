@@ -12,10 +12,13 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function admin_toolbar_search_toolbar_alter(&$items) {
-  $admin_toolbar_tools = \Drupal::service('module_handler')
+  $access = \Drupal::currentUser()->hasPermission('use admin toolbar search');
+  $admin_toolbar_tools_enabled = \Drupal::service('module_handler')
     ->moduleExists('admin_toolbar_tools');
+
   $items['administration_search'] = [
     "#type" => "toolbar_item",
+    '#access' => $access,
     'tab' => [
       '#type' => 'link',
       '#title' => new TranslatableMarkup('Search'),
@@ -43,12 +46,17 @@ function admin_toolbar_search_toolbar_alter(&$items) {
       ],
       'drupalSettings' => [
         'adminToolbarSearch' => [
-          'loadExtraLinks' => $admin_toolbar_tools,
+          'loadExtraLinks' => $admin_toolbar_tools_enabled,
         ],
       ],
     ],
     '#wrapper_attributes' => [
       'id' => 'admin-toolbar-search-tab',
+    ],
+    '#cache' => [
+      'contexts' => [
+        'user.permissions'
+      ],
     ],
   ];
 }

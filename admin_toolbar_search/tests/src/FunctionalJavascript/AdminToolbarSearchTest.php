@@ -17,7 +17,7 @@ class AdminToolbarSearchTest extends AdminToolbarSearchTestBase {
     $search_tab = '#toolbar-item-administration-search';
     $search_tray = '#toolbar-item-administration-search-tray';
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->userWithAccess);
     $assert_session = $this->assertSession();
     $assert_session->responseContains('admin.toolbar_search.css');
     $assert_session->responseContains('admin_toolbar_search.js');
@@ -27,6 +27,21 @@ class AdminToolbarSearchTest extends AdminToolbarSearchTestBase {
     $this->assertSuggestionContains('perfor', 'admin/config/development/performance');
     $this->assertSuggestionContains('develop', 'admin/config/development/maintenance');
     $this->assertSuggestionContains('types', 'admin/structure/types');
+  }
+
+  /**
+   * Tests a user without the search permission can't use search.
+   */
+  public function testNoAccess() {
+    $search_tab = '#toolbar-item-administration-search';
+    $search_tray = '#toolbar-item-administration-search-tray';
+
+    $this->drupalLogin($this->noAccessUser);
+    $assert_session = $this->assertSession();
+    $assert_session->responseNotContains('admin.toolbar_search.css');
+    $assert_session->responseNotContains('admin_toolbar_search.js');
+    $assert_session->elementNotExists('css', $search_tab);
+    $assert_session->elementNotExists('css', $search_tray);
   }
 
 }

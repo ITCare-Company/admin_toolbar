@@ -89,6 +89,7 @@ class AdminToolbarToolsSearchTest extends AdminToolbarSearchTestBase {
       'administer media form display',
       'administer media display',
       'administer media types',
+      'use admin toolbar search',
     ]);
   }
 
