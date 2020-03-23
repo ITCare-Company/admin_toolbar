@@ -41,13 +41,6 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
   protected $adminUser;
 
   /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-  }
-
-  /**
    * Tests that menu updates on entity add/update/delete.
    */
   public function testMenuUpdate() {

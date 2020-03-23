@@ -55,8 +55,9 @@ function admin_toolbar_search_toolbar_alter(&$items) {
     ],
     '#cache' => [
       'contexts' => [
-        'user.permissions'
+        'user.permissions',
       ],
     ],
   ];
+
 }

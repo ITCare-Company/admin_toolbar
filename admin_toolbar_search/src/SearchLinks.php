@@ -65,9 +65,9 @@ class SearchLinks {
    *   The module handler.
    * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
    *   The route provider.
-   * @param \Drupal\Core\Cache\Context\CacheContextsManager $cache_contexts_manager
+   * @param \Drupal\Core\Cache\Context\CacheContextsManager $cache_context_manager
    *   The cache contexts manager.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
+   * @param \Drupal\Core\Cache\CacheBackendInterface $toolbar_cache
    *   Cache backend instance to use.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, RouteProviderInterface $route_provider, CacheContextsManager $cache_context_manager, CacheBackendInterface $toolbar_cache) {
@@ -83,6 +83,9 @@ class SearchLinks {
    *
    * @return array
    *   An array of link data for the JSON used for search.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function getLinks() {
     $additional_keys = $this->cacheContextManager->convertTokensToKeys([
