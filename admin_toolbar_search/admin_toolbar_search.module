@@ -7,6 +7,22 @@
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function admin_toolbar_search_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help.
+    case 'help.page.admin_toolbar_search':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Admin Toolbar Search module add a search option to the toolbar for site administrative tasks.') . '</p>';
+
+      return $output;
+  }
+}
 
 /**
  * Implements hook_toolbar_alter().
