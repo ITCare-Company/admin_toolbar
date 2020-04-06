@@ -17,20 +17,8 @@
         return;
       }
 
-      var getUrl = window.location;
-      var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
       var $self = this;
       this.links = [];
-      $('.toolbar-tray a[data-drupal-link-system-path]').each(function () {
-        if (this.href != baseUrl) {
-          var label = $self.getItemLabel(this);
-          $self.links.push({
-            'value': $(this).attr('href'),
-            'label': label + ' ' + $(this).attr('href'),
-            'labelRaw': label
-          });
-        }
-      });
 
       $("#admin-toolbar-search-input").autocomplete({
         minLength: 2,
@@ -79,9 +67,11 @@
         .each(function () {
           if (Drupal.behaviors.adminToolbarSearch.isSearchVisible()) {
             $('#admin-toolbar-search-input').focus();
+            Drupal.behaviors.adminToolbarSearch.populateLinks($self);
           }
           $(this).on('click', function () {
             $self.focusOnSearchElement();
+            Drupal.behaviors.adminToolbarSearch.populateLinks($self);
           });
         });
 
@@ -154,6 +144,26 @@
      */
     toggleSearch: function () {
       $('#toolbar-item-administration-search').trigger('click');
+    },
+    /**
+     * Populates the links in admin toolbar search.
+     */
+    populateLinks: function ($self) {
+      // Populate only when links array is empty (1 time).
+      if ($self.links.length === 0) {
+        var getUrl = window.location;
+        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+        $('.toolbar-tray a[data-drupal-link-system-path]').each(function () {
+          if (this.href !== baseUrl) {
+            var label = $self.getItemLabel(this);
+            $self.links.push({
+              'value': this.href,
+              'label': label + ' ' + this.href,
+              'labelRaw': label
+            });
+          }
+        });
+      }
     },
     /**
      * Binds a keyboard shortcut to toggle the search.
