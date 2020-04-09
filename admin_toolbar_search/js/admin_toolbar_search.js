@@ -43,7 +43,7 @@
           }
         },
         open: function () {
-          var zIndex = $('#toolbar-item-administration-search-tray')
+          var zIndex = $('#toolbar-item-administration-tray')
             .css("z-index") + 1;
           $(this).autocomplete('widget').css('z-index', zIndex);
 
@@ -61,35 +61,14 @@
           .appendTo(ul);
       });
 
-      // Focus on search field when tab is clicked, or enter is pressed.
-      $(context).find('#toolbar-item-administration-search')
+      // Populate the links for search results when the input is pressed.
+      $(context).find('#admin-toolbar-search-input')
         .once('admin_toolbar_search')
         .each(function () {
-          if (Drupal.behaviors.adminToolbarSearch.isSearchVisible()) {
-            $('#admin-toolbar-search-input').focus();
-            Drupal.behaviors.adminToolbarSearch.populateLinks($self);
-          }
-          $(this).on('click', function () {
-            $self.focusOnSearchElement();
+          $(this).focus(function() {
             Drupal.behaviors.adminToolbarSearch.populateLinks($self);
           });
         });
-
-      // Initialize hotkey / keyboard shortcut.
-      this.initHotkey();
-    },
-    focusOnSearchElement: function () {
-      var waitforVisible = function () {
-        if ($('#toolbar-item-administration-search-tray:visible').length) {
-          $('#admin-toolbar-search-input').focus();
-        }
-        else {
-          setTimeout(function () {
-            waitforVisible();
-          }, 1);
-        }
-      };
-      waitforVisible();
     },
     getItemLabel: function (item) {
       var breadcrumbs = [];
@@ -131,25 +110,10 @@
       return suggestions;
     },
     /**
-     * Whether the search is visible or not.
-     *
-     * @returns {boolean}
-     *   True if visible, false otherwise.
-     */
-    isSearchVisible: function () {
-      return $('#toolbar-item-administration-search-tray').is(':visible');
-    },
-    /**
-     * Toggles the toolbar search tray.
-     */
-    toggleSearch: function () {
-      $('#toolbar-item-administration-search').trigger('click');
-    },
-    /**
      * Populates the links in admin toolbar search.
      */
     populateLinks: function ($self) {
-      // Populate only when links array is empty (1 time).
+      // Populate only when links array is empty (only the first time).
       if ($self.links.length === 0) {
         var getUrl = window.location;
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
@@ -165,34 +129,6 @@
         });
       }
     },
-    /**
-     * Binds a keyboard shortcut to toggle the search.
-     */
-    initHotkey: function () {
-      $(document)
-        .once('admin_toolbar_search')
-        .keydown(function (event) {
-          // Show the form with alt + S.
-          if (!Drupal.behaviors.adminToolbarSearch.isSearchVisible()) {
-            // 83 = s.
-            if (event.altKey === true && event.keyCode === 83) {
-              Drupal.behaviors.adminToolbarSearch.toggleSearch();
-              event.preventDefault();
-            }
-          }
-          // Hide the search with alt + S or ESC.
-          else {
-            // 83 = s.
-            if (
-              (event.altKey === true && event.keyCode === 83) ||
-              event.key === 'Escape'
-            ) {
-              Drupal.behaviors.adminToolbarSearch.toggleSearch();
-              event.preventDefault();
-            }
-          }
-        });
-    }
   };
 
 })(jQuery, Drupal);
