@@ -7,6 +7,12 @@
   min-height: 1rem;
   padding: 0 0.4rem;
   line-height: 1.75rem;
+  margin: 0;
+  color: #3b3b3b;
+  background: #fcfcfa;
+  border: 1px solid #ccc;
+  border-radius: unset;
+  font-size: 1em;
 }
 
 .ui-autocomplete .ui-menu-item span.admin-toolbar-search-url {
