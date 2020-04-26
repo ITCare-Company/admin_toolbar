@@ -4,7 +4,7 @@
   "type": "drupal-module",
   "keywords": ["Drupal", "Toolbar"],
   "homepage": "http://drupal.org/project/admin_toolbar",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Wilfrid Roze (eme)",
