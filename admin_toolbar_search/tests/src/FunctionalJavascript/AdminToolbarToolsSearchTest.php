@@ -38,7 +38,7 @@ class AdminToolbarToolsSearchTest extends AdminToolbarSearchTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->drupalCreateContentType([
