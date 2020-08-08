@@ -1,5 +1,5 @@
 name: Admin Toolbar Search
-description: Provides search of admin toolbar items.
+description: Provides search of Admin Toolbar items.
 package: Administration
 
 type: module
