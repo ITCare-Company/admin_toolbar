@@ -3,14 +3,11 @@
 namespace Drupal\admin_toolbar_tools;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Menu\LocalTaskManager;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Security\TrustedCallbackInterface;
 
 /**
  * Admin Toolbar Tools helper service.
  */
-class AdminToolbarToolsHelper implements TrustedCallbackInterface {
+class AdminToolbarToolsHelper {
 
   /**
    * The entity type manager.
@@ -20,42 +17,13 @@ class AdminToolbarToolsHelper implements TrustedCallbackInterface {
   protected $entityTypeManager;
 
   /**
-   * The local task manger.
-   *
-   * @var \Drupal\Core\Menu\LocalTaskManager
-   *   The local task manager menu.
-   */
-  protected $localTaskManager;
-
-  /**
-   * The route match interface.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   *   The route match.
-   */
-  protected $routeMatch;
-
-  /**
-   * Constructs an AdminToolbarToolsHelper instance.
+   * Create an AdminToolbarToolsHelper object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\Core\Menu\LocalTaskManager $local_task_manager
-   *   The local task manager.
-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *   The route match.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LocalTaskManager $local_task_manager, RouteMatchInterface $route_match) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->localTaskManager = $local_task_manager;
-    $this->routeMatch = $route_match;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function trustedCallbacks() {
-    return ['localTasksTrayLazyBuilder'];
   }
 
   /**
@@ -89,28 +57,6 @@ class AdminToolbarToolsHelper implements TrustedCallbackInterface {
     $content_entities = $this->getBundleableEntitiesList();
     $types = array_merge($types, array_column($content_entities, 'content_entity_bundle'));
     return $types;
-  }
-
-  /**
-   * Lazy builder callback for the admin_toolbar_local_tasks tray items.
-   *
-   * @return array
-   *   A renderable array as expected by the renderer service.
-   */
-  public function localTasksTrayLazyBuilder() {
-    // Get primary local task links and inject them into new
-    // admin_toolbar_local_tasks toolbar tray.
-    $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 0);
-    if (!empty($links)) {
-      $build['#theme'] = 'links';
-      $build['#attributes'] = ['class' => ['toolbar-menu']];
-      foreach ($links['tabs'] as $route => $link) {
-        $build['#links'][$route] = $link['#link'];
-      }
-      return $build;
-    }
-
-    return [];
   }
 
 }
