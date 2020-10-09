@@ -40,7 +40,7 @@ admin_toolbar_tools.flush:
   menu_name: admin
 
 admin_toolbar_tools.cssjs:
-  title: 'Flush CSS and Javascript'
+  title: 'Flush CSS and JavaScript'
   route_name: admin_toolbar_tools.cssjs
   parent: admin_toolbar_tools.flush
   menu_name: admin
