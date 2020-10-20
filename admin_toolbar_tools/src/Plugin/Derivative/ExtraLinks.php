@@ -3,6 +3,7 @@
 namespace Drupal\admin_toolbar_tools\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;
@@ -18,8 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
 
   use StringTranslationTrait;
-
-  const MAX_BUNDLE_NUMBER = 10;
 
   /**
    * The entity type manager.
@@ -50,13 +49,21 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
   protected $themeHandler;
 
   /**
+   * The admin toolbar tools configuration.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
+  protected $config;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, RouteProviderInterface $route_provider, ThemeHandlerInterface $theme_handler) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, RouteProviderInterface $route_provider, ThemeHandlerInterface $theme_handler, ConfigFactoryInterface $config_factory) {
     $this->entityTypeManager = $entity_type_manager;
     $this->moduleHandler = $module_handler;
     $this->routeProvider = $route_provider;
     $this->themeHandler = $theme_handler;
+    $this->config = $config_factory->get('admin_toolbar_tools.settings');
   }
 
   /**
@@ -67,7 +74,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       $container->get('entity_type.manager'),
       $container->get('module_handler'),
       $container->get('router.route_provider'),
-      $container->get('theme_handler')
+      $container->get('theme_handler'),
+      $container->get('config.factory')
     );
   }
 
@@ -76,6 +84,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
    */
   public function getDerivativeDefinitions($base_plugin_definition) {
     $links = [];
+    $max_bundle_number = $this->config->get('max_bundle_number');
     $entity_types = $this->entityTypeManager->getDefinitions();
     $content_entities = [];
     foreach ($entity_types as $key => $entity_type) {
@@ -91,11 +100,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
     foreach ($content_entities as $entities) {
       $content_entity_bundle = $entities['content_entity_bundle'];
       $content_entity = $entities['content_entity'];
-      // We do not display more than 10 different bundles per entity type.
       $content_entity_bundle_storage = $this->entityTypeManager->getStorage($content_entity_bundle);
-      $bundles_ids = $content_entity_bundle_storage->getQuery()->pager(self::MAX_BUNDLE_NUMBER)->execute();
+      $bundles_ids = $content_entity_bundle_storage->getQuery()->pager($max_bundle_number)->execute();
       $bundles = $this->entityTypeManager->getStorage($content_entity_bundle)->loadMultiple($bundles_ids);
-      if (count($bundles) == self::MAX_BUNDLE_NUMBER && $this->routeExists('entity.' . $content_entity_bundle . '.collection')) {
+      if (count($bundles) == $max_bundle_number && $this->routeExists('entity.' . $content_entity_bundle . '.collection')) {
         $links[$content_entity_bundle . '.collection'] = [
           'title' => $this->t('All types'),
           'route_name' => 'entity.' . $content_entity_bundle . '.collection',
@@ -317,11 +325,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'weight' => -2,
       ] + $base_plugin_definition;
       // Adds links to /admin/structure/menu.
-      // We do not display more than 10 different menus.
       $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
       uasort($menus, [Menu::class, 'sort']);
-      $menus = array_slice($menus, 0, self::MAX_BUNDLE_NUMBER);
-      if (count($menus) == self::MAX_BUNDLE_NUMBER) {
+      $menus = array_slice($menus, 0, $max_bundle_number);
+      if (count($menus) == $max_bundle_number) {
         $links['entity.menu.collection'] = [
           'title' => $this->t('All menus'),
           'route_name' => 'entity.menu.collection',
