@@ -119,7 +119,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           // link.
           $content_entity_bundle_root = 'entity.' . $content_entity_bundle . '.overview_form.' . $machine_name;
           $links[$content_entity_bundle_root] = [
-            'title' => $this->t('@label', ['@label' => $bundle->label()]),
+            'title' => $bundle->label(),
             'route_name' => 'entity.' . $content_entity_bundle . '.overview_form',
             'parent' => 'entity.' . $content_entity_bundle . '.collection',
             'route_parameters' => [$content_entity_bundle => $machine_name],
@@ -128,7 +128,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         if ($this->routeExists('entity.' . $content_entity_bundle . '.edit_form')) {
           $key = 'entity.' . $content_entity_bundle . '.edit_form.' . $machine_name;
           $links[$key] = [
-            'title' => $this->t('@label', ['@label' => $bundle->label()]),
+            'title' => $bundle->label(),
             'route_name' => 'entity.' . $content_entity_bundle . '.edit_form',
             'parent' => 'entity.' . $content_entity_bundle . '.collection',
             'route_parameters' => [$content_entity_bundle => $machine_name],
@@ -243,7 +243,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
 
     foreach ($this->entityTypeManager->getStorage('user_role')->loadMultiple() as $role) {
       $links['entity.user_role.edit_form.' . $role->id()] = [
-        'title' => $this->t('@label', ['@label' => $role->label()]),
+        'title' => $role->label(),
         'route_name' => 'entity.user_role.edit_form',
         'parent' => $base_plugin_definition['id'] . ':entity.user_role.collection',
         'route_parameters' => ['user_role' => $role->id()],
@@ -287,7 +287,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       // Adds node links for each content type.
       foreach ($this->entityTypeManager->getStorage('node_type')->loadMultiple() as $type) {
         $links['node.add.' . $type->id()] = [
-          'title' => $this->t('@label', ['@label' => $type->label()]),
+          'title' => $type->label(),
           'route_name' => 'node.add',
           'parent' => $base_plugin_definition['id'] . ':node.add',
           'route_parameters' => ['node_type' => $type->id()],
