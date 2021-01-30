@@ -584,6 +584,13 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'route_name' => 'entity.media.collection',
         'parent' => 'system.admin_content',
       ] + $base_plugin_definition;
+      if ($this->moduleHandler->moduleExists('media_library')) {
+        $links['media_library'] = [
+            'title' => $this->t('Media library'),
+            'route_name' => 'view.media_library.page',
+            'parent' => $base_plugin_definition['id'] . ':media_page',
+          ] + $base_plugin_definition;
+      }
       $links['add_media'] = [
         'title' => $this->t('Add media'),
         'route_name' => 'entity.media.add_page',
