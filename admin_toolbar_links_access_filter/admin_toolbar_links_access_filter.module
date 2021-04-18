@@ -71,6 +71,16 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
       $route_name = $original_link->getRouteName();
       $route_params = $original_link->getRouteParameters();
     }
+    elseif (!empty($item['url'])) {
+      /** @var \Drupal\Core\Url $url */
+      $url = $item['url'];
+      if ($url->isExternal()) {
+        // Do not filter external URL at all.
+        continue;
+      }
+      $route_name = $url->getRouteName();
+      $route_params = $url->getRouteParameters();
+    }
 
     // Check, if user has access rights to the route.
     if (!\Drupal::accessManager()
