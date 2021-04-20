@@ -94,6 +94,11 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
         if (admin_toolbar_links_access_filter_is_overview_page($route)) {
           unset($items[$route]);
         }
+        // If there are no sub-items and the parent does not have a link, then
+        // it is safe to remove it.
+        elseif ($route_name === '<nolink>') {
+          unset($items[$route]);
+        }
         else {
           // Let's remove the expanded flag.
           $items[$route]['is_expanded'] = FALSE;
