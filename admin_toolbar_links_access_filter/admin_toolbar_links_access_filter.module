@@ -59,7 +59,6 @@ function admin_toolbar_links_access_filter_preprocess_menu(&$variables) {
  */
 function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$items) {
   $access_manager = \Drupal::accessManager();
-  $toolbar_enabled = \Drupal::moduleHandler()->moduleExists('admin_toolbar');
   foreach ($items as $menu_id => &$item) {
     $route_name = NULL;
     $route_params = [];
@@ -93,7 +92,7 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
         // Recursively call this function for the child items.
         admin_toolbar_links_access_filter_filter_non_accessible_links($items[$menu_id]['below']);
       }
-      if (empty($items[$menu_id]['below']) && $toolbar_enabled) {
+      if (empty($items[$menu_id]['below'])) {
 
         // Every child item has been cleared out.
         // Now check, if the given route represents an overview page only,
