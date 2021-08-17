@@ -2,15 +2,15 @@
 
 namespace Drupal\admin_toolbar_tools\Plugin\Derivative;
 
-use Drupal\Component\Plugin\Derivative\DeriverBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Extension\ThemeHandlerInterface;
-use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
-use Drupal\Core\Routing\RouteProviderInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\system\Entity\Menu;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Component\Plugin\Derivative\DeriverBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -587,10 +587,10 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       ] + $base_plugin_definition;
       if ($this->moduleHandler->moduleExists('media_library') && $this->routeExists('view.media_library.page')) {
         $links['media_library'] = [
-            'title' => $this->t('Media library'),
-            'route_name' => 'view.media_library.page',
-            'parent' => $base_plugin_definition['id'] . ':media_page',
-          ] + $base_plugin_definition;
+          'title' => $this->t('Media library'),
+          'route_name' => 'view.media_library.page',
+          'parent' => $base_plugin_definition['id'] . ':media_page',
+        ] + $base_plugin_definition;
       }
       $links['add_media'] = [
         'title' => $this->t('Add media'),
