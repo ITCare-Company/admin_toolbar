@@ -43,13 +43,14 @@ function admin_toolbar_search_toolbar_alter(&$items) {
       '#weight' => 100,
       'tab' => [
         'search' => [
-          '#type' => 'textfield',
+          '#title' => t('Search'),
+          '#title_display' => 'invisible',
+          '#type' => 'search',
           '#size' => 30,
           '#attributes' => [
-            'id' => 'admin-toolbar-search-input',
-            'aria-labelledby' => 'toolbar-item-administration-search',
             'placeholder' => new TranslatableMarkup('Admin Toolbar quick search'),
           ],
+          '#id' => 'admin-toolbar-search-input',
         ],
       ],
       '#attached' => [
@@ -90,13 +91,10 @@ function admin_toolbar_search_toolbar_alter(&$items) {
       ],
       'tray' => [
         'search' => [
-          '#title' => 'Search',
-          '#type' => 'textfield',
+          '#title' => t('Search'),
+          '#type' => 'search',
           '#size' => 60,
-          '#attributes' => [
-            'id' => 'admin-toolbar-search-input',
-            'aria-labelledby' => 'toolbar-item-administration-search',
-          ],
+          '#id' => 'admin-toolbar-search-input',
         ],
       ],
       '#attached' => [
