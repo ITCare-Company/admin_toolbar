@@ -376,8 +376,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'route_parameters' => ['menu' => $menu_id],
         ] + $base_plugin_definition;
         // Un-deletable menus.
-        $menus = ['admin', 'devel', 'footer', 'main', 'tools', 'account'];
-        if (!in_array($menu_id, $menus)) {
+        $un_deletable_menus = ['admin', 'devel', 'footer', 'main', 'tools', 'account'];
+        if (!in_array($menu_id, $un_deletable_menus)) {
           $links['entity.menu.delete_form.' . $menu_id] = [
             'title' => $this->t('Delete'),
             'route_name' => 'entity.menu.delete_form',
