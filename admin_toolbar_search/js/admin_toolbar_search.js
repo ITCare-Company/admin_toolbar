@@ -25,6 +25,10 @@
         var $searchTab = $(this).find('#admin-toolbar-search-tab')
         var $searchInput = $searchTab.find('#admin-toolbar-search-input');
 
+        if ($searchInput.length === 0) {
+          return;
+        }
+
         $searchInput.autocomplete({
           minLength: 2,
           position: { collision : 'fit' },
