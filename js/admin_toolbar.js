@@ -6,7 +6,7 @@
 
       // Get keyboard functionality from mobile menu.
       if ('drupalToolbarMenu' in $.fn) {
-        $(once('keyboard-navigation', '.toolbar-menu-administration')).each(function () {
+        $(once('keyboar-navigation', '.toolbar-menu-administration')).each(function () {
           const $toolbar = $(this);
 
           // Initialize Extend/Collapse buttons even if menu was loaded horizontally.
@@ -87,16 +87,6 @@
           dismissOpenMenus();
         });
       });
-
-      // Fix padding at top of body when horizontal toolbar wraps.
-      $(once('update-toolbar-height', 'body')).each(function () {
-        // Set timer so padding doesn't update continuously on resize.
-        let timer;
-        jQuery(window).on('resize', function () {
-          clearTimeout(timer);
-          timer = setTimeout(Drupal.toolbar.ToolbarVisualView.prototype.updateToolbarHeight.bind(Drupal.toolbar.views.toolbarVisualView), 100);
-        });
-      })
 
       $('.toolbar-menu:first-child > .menu-item:not(.menu-item--expanded) a, .toolbar-tab > a', context).on('focusin', function () {
         $('.menu-item--expanded').removeClass('hover-intent');
