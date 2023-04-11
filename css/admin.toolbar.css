@@ -15,7 +15,6 @@
   position: relative;
   padding: 1em 0;
   line-height: 1;
-  z-index: auto;
 }
 
 .menu-item a:focus,
