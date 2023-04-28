@@ -6,10 +6,6 @@
   background: #fff;
 }
 
-#toolbar-bar {
-  z-index: 100000;
-}
-
 .toolbar-tray-horizontal a {
   display: inline-block;
 }
