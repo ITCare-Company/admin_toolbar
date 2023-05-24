@@ -70,10 +70,13 @@
   padding: 3px 1em 3px 0.4em;
 }
 
-.admin-toolbar-search-autocomplete-list .ui-menu-item .ui-state-active:hover a,
-.admin-toolbar-search-autocomplete-list .ui-menu-item .ui-state-active a{
-  color: white;
+.admin-toolbar-search-autocomplete-list .ui-menu-item a {
   text-decoration: none;
+}
+
+.admin-toolbar-search-autocomplete-list .ui-menu-item .ui-state-active:hover a,
+.admin-toolbar-search-autocomplete-list .ui-menu-item .ui-state-active a {
+  color: white;
 }
 
 #toolbar-item-administration-search-tray label {
