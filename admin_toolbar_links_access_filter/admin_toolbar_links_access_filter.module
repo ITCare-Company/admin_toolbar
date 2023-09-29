@@ -102,8 +102,8 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
 
           // Every child item has been cleared out.
           // Now check, if the given route represents an overview page only,
-          // without having functionality on its own. In this case, we can safely
-          // unset this item, as there aren't any children left.
+          // without having functionality on its own. In this case, we can
+          // safely unset this item, as there aren't any children left.
           // This assumption is only valid, when the admin_toolbar module is
           // installed because otherwise we won't have child items at all.
           if (admin_toolbar_links_access_filter_is_overview_page($route_name)) {
@@ -120,7 +120,8 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
           }
         }
       }
-    } catch (\UnexpectedValueException $e) {
+    }
+    catch (\UnexpectedValueException $e) {
       // Skip on errors like "base:block has no corresponding route":
       \Drupal::logger('my_module')->error($e->getMessage());
       continue;
