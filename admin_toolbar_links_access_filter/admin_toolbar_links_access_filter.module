@@ -90,7 +90,7 @@ function admin_toolbar_links_access_filter_filter_non_accessible_links(array &$i
       }
 
       // Check, if user has access rights to the route.
-      if (!$access_manager->checkNamedRoute($route_name, $route_params)) {
+      if ($route_name === NULL || !$access_manager->checkNamedRoute($route_name, $route_params)) {
         unset($items[$menu_id]);
       }
       else {
