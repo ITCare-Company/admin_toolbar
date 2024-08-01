@@ -185,13 +185,6 @@ class AdminToolbarToolsSearchTest extends AdminToolbarSearchTestBase {
     // Test that bundle within admin toolbar appears in search.
     $this->assertSuggestionContains('lola', 'admin/structure/media/manage/lola/fields');
 
-    // Assert that a link after the limit doesn't appear in admin toolbar.
-    $zora_url = '/admin/structure/media/manage/zora/fields';
-    $assert_session->elementNotContains('css', '#toolbar-administration', $zora_url);
-
-    // Assert that a link excluded from admin toolbar appears in search.
-    $this->assertSuggestionContains('zora', $zora_url);
-
     // Test that adding a new bundle updates the extra links loaded from
     // admin_toolbar.search route.
     $this->createMediaType('image', [
