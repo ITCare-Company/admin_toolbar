@@ -126,6 +126,16 @@
 
 [dir="rtl"]
   .toolbar-tray-horizontal
+  .toolbar-menu:not(:first-child)
+  li.menu-item--expanded
+  > a:focus {
+  background-image: url(../misc/icons/0074bd/chevron-left.svg);
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+
+[dir="rtl"]
+  .toolbar-tray-horizontal
   ul
   li.menu-item--expanded
   .menu-item.hover-intent
