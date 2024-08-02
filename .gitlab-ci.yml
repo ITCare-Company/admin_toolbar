@@ -30,3 +30,10 @@ variables:
   OPT_IN_TEST_NEXT_MINOR: 1
   OPT_IN_TEST_NEXT_MAJOR: 1
   OPT_IN_TEST_MAX_PHP: 1
+
+#
+# Stylelint overrides and configuration.
+#
+stylelint:
+  # Require stylelint to pass.
+  allow_failure: false
