@@ -5,8 +5,8 @@
  * Functionality for search of Admin Toolbar.
  */
 
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 
 /**

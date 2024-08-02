@@ -30,7 +30,7 @@ function admin_toolbar_update_8002() {
 }
 
 /**
- * Uninstall Admin Toolbar Links Access Filter for Drupal 10.3+
+ * Uninstall Admin Toolbar Links Access Filter for Drupal 10.3+.
  *
  * @see https://www.drupal.org/project/admin_toolbar/issues/3463291
  */

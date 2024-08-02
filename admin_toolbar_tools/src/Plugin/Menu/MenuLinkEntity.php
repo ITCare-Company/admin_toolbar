@@ -2,11 +2,9 @@
 
 namespace Drupal\admin_toolbar_tools\Plugin\Menu;
 
-use Drupal\Core\Entity\EntityDescriptionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Menu\MenuLinkDefault;
 use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
-use Drupal\node\NodeTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

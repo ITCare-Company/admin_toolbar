@@ -31,6 +31,13 @@ variables:
   OPT_IN_TEST_MAX_PHP: 1
 
 #
+# PHPCS overrides and configuration.
+#
+phpcs:
+  # Require phpcs to pass.
+  allow_failure: false
+
+#
 # Stylelint overrides and configuration.
 #
 stylelint:

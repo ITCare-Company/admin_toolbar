@@ -5,10 +5,10 @@
  * This module don't show menu links that you don't have access permission for.
  */
 
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\user\Entity\Role;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Implements hook_help().

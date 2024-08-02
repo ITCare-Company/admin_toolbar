@@ -47,7 +47,7 @@ class AdminToolbarAlterTest extends BrowserTestBase {
       'administer site configuration',
       'administer permissions',
       'administer users',
-      'administer account settings'
+      'administer account settings',
     ];
 
     // Create and log in an administrative user.
