@@ -67,6 +67,7 @@ function admin_toolbar_search_toolbar_alter(&$items) {
           '#size' => 30,
           '#attributes' => [
             'placeholder' => new TranslatableMarkup('Admin Toolbar quick search'),
+            'accesskey' => ('a'),
           ],
           '#id' => 'admin-toolbar-search-input',
         ],
