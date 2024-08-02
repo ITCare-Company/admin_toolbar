@@ -431,21 +431,42 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
 
     // If module block_content is enabled.
     if ($this->moduleHandler->moduleExists('block_content')) {
-      $links['block_content.add_page'] = [
-        'title' => $this->t('Add custom block'),
-        'route_name' => 'block_content.add_page',
-        'parent' => 'block.admin_display',
-      ] + $base_plugin_definition;
-      $links['entity.block_content.collection'] = [
-        'title' => $this->t('Custom block library'),
+
+      // Add the custom blocks management under Content.
+      $links['block_content_page'] = [
+        'title' => $this->t('Blocks'),
         'route_name' => 'entity.block_content.collection',
-        'parent' => 'block.admin_display',
+        'parent' => 'system.admin_content',
       ] + $base_plugin_definition;
-      $links['entity.block_content_type.collection'] = [
-        'title' => $this->t('Block types'),
-        'route_name' => 'entity.block_content_type.collection',
-        'parent' => 'block.admin_display',
+
+      $links['add_block'] = [
+        'title' => $this->t('Add content block'),
+        'route_name' => 'block_content.add_page',
+        'parent' => $base_plugin_definition['id'] . ':block_content_page',
       ] + $base_plugin_definition;
+
+      // Adds links for each block_content type.
+      foreach ($this->entityTypeManager->getStorage('block_content_type')->loadMultiple() as $type) {
+        $links['block_content.add.' . $type->id()] = [
+          'route_name' => 'block_content.add_form',
+          'parent' => $base_plugin_definition['id'] . ':add_block',
+          'route_parameters' => ['block_content_type' => $type->id()],
+          'class' => 'Drupal\admin_toolbar_tools\Plugin\Menu\MenuLinkEntity',
+          'metadata' => [
+            'entity_type' => $type->getEntityTypeId(),
+            'entity_id' => $type->id(),
+          ],
+        ] + $base_plugin_definition;
+      }
+
+      if (version_compare(\Drupal::VERSION, '10.1', '<')) {
+        // Add custom block types management under Structure.
+        $links['entity.block_content_type.collection'] = [
+          'title' => $this->t('Block types'),
+          'route_name' => 'entity.block_content_type.collection',
+          'parent' => 'block.admin_display',
+        ] + $base_plugin_definition;
+      }
     }
 
     // If module Contact is enabled.
