@@ -67,11 +67,10 @@ class MenuLinkEntity extends MenuLinkDefault {
    * {@inheritdoc}
    */
   public function getDescription() {
-    // @todo Remove node_type special handling.
-    if ($this->entity instanceof EntityDescriptionInterface || $this->entity instanceof NodeTypeInterface) {
-      return $this->entity->getDescription();
+    if (method_exists($this->entity, 'getDescription')) {
+      $description = $this->entity->getDescription();
     }
-    return parent::getDescription();
+    return $description ?? parent::getDescription();
   }
 
   /**
