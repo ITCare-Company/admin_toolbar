@@ -707,6 +707,15 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       }
     }
 
+    if ($this->moduleHandler->moduleExists('project_browser')) {
+      $links['project_browser.browse'] = [
+        'title' => $this->t('Browse'),
+        'route_name' => 'project_browser.browse',
+        'parent' => 'system.modules_list',
+        'weight' => -1,
+      ] + $base_plugin_definition;
+    }
+
     return $links;
   }
 
