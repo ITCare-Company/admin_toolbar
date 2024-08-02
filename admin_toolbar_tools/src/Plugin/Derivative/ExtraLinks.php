@@ -587,7 +587,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'parent' => 'entity.view.collection',
         'weight' => -5,
       ] + $base_plugin_definition;
-      $views = $this->entityTypeManager->getStorage('view')->loadMultiple();
+      $views = $this->entityTypeManager->getStorage('view')->loadByProperties(['status' => TRUE]);
       foreach ($views as $view) {
         $links['views_ui.' . $view->id()] = [
           'title' => $view->label(),
