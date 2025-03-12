@@ -86,7 +86,7 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
       ->set('disable_sticky', $form_state->getValue('disable_sticky'))
       ->save();
     parent::submitForm($form, $form_state);
-    $this->cacheMenu->invalidateAll();
+    $this->cacheMenu->deleteAll();
     $this->menuLinkManager->rebuild();
   }
 

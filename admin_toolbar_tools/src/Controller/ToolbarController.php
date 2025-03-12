@@ -239,7 +239,7 @@ class ToolbarController extends ControllerBase {
    * Clears all cached menu data.
    */
   public function flushMenu() {
-    $this->cacheMenu->invalidateAll();
+    $this->cacheMenu->deleteAll();
     $this->menuLinkManager->rebuild();
     $this->contextualLinkManager->clearCachedDefinitions();
     $this->localTaskLinkManager->clearCachedDefinitions();
@@ -279,7 +279,7 @@ class ToolbarController extends ControllerBase {
    * Clear the rendered cache.
    */
   public function cacheRender() {
-    $this->cacheRender->invalidateAll();
+    $this->cacheRender->deleteAll();
     $this->messenger()->addMessage($this->t('Render cache cleared.'));
     return new RedirectResponse($this->reloadPage());
   }
