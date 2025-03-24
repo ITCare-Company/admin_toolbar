@@ -3,7 +3,9 @@
 namespace Drupal\admin_toolbar_tools\Controller;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Asset\AssetCollectionOptimizerInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\CronInterface;
 use Drupal\Core\Menu\ContextualLinkManager;
@@ -109,6 +111,34 @@ class ToolbarController extends ControllerBase {
   protected $themeRegistry;
 
   /**
+   * The cache tags invalidator.
+   *
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
+   */
+  protected $cacheTagsInvalidator;
+
+  /**
+   * The CSS asset collection optimizer service.
+   *
+   * @var \Drupal\Core\Asset\AssetCollectionOptimizerInterface
+   */
+  protected $cssCollectionOptimizer;
+
+  /**
+   * The JavaScript asset collection optimizer service.
+   *
+   * @var \Drupal\Core\Asset\AssetCollectionOptimizerInterface
+   */
+  protected $jsCollectionOptimizer;
+
+  /**
+   * The asset query string service.
+   *
+   * @var \Drupal\Core\Asset\AssetQueryStringInterface
+   */
+  protected $assetQueryString;
+
+  /**
    * Constructs a ToolbarController object.
    *
    * @param \Drupal\Core\CronInterface $cron
@@ -135,6 +165,12 @@ class ToolbarController extends ControllerBase {
    *   A TwigEnvironment instance.
    * @param \Drupal\Core\Theme\Registry $theme_registry
    *   The theme.registry service.
+   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
+   *   The cache tags invalidator.
+   * @param \Drupal\Core\Asset\AssetCollectionOptimizerInterface $css_collection_optimizer
+   *   The CSS asset collection optimizer service.
+   * @param \Drupal\Core\Asset\AssetCollectionOptimizerInterface $js_collection_optimizer
+   *   The JavaScript asset collection optimizer service.
    */
   public function __construct(
     CronInterface $cron,
@@ -148,8 +184,11 @@ class ToolbarController extends ControllerBase {
     CachedDiscoveryClearerInterface $plugin_cache_clearer,
     CacheBackendInterface $cache_menu,
     TwigEnvironment $twig,
+    Registry $theme_registry,
+    CacheTagsInvalidatorInterface $cache_tags_invalidator,
+    AssetCollectionOptimizerInterface $css_collection_optimizer,
     // phpcs:ignore Drupal.Functions.MultiLineFunctionDeclaration.MissingTrailingComma
-    Registry $theme_registry
+    AssetCollectionOptimizerInterface $js_collection_optimizer
   ) {
     $this->cron = $cron;
     $this->menuLinkManager = $menuLinkManager;
@@ -163,13 +202,16 @@ class ToolbarController extends ControllerBase {
     $this->cacheMenu = $cache_menu;
     $this->twig = $twig;
     $this->themeRegistry = $theme_registry;
+    $this->cacheTagsInvalidator = $cache_tags_invalidator;
+    $this->cssCollectionOptimizer = $css_collection_optimizer;
+    $this->jsCollectionOptimizer = $js_collection_optimizer;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
+    $instance = new static(
       $container->get('cron'),
       $container->get('plugin.manager.menu.link'),
       $container->get('plugin.manager.menu.contextual_link'),
@@ -181,8 +223,15 @@ class ToolbarController extends ControllerBase {
       $container->get('plugin.cache_clearer'),
       $container->get('cache.menu'),
       $container->get('twig'),
-      $container->get('theme.registry')
+      $container->get('theme.registry'),
+      $container->get('cache_tags.invalidator'),
+      $container->get('asset.css.collection_optimizer'),
+      $container->get('asset.js.collection_optimizer')
     );
+    if (floatval(\Drupal::VERSION) >= 10.2) {
+      $instance->assetQueryString = $container->get('asset.query_string');
+    }
+    return $instance;
   }
 
   /**
@@ -211,8 +260,18 @@ class ToolbarController extends ControllerBase {
    * Flushes css and javascript caches.
    */
   public function flushJsCss() {
-    $this->state()
-      ->set('system.css_js_query_string', base_convert($this->time->getCurrentTime(), 10, 36));
+    $this->cacheTagsInvalidator->invalidateTags(['library_info']);
+    $this->cssCollectionOptimizer->deleteAll();
+    $this->jsCollectionOptimizer->deleteAll();
+
+    // @todo Remove once Core versions below 10.2.x are not supported anymore.
+    if (floatval(\Drupal::VERSION) < 10.2) {
+      // @phpstan-ignore function.notFound
+      _drupal_flush_css_js();
+    }
+    else {
+      $this->assetQueryString->reset();
+    }
     $this->messenger()->addMessage($this->t('CSS and JavaScript cache cleared.'));
     return new RedirectResponse($this->reloadPage());
   }
