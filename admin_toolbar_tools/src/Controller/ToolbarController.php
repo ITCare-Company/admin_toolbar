@@ -2,22 +2,9 @@
 
 namespace Drupal\admin_toolbar_tools\Controller;
 
-use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\Asset\AssetCollectionOptimizerInterface;
-use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\CronInterface;
-use Drupal\Core\Menu\ContextualLinkManager;
-use Drupal\Core\Menu\LocalActionManager;
-use Drupal\Core\Menu\LocalTaskManager;
-use Drupal\Core\Menu\MenuLinkManagerInterface;
-use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
-use Drupal\Core\Template\TwigEnvironment;
-use Drupal\Core\Theme\Registry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Controller for AdminToolbar Tools.
@@ -139,95 +126,26 @@ class ToolbarController extends ControllerBase {
   protected $assetQueryString;
 
   /**
-   * Constructs a ToolbarController object.
-   *
-   * @param \Drupal\Core\CronInterface $cron
-   *   A cron instance.
-   * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menuLinkManager
-   *   A menu link manager instance.
-   * @param \Drupal\Core\Menu\ContextualLinkManager $contextualLinkManager
-   *   A context link manager instance.
-   * @param \Drupal\Core\Menu\LocalTaskManager $localTaskLinkManager
-   *   A local task manager instance.
-   * @param \Drupal\Core\Menu\LocalActionManager $localActionLinkManager
-   *   A local action manager instance.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheRender
-   *   A cache backend interface instance.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   A date time instance.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
-   *   A request stack symfony instance.
-   * @param \Drupal\Core\Plugin\CachedDiscoveryClearerInterface $plugin_cache_clearer
-   *   A plugin cache clear instance.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_menu
-   *   A cache menu instance.
-   * @param \Drupal\Core\Template\TwigEnvironment $twig
-   *   A TwigEnvironment instance.
-   * @param \Drupal\Core\Theme\Registry $theme_registry
-   *   The theme.registry service.
-   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
-   *   The cache tags invalidator.
-   * @param \Drupal\Core\Asset\AssetCollectionOptimizerInterface $css_collection_optimizer
-   *   The CSS asset collection optimizer service.
-   * @param \Drupal\Core\Asset\AssetCollectionOptimizerInterface $js_collection_optimizer
-   *   The JavaScript asset collection optimizer service.
-   */
-  public function __construct(
-    CronInterface $cron,
-    MenuLinkManagerInterface $menuLinkManager,
-    ContextualLinkManager $contextualLinkManager,
-    LocalTaskManager $localTaskLinkManager,
-    LocalActionManager $localActionLinkManager,
-    CacheBackendInterface $cacheRender,
-    TimeInterface $time,
-    RequestStack $request_stack,
-    CachedDiscoveryClearerInterface $plugin_cache_clearer,
-    CacheBackendInterface $cache_menu,
-    TwigEnvironment $twig,
-    Registry $theme_registry,
-    CacheTagsInvalidatorInterface $cache_tags_invalidator,
-    AssetCollectionOptimizerInterface $css_collection_optimizer,
-    // phpcs:ignore Drupal.Functions.MultiLineFunctionDeclaration.MissingTrailingComma
-    AssetCollectionOptimizerInterface $js_collection_optimizer
-  ) {
-    $this->cron = $cron;
-    $this->menuLinkManager = $menuLinkManager;
-    $this->contextualLinkManager = $contextualLinkManager;
-    $this->localTaskLinkManager = $localTaskLinkManager;
-    $this->localActionLinkManager = $localActionLinkManager;
-    $this->cacheRender = $cacheRender;
-    $this->time = $time;
-    $this->requestStack = $request_stack;
-    $this->pluginCacheClearer = $plugin_cache_clearer;
-    $this->cacheMenu = $cache_menu;
-    $this->twig = $twig;
-    $this->themeRegistry = $theme_registry;
-    $this->cacheTagsInvalidator = $cache_tags_invalidator;
-    $this->cssCollectionOptimizer = $css_collection_optimizer;
-    $this->jsCollectionOptimizer = $js_collection_optimizer;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    $instance = new static(
-      $container->get('cron'),
-      $container->get('plugin.manager.menu.link'),
-      $container->get('plugin.manager.menu.contextual_link'),
-      $container->get('plugin.manager.menu.local_task'),
-      $container->get('plugin.manager.menu.local_action'),
-      $container->get('cache.render'),
-      $container->get('datetime.time'),
-      $container->get('request_stack'),
-      $container->get('plugin.cache_clearer'),
-      $container->get('cache.menu'),
-      $container->get('twig'),
-      $container->get('theme.registry'),
-      $container->get('cache_tags.invalidator'),
-      $container->get('asset.css.collection_optimizer'),
-      $container->get('asset.js.collection_optimizer')
-    );
+    $instance = parent::create($container);
+    $instance->cron = $container->get('cron');
+    $instance->menuLinkManager = $container->get('plugin.manager.menu.link');
+    $instance->contextualLinkManager = $container->get('plugin.manager.menu.contextual_link');
+    $instance->localTaskLinkManager = $container->get('plugin.manager.menu.local_task');
+    $instance->localActionLinkManager = $container->get('plugin.manager.menu.local_action');
+    $instance->cacheRender = $container->get('cache.render');
+    $instance->time = $container->get('datetime.time');
+    $instance->requestStack = $container->get('request_stack');
+    $instance->pluginCacheClearer = $container->get('plugin.cache_clearer');
+    $instance->cacheMenu = $container->get('cache.menu');
+    $instance->twig = $container->get('twig');
+    $instance->themeRegistry = $container->get('theme.registry');
+    $instance->cacheTagsInvalidator = $container->get('cache_tags.invalidator');
+    $instance->cssCollectionOptimizer = $container->get('asset.css.collection_optimizer');
+    $instance->jsCollectionOptimizer = $container->get('asset.js.collection_optimizer');
+
     if (floatval(\Drupal::VERSION) >= 10.2) {
       $instance->assetQueryString = $container->get('asset.query_string');
     }

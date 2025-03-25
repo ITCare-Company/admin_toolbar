@@ -2,9 +2,7 @@
 
 namespace Drupal\admin_toolbar_tools\Plugin\Menu;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Menu\MenuLinkDefault;
-use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -20,35 +18,14 @@ class MenuLinkEntity extends MenuLinkDefault {
   protected $entity;
 
   /**
-   * Constructs a new MenuLinkEntity.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Menu\StaticMenuLinkOverridesInterface $static_override
-   *   The static override storage.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, EntityTypeManagerInterface $entity_type_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override);
-    $this->entity = $entity_type_manager->getStorage($this->pluginDefinition['metadata']['entity_type'])->load($this->pluginDefinition['metadata']['entity_id']);
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('menu_link.static.overrides'),
-      $container->get('entity_type.manager')
-    );
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->entity = $container->get('entity_type.manager')
+      ->getStorage($instance->pluginDefinition['metadata']['entity_type'])
+      ->load($instance->pluginDefinition['metadata']['entity_id']);
+    return $instance;
   }
 
   /**
