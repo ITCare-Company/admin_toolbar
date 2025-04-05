@@ -55,6 +55,9 @@ class AdminToolbarAlterTest extends BrowserTestBase {
 
   /**
    * Tests for a the hover of sub menus.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function testAdminToolbar() {
     // Assert that expanded links are present in the HTML.

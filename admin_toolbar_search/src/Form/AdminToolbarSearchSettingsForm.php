@@ -19,6 +19,9 @@ class AdminToolbarSearchSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string>
+   *   An array of configuration names that this form is responsible for.
    */
   protected function getEditableConfigNames() {
     return ['admin_toolbar_search.settings'];
@@ -26,6 +29,14 @@ class AdminToolbarSearchSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array<string, mixed>
+   *   The form array with the form elements.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['display_menu_item'] = [
@@ -39,6 +50,14 @@ class AdminToolbarSearchSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar_search.settings')

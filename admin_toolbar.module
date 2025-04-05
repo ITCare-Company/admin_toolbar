@@ -70,6 +70,10 @@ function toolbar_tools_menu_navigation_links(array $tree) {
     $link = $element->link;
     // Get the non-localized title to make the icon class.
     $definition = $link->getPluginDefinition();
+    // Prevent PHPSTAN error due to incorrect type hinting as an array of
+    // strings (string[]) for property 'options' of class 'MenuLinkTreeElement'
+    // in Core, preventing the assignment of an associative array of options.
+    // @phpstan-ignore offsetAssign.dimType
     $element->options['attributes']['class'][] = 'toolbar-icon';
     $string = strtolower(str_replace(['.', ' ', '_'], ['-', '-', '-'], $definition['id']));
     $element->options['attributes']['class'][] = Html::cleanCssIdentifier('toolbar-icon-' . $string);

@@ -154,6 +154,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Reload the previous page.
+   *
+   * @return string
+   *   The URL to redirect to.
    */
   public function reloadPage() {
     $request = $this->requestStack->getCurrentRequest();
@@ -167,6 +170,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Flushes all caches.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushAll() {
     $this->messenger()->addMessage($this->t('All caches cleared.'));
@@ -176,6 +182,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Flushes css and javascript caches.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushJsCss() {
     $this->cacheTagsInvalidator->invalidateTags(['library_info']);
@@ -196,6 +205,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Flushes plugins caches.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushPlugins() {
     $this->pluginCacheClearer->clearCachedDefinitions();
@@ -205,6 +217,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Resets all static caches.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushStatic() {
     drupal_static_reset();
@@ -214,6 +229,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Clears all cached menu data.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushMenu() {
     $this->cacheMenu->deleteAll();
@@ -227,6 +245,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Clears all cached views data.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushViews() {
     views_invalidate_cache();
@@ -236,6 +257,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Clears the twig cache.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function flushTwig() {
     $this->twig->invalidate();
@@ -245,6 +269,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Run the cron.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function runCron() {
     $this->cron->run();
@@ -254,6 +281,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Clear the rendered cache.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function cacheRender() {
     $this->cacheRender->deleteAll();
@@ -263,6 +293,9 @@ class ToolbarController extends ControllerBase {
 
   /**
    * Rebuild the theme registry.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response to the previous page.
    */
   public function themeRebuild() {
     $this->themeRegistry->reset();

@@ -31,6 +31,9 @@ class AdminToolbarSearchController extends ControllerBase {
 
   /**
    * Return additional search links.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   A JSON response with the search links.
    */
   public function search() {
     return new JsonResponse($this->links->getLinks());

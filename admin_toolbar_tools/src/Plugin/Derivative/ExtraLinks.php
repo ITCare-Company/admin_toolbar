@@ -91,6 +91,12 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<mixed> $base_plugin_definition
+   *   The base plugin definition.
+   *
+   * @return array<mixed>
+   *   An array of menu links plugin definitions.
    */
   public function getDerivativeDefinitions($base_plugin_definition) {
     $links = [];
@@ -112,11 +118,12 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       $content_entity = $entities['content_entity'];
       $content_entity_bundle_storage = $this->entityTypeManager->getStorage($content_entity_bundle);
       $bundles_ids = $content_entity_bundle_storage->getQuery()
-        ->accessCheck()
         ->sort('weight')
-        ->sort($this->entityTypeManager->getDefinition($content_entity_bundle)->getKey('label'))
+        ->sort($this->entityTypeManager->getDefinition($content_entity_bundle)->getKey('label') ?: '')
         ->pager($max_bundle_number)
+        ->accessCheck()
         ->execute();
+      /** @var \Drupal\Core\Config\Entity\ConfigEntityInterface[] $bundles */
       $bundles = $this->entityTypeManager->getStorage($content_entity_bundle)->loadMultiple($bundles_ids);
       if (count($bundles) == $max_bundle_number && $this->routeExists('entity.' . $content_entity_bundle . '.collection')) {
         $links[$content_entity_bundle . '.collection'] = [
@@ -744,8 +751,9 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
   /**
    * Lists all installed themes.
    *
-   * @return array
-   *   The list of installed themes.
+   * @return array<string, string>
+   *   The list of installed themes: an associative array of theme machine names
+   *   and their human-readable names.
    */
   public function installedThemes() {
     $themeHandler = $this->themeHandler;

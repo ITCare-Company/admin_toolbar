@@ -29,6 +29,9 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return static
+   *   Returns an instance of this plugin.
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
@@ -39,6 +42,9 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string>
+   *   An array of configuration names that this form is responsible for.
    */
   protected function getEditableConfigNames() {
     return [
@@ -55,6 +61,14 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array<string, mixed>
+   *   The form array with the form elements.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('admin_toolbar_tools.settings');
@@ -84,6 +98,14 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar_tools.settings')

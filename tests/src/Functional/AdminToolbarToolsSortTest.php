@@ -40,6 +40,9 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
 
   /**
    * Tests that menu updates on entity add/update/delete.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function testMenuUpdate() {
 
@@ -106,6 +109,9 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
 
   /**
    * Tests sorting of menus by label rather than machine name.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function testMenuSorting() {
 
@@ -229,6 +235,9 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
    * @param string $url
    *   The url to assert exists in the admin menu.
    *
+   * @return void
+   *   Nothing to return.
+   *
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    */
   protected function assertMenuHasHref($url) {
@@ -241,6 +250,9 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
    *
    * @param string $url
    *   The url to assert exists in the admin menu.
+   *
+   * @return void
+   *   Nothing to return.
    *
    * @throws \Behat\Mink\Exception\ExpectationException
    */

@@ -13,12 +13,24 @@ class MenuLinkEntity extends MenuLinkDefault {
   /**
    * The entity represented in the menu link.
    *
-   * @var \Drupal\Core\Entity\EntityInterface
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\EntityDescriptionInterface|null
    */
   protected $entity;
 
   /**
-   * {@inheritdoc}
+   * Adds the config entity bundle plugin to parent's container.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container to pull out services used in the plugin.
+   * @param array{field_definition: \Drupal\Core\Field\FieldDefinitionInterface, settings: array<string>, label: string, view_mode: string, third_party_settings: array<string>} $configuration
+   *   The configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param array<string, array<string, string>> $plugin_definition
+   *   The plugin implementation definition.
+   *
+   * @return static
+   *   Returns an instance of this plugin.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);

@@ -48,6 +48,9 @@ class AdminToolbarToolsAlterTest extends BrowserTestBase {
 
   /**
    * Tests for the hover of sub menus.
+   *
+   * @return void
+   *   Nothing to return.
    */
   public function testAdminToolbarTools() {
     // Assert that special menu items are present in the HTML.
