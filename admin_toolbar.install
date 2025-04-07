@@ -41,3 +41,35 @@ function admin_toolbar_update_8003() {
     $module_installer->uninstall(['admin_toolbar_links_access_filter']);
   }
 }
+
+/**
+ * Move the 'hoverintent_functionality' configuration to 'admin_toolbar'.
+ */
+function admin_toolbar_update_8004() {
+  // If the 'hoverintent_functionality' is set in the config
+  // 'admin_toolbar_tools.settings' copy it to the 'admin_toolbar.settings'.
+  /** @var \Drupal\Core\Config\Config $admin_toolbar_tools_config */
+  $admin_toolbar_tools_config = \Drupal::service('config.factory')
+    ->getEditable('admin_toolbar_tools.settings');
+  // If there is a value in the old config, move it to the new config.
+  if (!$admin_toolbar_tools_config->isNew()) {
+    $hoverintent_functionality = (bool) $admin_toolbar_tools_config->get('hoverintent_functionality');
+    // Move 'hoverintent_functionality' to the 'admin_toolbar.settings'.
+    \Drupal::service('config.factory')
+      ->getEditable('admin_toolbar.settings')
+      ->set('enable_hoverintent', $hoverintent_functionality)
+      ->save(TRUE);
+    // Remove the 'hoverintent_functionality' configuration from the
+    // 'admin_toolbar_tools.settings'.
+    $admin_toolbar_tools_config->clear('hoverintent_functionality')
+      ->save(TRUE);
+  }
+  else {
+    // If the admin_toolbar_tools config is new, it means that the module was
+    // not installed and therefore had no value for the config.
+    \Drupal::service('config.factory')
+      ->getEditable('admin_toolbar.settings')
+      ->set('enable_hoverintent', TRUE)
+      ->save(TRUE);
+  }
+}

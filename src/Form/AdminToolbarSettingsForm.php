@@ -81,6 +81,14 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
       '#options' => array_combine($depth_values, $depth_values),
     ];
 
+    // Enable the HoverIntent plugin behavior.
+    $form['enable_hoverintent'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable HoverIntent'),
+      '#description' => $this->t("Provides a smoother user experience, where only menu items which are paused over are expanded, to avoid accidental activations.<br/>Disable to use module's default basic JavaScript behavior."),
+      '#default_value' => $config->get('enable_hoverintent'),
+    ];
+
     $form['disable_sticky'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Disable sticky toolbar'),
@@ -105,6 +113,7 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar.settings')
       ->set('menu_depth', $form_state->getValue('menu_depth'))
+      ->set('enable_hoverintent', $form_state->getValue('enable_hoverintent'))
       ->set('disable_sticky', $form_state->getValue('disable_sticky'))
       ->save();
     parent::submitForm($form, $form_state);

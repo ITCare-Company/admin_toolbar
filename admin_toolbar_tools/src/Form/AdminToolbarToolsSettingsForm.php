@@ -79,13 +79,6 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('max_bundle_number'),
     ];
 
-    $form['hoverintent_functionality'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Enable/Disable the hoverintent functionality'),
-      '#description' => $this->t('Check it if you want to enable the hoverintent feature.'),
-      '#default_value' => $config->get('hoverintent_functionality'),
-    ];
-
     $form['show_local_tasks'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable/Disable local tasks display'),
@@ -110,7 +103,6 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar_tools.settings')
       ->set('max_bundle_number', $form_state->getValue('max_bundle_number'))
-      ->set('hoverintent_functionality', $form_state->getValue('hoverintent_functionality'))
       ->set('show_local_tasks', $form_state->getValue('show_local_tasks'))
       ->save();
     parent::submitForm($form, $form_state);

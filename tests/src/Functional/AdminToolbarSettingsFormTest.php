@@ -59,21 +59,37 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
     $this->submitForm([], 'Save configuration');
     $assert->pageTextContains('The configuration options have been saved.');
 
+    /* Test default values to compare with the ones after the changes. */
+
     // Test 'Menu depth' for the Admin Toolbar settings form, under:
     // Configuration > User interface > Admin Toolbar.
     // Default value '4': the menu should be displayed as level 3.
     $assert->elementExists('xpath', '//div[@class="toolbar-menu-administration"]//ul[contains(@class, "toolbar-menu")]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[@class="menu-item"]//a[contains(@href, "/admin/config/user-interface/admin-toolbar") and contains(.,"Admin Toolbar")]');
 
+    // Test Hoverintent and Sticky behavior.
+    $hover_js = 'js/admin_toolbar.hover.js';
+    $hoverintent_js = 'js/admin_toolbar.hoverintent.js';
+    $disable_sticky_css = 'css/admin_toolbar.disable_sticky.css';
+
+    // Check the default hoverintent library is not loaded.
+    $assert->responseNotContains($hover_js);
+    // Check the HoverIntent functionality is enabled.
+    $assert->responseContains($hoverintent_js);
     // Check sticky behavior is not disabled.
-    $assert->responseNotContains('css/admin_toolbar.disable_sticky.css');
+    $assert->responseNotContains($disable_sticky_css);
+
+    /* Change all the values of the settings form. */
 
     // Set the 'Menu depth' to '2', disable sticky and save the form.
     $edit = [
       'menu_depth' => '2',
+      'enable_hoverintent' => FALSE,
       'disable_sticky' => TRUE,
     ];
     $this->submitForm($edit, 'Save configuration');
     $assert->pageTextContains('The configuration options have been saved.');
+
+    /* Test updated values. */
 
     // Check the menu item 'Admin Toolbar' is not displayed.
     $assert->elementNotExists('xpath', '//div[@class="toolbar-menu-administration"]//ul[contains(@class, "toolbar-menu")]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[@class="menu-item"]//a[contains(@href, "/admin/config/user-interface/admin-toolbar") and contains(.,"Admin Toolbar")]');
@@ -82,8 +98,12 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
     // Check the menu item 'User interface' has a single child 'a' link tag.
     $assert->elementExists('xpath', '//div[@class="toolbar-menu-administration"]//ul[contains(@class, "toolbar-menu")]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[contains(@class, "menu-item") and count(child::*)=1 and child::*=a]');
 
+    // Check the default hoverintent library is loaded.
+    $assert->responseContains($hover_js);
+    // Check the HoverIntent functionality is not enabled.
+    $assert->responseNotContains($hoverintent_js);
     // Check sticky behavior is disabled.
-    $assert->responseContains('css/admin_toolbar.disable_sticky.css');
+    $assert->responseContains($disable_sticky_css);
 
   }
 

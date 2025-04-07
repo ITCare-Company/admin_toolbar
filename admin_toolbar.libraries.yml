@@ -5,21 +5,21 @@ toolbar.tree:
   js:
     js/admin_toolbar.js: {}
   dependencies:
-    - core/jquery
-    - core/drupal
+    # Require the Core Toolbar module library for the 'ToolbarModel' class.
+    - toolbar/toolbar
 
 toolbar.tree.hoverintent:
   js:
     js/jquery.hoverIntent.js: {}
     js/admin_toolbar.hoverintent.js: {}
   dependencies:
-    - core/jquery
+    - admin_toolbar/toolbar.tree
 
 toolbar.tree.hover:
   js:
     js/admin_toolbar.hover.js: {}
   dependencies:
-    - core/jquery
+    - admin_toolbar/toolbar.tree
 
 toolbar.disable_sticky:
   css:

@@ -17,18 +17,19 @@ function admin_toolbar_toolbar_alter(&$items) {
   $items['administration']['tray']['toolbar_administration']['#pre_render'] = [
     [AdminToolbar::class, 'preRenderTray'],
   ];
+  $admin_toolbar_config = \Drupal::config('admin_toolbar.settings');
   $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
-  $disable_sticky = \Drupal::config('admin_toolbar.settings')->get('disable_sticky');
+  $disable_sticky = $admin_toolbar_config->get('disable_sticky');
   if ($disable_sticky === TRUE) {
     $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.disable_sticky';
   }
-  $hoverintent_functionality = \Drupal::config('admin_toolbar_tools.settings')->get('hoverintent_functionality');
-  if ($hoverintent_functionality === TRUE) {
-    // Use jQuery hover() effect.
+  $enable_hoverintent = $admin_toolbar_config->get('enable_hoverintent');
+  if ($enable_hoverintent === TRUE) {
+    // Use the hoverIntent plugin library.
     $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hoverintent';
   }
   else {
-    // User hoverIntent plugin.
+    // Use default Admin Toolbar hover library.
     $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hover';
   }
 }
