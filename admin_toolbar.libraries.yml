@@ -21,7 +21,18 @@ toolbar.tree.hover:
   dependencies:
     - admin_toolbar/toolbar.tree
 
+# Disable toolbar sticky behavior.
 toolbar.disable_sticky:
   css:
     theme:
       css/admin_toolbar.disable_sticky.css: {}
+
+# Enable toolbar custom sticky behavior.
+toolbar.sticky_behavior:
+  css:
+    theme:
+      css/admin_toolbar.sticky_behavior.css: {}
+  js:
+    js/admin_toolbar.sticky_behavior.js: {}
+  dependencies:
+    - admin_toolbar/toolbar.tree

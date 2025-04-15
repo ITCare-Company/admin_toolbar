@@ -8,6 +8,10 @@ admin_toolbar.settings:
     enable_hoverintent:
       type: boolean
       label: 'Enable HoverIntent'
-    disable_sticky:
-      type: boolean
-      label: 'Disable sticky toolbar'
+    sticky_behavior:
+      type: string
+      label: 'Sticky toolbar behavior'
+      options:
+        enabled: 'Enabled'
+        disabled: 'Disabled'
+        hide_on_scroll_down: 'Disabled: Hide on scroll-down, show on scroll-up'

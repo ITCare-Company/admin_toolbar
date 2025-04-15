@@ -19,10 +19,22 @@ function admin_toolbar_toolbar_alter(&$items) {
   ];
   $admin_toolbar_config = \Drupal::config('admin_toolbar.settings');
   $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
-  $disable_sticky = $admin_toolbar_config->get('disable_sticky');
-  if ($disable_sticky === TRUE) {
-    $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.disable_sticky';
+
+  // Add sticky behavior libraries based on the configuration.
+  $sticky_behavior = $admin_toolbar_config->get('sticky_behavior') ?? 'enabled';
+  switch ($sticky_behavior) {
+    case 'disabled':
+      $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.disable_sticky';
+      break;
+
+    case 'hide_on_scroll_down':
+      $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.sticky_behavior';
+      break;
+
+    default:
+      break;
   }
+
   $enable_hoverintent = $admin_toolbar_config->get('enable_hoverintent');
   if ($enable_hoverintent === TRUE) {
     // Use the hoverIntent plugin library.

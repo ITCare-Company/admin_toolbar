@@ -89,11 +89,20 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('enable_hoverintent'),
     ];
 
-    $form['disable_sticky'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Disable sticky toolbar'),
-      '#description' => $this->t("Disable Admin Toolbar's sticky behavior so it stays at the top of the page when scrolling."),
-      '#default_value' => $config->get('disable_sticky'),
+    $form['sticky_options_wrapper'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Toolbar sticky behavior'),
+    ];
+
+    $form['sticky_options_wrapper']['sticky_behavior'] = [
+      '#type' => 'radios',
+      '#prefix' => $this->t("By default, the Admin Toolbar sticky behavior is <em>enabled</em> so it stays at the top of the browser window when scrolling up or down.<br/>Select <em>Disabled</em> to disable Admin Toolbar's sticky behavior so it stays at the top of the page when scrolling."),
+      '#options' => [
+        'enabled' => $this->t('Enabled'),
+        'disabled' => $this->t('Disabled'),
+        'hide_on_scroll_down' => $this->t('Disabled: Hide on scroll-down, show on scroll-up'),
+      ],
+      '#default_value' => $config->get('sticky_behavior') ?: 'enabled',
     ];
 
     return parent::buildForm($form, $form_state);
@@ -114,7 +123,7 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
     $this->config('admin_toolbar.settings')
       ->set('menu_depth', $form_state->getValue('menu_depth'))
       ->set('enable_hoverintent', $form_state->getValue('enable_hoverintent'))
-      ->set('disable_sticky', $form_state->getValue('disable_sticky'))
+      ->set('sticky_behavior', $form_state->getValue('sticky_behavior'))
       ->save();
     parent::submitForm($form, $form_state);
     $this->cacheMenu->deleteAll();
