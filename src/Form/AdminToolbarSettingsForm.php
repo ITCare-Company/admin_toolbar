@@ -4,6 +4,7 @@ namespace Drupal\admin_toolbar\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -72,37 +73,72 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('admin_toolbar.settings');
+
+    // Add maximum 'Menu depth' select field with a range of values: 1 to 9.
     $depth_values = range(1, 9);
     $form['menu_depth'] = [
       '#type' => 'select',
       '#title' => $this->t('Menu depth'),
-      '#description' => $this->t('Maximal depth of displayed menu.'),
+      '#description' => $this->t('Maximum depth of displayed nested menu items.'),
       '#default_value' => $config->get('menu_depth'),
       '#options' => array_combine($depth_values, $depth_values),
     ];
 
-    // Enable the HoverIntent plugin behavior.
-    $form['enable_hoverintent'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Enable HoverIntent'),
-      '#description' => $this->t("Provides a smoother user experience, where only menu items which are paused over are expanded, to avoid accidental activations.<br/>Disable to use module's default basic JavaScript behavior."),
-      '#default_value' => $config->get('enable_hoverintent'),
-    ];
-
+    // Add 'sticky behavior' wrapper as a 'fieldset' so it stays displayed.
     $form['sticky_options_wrapper'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Toolbar sticky behavior'),
     ];
-
+    // Add 'sticky behavior' radio field with options.
     $form['sticky_options_wrapper']['sticky_behavior'] = [
       '#type' => 'radios',
-      '#prefix' => $this->t("By default, the Admin Toolbar sticky behavior is <em>enabled</em> so it stays at the top of the browser window when scrolling up or down.<br/>Select <em>Disabled</em> to disable Admin Toolbar's sticky behavior so it stays at the top of the page when scrolling."),
+      '#prefix' => $this->t("By default, the Admin Toolbar sticky behavior is <em>enabled</em> so it stays at the top of the browser window when scrolling up or down.<br/>Select <em>Disabled</em> to disable Admin Toolbar's sticky behavior so it stays at the top of the page when scrolling up/down and does not follow the browser window."),
       '#options' => [
         'enabled' => $this->t('Enabled'),
         'disabled' => $this->t('Disabled'),
         'hide_on_scroll_down' => $this->t('Disabled: Hide on scroll-down, show on scroll-up'),
       ],
       '#default_value' => $config->get('sticky_behavior') ?: 'enabled',
+    ];
+
+    /* Add hoverIntent form settings. */
+
+    // Add hoverIntent behavior wrapper as a 'fieldset' so it stays displayed.
+    $form['hoverintent_behavior'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Toolbar hoverIntent behavior'),
+      '#tree' => TRUE,
+    ];
+
+    // Create link to hoverIntent source website.
+    $hoverintent_source_link = new TranslatableMarkup('<a href=":hoverintent_src_url" target="_blank">hoverIntent</a>', [':hoverintent_src_url' => 'https://briancherne.github.io/jquery-hoverIntent/']);
+
+    // Add enable hoverIntent behavior checkbox.
+    $form['hoverintent_behavior']['enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable hoverIntent'),
+      '#prefix' => $this->t(
+        "Provides a smoother user experience, where only menu items which are paused over are expanded, to avoid accidental activations.<br/>Disable @hoverintent_source_link to use module's default basic JavaScript behavior.",
+        ['@hoverintent_source_link' => $hoverintent_source_link]
+      ),
+      '#default_value' => $config->get('hoverintent_behavior')['enabled'] ?? TRUE,
+    ];
+
+    // Add hoverIntent timeout field as a select with a range of integer values.
+    $timeout_range_values = range(250, 2000, 250);
+    $form['hoverintent_behavior']['timeout'] = [
+      '#type' => 'select',
+      '#title' => $this->t('hoverIntent timeout (ms)'),
+      '#field_suffix' => 'milliseconds',
+      '#description' => $this->t('Sets the hoverIntent trigger timeout (steps of 250).<br/>The higher the value, the longer the menu dropdown stays visible, after the mouse moves out (default: 500ms).'),
+      '#options' => array_combine($timeout_range_values, $timeout_range_values),
+      '#default_value' => $config->get('hoverintent_behavior')['timeout'],
+      // Display the timeout field if hoverIntent is enabled.
+      '#states' => [
+        'visible' => [
+          ':input[name="hoverintent_behavior[enabled]"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
 
     return parent::buildForm($form, $form_state);
@@ -122,8 +158,8 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar.settings')
       ->set('menu_depth', $form_state->getValue('menu_depth'))
-      ->set('enable_hoverintent', $form_state->getValue('enable_hoverintent'))
       ->set('sticky_behavior', $form_state->getValue('sticky_behavior'))
+      ->set('hoverintent_behavior', $form_state->getValue('hoverintent_behavior'))
       ->save();
     parent::submitForm($form, $form_state);
     $this->cacheMenu->deleteAll();

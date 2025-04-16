@@ -1,3 +1,5 @@
 menu_depth: 4
-enable_hoverintent: true
 sticky_behavior: 'enabled'
+hoverintent_behavior:
+  enabled: true
+  timeout: 500

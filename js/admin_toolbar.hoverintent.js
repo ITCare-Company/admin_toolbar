@@ -3,7 +3,7 @@
  * Admin Toolbar hoverIntent plugin behavior for the display of the menu.
  */
 
-(($, once) => {
+(($, Drupal, once) => {
   /**
    * Implements the Admin Toolbar hoverIntent plugin behavior.
    *
@@ -13,7 +13,7 @@
    *   Attaches the behavior for the display of the menu on hover.
    */
   Drupal.behaviors.adminToolbarHoverIntent = {
-    attach: (context) => {
+    attach: (context, settings) => {
       if (context !== document) {
         return;
       }
@@ -33,9 +33,9 @@
           out() {
             $(this).removeClass('hover-intent');
           },
-          timeout: 250,
+          timeout: settings.hoverIntentTimeout,
         });
       });
     },
   };
-})(jQuery, once);
+})(jQuery, Drupal, once);

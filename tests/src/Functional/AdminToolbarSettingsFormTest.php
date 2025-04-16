@@ -56,8 +56,13 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
 
     // Test the 'Admin Toolbar settings' page form submission and fields.
     $this->drupalGet('admin/config/user-interface/admin-toolbar');
-    // Submit the form with default values.
-    $this->submitForm([], 'Save configuration');
+
+    // Change the hoverIntent settings values.
+    $hoverintent_settings_expected_js_value = '"hoverIntentTimeout":750';
+    $edit = [
+      'hoverintent_behavior[timeout]' => 750,
+    ];
+    $this->submitForm($edit, 'Save configuration');
     $assert->pageTextContains('The configuration options have been saved.');
 
     /* Test default values to compare with the ones after the changes. */
@@ -67,7 +72,7 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
     // Default value '4': the menu should be displayed as level 3.
     $assert->elementExists('xpath', '//div[@class="toolbar-menu-administration"]//ul[contains(@class, "toolbar-menu")]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[contains(@class, "menu-item")]//ul[@class="toolbar-menu"]//li[@class="menu-item"]//a[contains(@href, "/admin/config/user-interface/admin-toolbar") and contains(.,"Admin Toolbar")]');
 
-    // Test Hoverintent and Sticky behavior.
+    // Test hoverintent and Sticky behavior.
     $hover_js = 'js/admin_toolbar.hover.js';
     $hoverintent_js = 'js/admin_toolbar.hoverintent.js';
     // Path to the libraries CSS files for sticky behavior, to be tested.
@@ -76,19 +81,21 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
 
     // Check the default hoverintent library is not loaded.
     $assert->responseNotContains($hover_js);
-    // Check the HoverIntent functionality is enabled.
+    // Check the hoverIntent functionality is enabled.
     $assert->responseContains($hoverintent_js);
-    // Check sticky behavior is 'enabled' by default (not disabled).
+    // Check the hoverIntent drupalSettings values are loaded as expected.
+    $assert->responseContains($hoverintent_settings_expected_js_value);
+    // Check sticky behavior is not disabled.
     $assert->responseNotContains($disable_sticky_css);
     $assert->responseNotContains($sticky_behavior_css);
 
     /* Change all the values of the settings form. */
 
-    // Set the 'Menu depth' to '2', disable sticky and save the form.
+    // Set the 'Menu depth' to '2', disable sticky, hoverIntent and save.
     $edit = [
       'menu_depth' => '2',
-      'enable_hoverintent' => FALSE,
       'sticky_behavior' => 'disabled',
+      'hoverintent_behavior[enabled]' => FALSE,
     ];
     $this->submitForm($edit, 'Save configuration');
     $assert->pageTextContains('The configuration options have been saved.');
@@ -104,8 +111,10 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
 
     // Check the default hoverintent library is loaded.
     $assert->responseContains($hover_js);
-    // Check the HoverIntent functionality is not enabled.
+    // Check the hoverIntent functionality is not enabled.
     $assert->responseNotContains($hoverintent_js);
+    // Check the hoverIntent drupalSettings values are not loaded.
+    $assert->responseNotContains('hoverIntentTimeout');
     // Check sticky behavior is disabled.
     $assert->responseContains($disable_sticky_css);
     $assert->responseNotContains($sticky_behavior_css);

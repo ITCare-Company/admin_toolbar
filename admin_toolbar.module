@@ -34,11 +34,12 @@ function admin_toolbar_toolbar_alter(&$items) {
     default:
       break;
   }
-
-  $enable_hoverintent = $admin_toolbar_config->get('enable_hoverintent');
-  if ($enable_hoverintent === TRUE) {
+  $hoverintent_behavior = $admin_toolbar_config->get('hoverintent_behavior');
+  if ($hoverintent_behavior['enabled'] === TRUE) {
     // Use the hoverIntent plugin library.
     $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hoverintent';
+    // Add the configured hoverIntent settings values to the JS of the toolbar.
+    $items['administration']['#attached']['drupalSettings']['hoverIntentTimeout'] = $hoverintent_behavior['timeout'];
   }
   else {
     // Use default Admin Toolbar hover library.

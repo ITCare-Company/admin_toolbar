@@ -5,9 +5,6 @@ admin_toolbar.settings:
     menu_depth:
       type: integer
       label: 'Depth of displayed menu'
-    enable_hoverintent:
-      type: boolean
-      label: 'Enable HoverIntent'
     sticky_behavior:
       type: string
       label: 'Sticky toolbar behavior'
@@ -15,3 +12,13 @@ admin_toolbar.settings:
         enabled: 'Enabled'
         disabled: 'Disabled'
         hide_on_scroll_down: 'Disabled: Hide on scroll-down, show on scroll-up'
+    hoverintent_behavior:
+      type: mapping
+      label: 'hoverIntent behavior'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Enable hoverIntent'
+        timeout:
+          type: integer
+          label: 'hoverIntent timeout'
