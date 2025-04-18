@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\Tests\admin_toolbar_tools\Functional;
+namespace Drupal\Tests\admin_toolbar_search\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test the Admin Toolbar Tools settings form.
+ * Test the Admin Toolbar Search settings form.
  *
  * @group admin_toolbar
  */
-class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
+class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
 
   /**
    * {@inheritdoc}
@@ -20,7 +20,7 @@ class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'admin_toolbar_tools',
+    'admin_toolbar_search',
   ];
 
   /**
@@ -54,8 +54,8 @@ class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
     // Log in as an admin user to test admin pages.
     $this->drupalLogin($this->adminUser);
 
-    // Test the 'Admin Toolbar Tools settings' page form submission and fields.
-    $this->drupalGet('admin/config/user-interface/admin-toolbar-tools');
+    // Test the 'Admin Toolbar Search settings' page form submission and fields.
+    $this->drupalGet('admin/config/user-interface/admin-toolbar-search-settings');
     // Submit the form with default values.
     $this->submitForm([], 'Save configuration');
     // Check the form submission was successful.
