@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\admin_toolbar_search\Functional;
 
+use Drupal\block\Entity\Block;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -21,6 +22,8 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
    */
   protected static $modules = [
     'admin_toolbar_search',
+    // Enable the block module to be able to test module's local tasks.
+    'block',
   ];
 
   /**
@@ -44,6 +47,8 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
       'use admin toolbar search',
     ];
     $this->adminUser = $this->drupalCreateUser($permissions);
+    // Create a block for testing module's primary local tasks.
+    $this->createPrimaryLocalTasksBlock();
   }
 
   /**
@@ -93,6 +98,35 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
     $assert->responseNotContains('admin_toolbar_search.keyboard_shortcut.js');
     // Check the display menu item JS is not found.
     $assert->responseNotContains('displayMenuItem');
+    // Check the module's local tasks are displayed as expected.
+    $local_tasks_regex = '/<div.*-primary-local-tasks.*>([\r\n].*)+<a.*>Toolbar settings<\/a>.*[\r\n].*<a.*>Search settings<\/a>.*[\r\n].*<a.*>Tools settings<\/a>.*[\r\n].*([\r\n].*)+<\/div>/';
+    $assert->responseMatches($local_tasks_regex);
+  }
+
+  /**
+   * Helper function to create a block to test module's primary local tasks.
+   */
+  private function createPrimaryLocalTasksBlock(): void {
+    $values = [
+      // A unique ID for the block instance.
+      'id' => 'stark_primary_local_tasks',
+      // The plugin block id as defined in the class.
+      'plugin' => 'local_tasks_block',
+      // The machine name of the theme region.
+      'region' => 'highlighted',
+      'settings' => [
+        'label' => 'Primary tabs',
+        'label_display' => '0',
+        'primary' => TRUE,
+        'secondary' => FALSE,
+      ],
+      // The machine name of the theme.
+      'theme' => $this->defaultTheme,
+      'visibility' => [],
+      'weight' => 100,
+    ];
+    $block = Block::create($values);
+    $block->save();
   }
 
 }
