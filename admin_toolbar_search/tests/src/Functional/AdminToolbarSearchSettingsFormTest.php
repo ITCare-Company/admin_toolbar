@@ -40,6 +40,8 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
       'access toolbar',
       'access administration pages',
       'administer site configuration',
+      // This permission is needed to test the inclusion of the JS libraries.
+      'use admin toolbar search',
     ];
     $this->adminUser = $this->drupalCreateUser($permissions);
   }
@@ -56,10 +58,41 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
 
     // Test the 'Admin Toolbar Search settings' page form submission and fields.
     $this->drupalGet('admin/config/user-interface/admin-toolbar-search-settings');
-    // Submit the form with default values.
-    $this->submitForm([], 'Save configuration');
+
+    /* Test default values to compare with the ones after the changes. */
+
+    // Test 'enable_keyboard_shortcut'.
+    $keyboard_shortcut_js = 'admin_toolbar_search/js/admin_toolbar_search.keyboard_shortcut.js';
+    // Check the keyboard shortcut library is loaded by default.
+    $assert->responseContains($keyboard_shortcut_js);
+    // Check the display menu item is disabled by default.
+    $assert->responseContains('"displayMenuItem":false');
+
+    // Change the value of 'display_menu_item' and submit the form.
+    $this->submitForm([
+      'display_menu_item' => TRUE,
+    ], 'Save configuration');
     // Check the form submission was successful.
     $assert->pageTextContains('The configuration options have been saved.');
+
+    /* Test updated values. */
+
+    // Check the keyboard shortcut library is loaded by default.
+    $assert->responseContains($keyboard_shortcut_js);
+    // Check the display menu item is disabled by default.
+    $assert->responseContains('"displayMenuItem":true');
+
+    // Change the value of 'enable_keyboard_shortcut' and submit the form.
+    $this->submitForm([
+      'enable_keyboard_shortcut' => FALSE,
+    ], 'Save configuration');
+    // Check the form submission was successful.
+    $assert->pageTextContains('The configuration options have been saved.');
+
+    // Check the keyboard shortcut library is not loaded.
+    $assert->responseNotContains('admin_toolbar_search.keyboard_shortcut.js');
+    // Check the display menu item JS is not found.
+    $assert->responseNotContains('displayMenuItem');
   }
 
 }
