@@ -74,14 +74,10 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('admin_toolbar.settings');
 
-    // Add maximum 'Menu depth' select field with a range of values: 1 to 9.
-    $depth_values = range(1, 9);
-    $form['menu_depth'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Menu depth'),
-      '#description' => $this->t('Maximum depth of displayed nested menu items.'),
-      '#default_value' => $config->get('menu_depth'),
-      '#options' => array_combine($depth_values, $depth_values),
+    // Add an introduction text to module's settings form.
+    $form['settings_form_help_intro'] = [
+      '#type' => 'markup',
+      '#markup' => $this->t('The Admin Toolbar module provides a better user experience for the default Drupal Toolbar.<br/>It is a drop-down menu that allows quicker access to all the administration pages in a more efficient way, with fewer clicks and less scrolling.<br/><br/>The following settings mostly provide advanced configuration of the JavaScript behavior of the Toolbar: sticky and hoverIntent.'),
     ];
 
     // Add 'sticky behavior' wrapper as a 'fieldset' so it stays displayed.
@@ -95,8 +91,8 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
       '#prefix' => $this->t("By default, the Admin Toolbar sticky behavior is <em>enabled</em> so it stays at the top of the browser window when scrolling up or down.<br/>Select <em>Disabled</em> to disable Admin Toolbar's sticky behavior so it stays at the top of the page when scrolling up/down and does not follow the browser window."),
       '#options' => [
         'enabled' => $this->t('Enabled'),
+        'hide_on_scroll_down' => $this->t('Disabled, show on scroll-up'),
         'disabled' => $this->t('Disabled'),
-        'hide_on_scroll_down' => $this->t('Disabled: Hide on scroll-down, show on scroll-up'),
       ],
       '#default_value' => $config->get('sticky_behavior') ?: 'enabled',
     ];
@@ -139,6 +135,27 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
           ':input[name="hoverintent_behavior[enabled]"]' => ['checked' => TRUE],
         ],
       ],
+    ];
+
+    /* Add Advanced form settings. */
+
+    // Add 'Advanced settings' wrapper as 'details' so it could be collapsed.
+    $form['advanced_settings_wrapper'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Advanced settings'),
+      '#description' => $this->t('Advanced settings for the Admin Toolbar module.'),
+      // Collapsed by default.
+      '#open' => FALSE,
+    ];
+
+    // Add maximum 'Menu depth' select field with a range of values: 1 to 9.
+    $depth_values = range(1, 9);
+    $form['advanced_settings_wrapper']['menu_depth'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Menu depth'),
+      '#description' => $this->t('Maximum depth of displayed nested menu items.'),
+      '#default_value' => $config->get('menu_depth'),
+      '#options' => array_combine($depth_values, $depth_values),
     ];
 
     return parent::buildForm($form, $form_state);
