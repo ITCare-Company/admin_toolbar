@@ -37,7 +37,7 @@ function admin_toolbar_search_toolbar_alter(&$items) {
   $display_menu_item = $admin_toolbar_search_settings->get('display_menu_item');
   // Admin Toolbar Search field labels.
   $search_field_title = t('Search');
-  $search_field_placeholder = t('Admin Toolbar quick search');
+  $search_field_placeholder = t('Admin Toolbar Search (Alt+a)');
   $search_field_title_attribute = t('Keyboard shortcut: Alt + a');
 
   if (!$display_menu_item) {
