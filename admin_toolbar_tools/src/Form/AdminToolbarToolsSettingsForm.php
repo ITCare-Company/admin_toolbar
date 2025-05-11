@@ -77,6 +77,8 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Maximum number of bundle sub-menus to display'),
       '#description' => $this->t('Loading a large number of items can cause performance issues.'),
       '#default_value' => $config->get('max_bundle_number'),
+      '#min' => 1,
+      '#max' => 500,
     ];
 
     $form['show_local_tasks'] = [
