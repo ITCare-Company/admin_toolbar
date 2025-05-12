@@ -62,7 +62,7 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
     $this->drupalLogin($this->adminUser);
 
     // Test the 'Admin Toolbar Search settings' page form submission and fields.
-    $this->drupalGet('admin/config/user-interface/admin-toolbar-search-settings');
+    $this->drupalGet('admin/config/user-interface/admin-toolbar-search');
 
     /* Test default values to compare with the ones after the changes. */
 
