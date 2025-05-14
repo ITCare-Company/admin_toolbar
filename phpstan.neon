@@ -14,7 +14,7 @@ parameters:
     -
       message: '#Function admin_toolbar_[a-zA-Z0-9\\_]+\(\) has parameter \$[a-zA-Z0-9\\_]+ with no type specified\.#'
       paths:
-        # - *.install
+        - *.install
         - *.module
     -
       message: '#Function admin_toolbar_[a-zA-Z0-9\\_]+\(\) has parameter \$[a-zA-Z0-9\\_]+ with no value type specified in iterable type [a-zA-Z0-9\\_]+\.#'
