@@ -2,6 +2,9 @@ admin_toolbar.settings:
   type: config_object
   label: 'Admin Toolbar settings'
   mapping:
+    enable_toggle_shortcut:
+      type: boolean
+      label: 'Enable toggle toolbar keyboard shortcut'
     menu_depth:
       type: integer
       label: 'Depth of displayed menu'

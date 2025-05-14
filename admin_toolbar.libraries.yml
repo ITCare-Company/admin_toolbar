@@ -36,3 +36,14 @@ toolbar.sticky_behavior:
     js/admin_toolbar.sticky_behavior.js: {}
   dependencies:
     - admin_toolbar/toolbar.tree
+
+# Enable toolbar toggle keyboard shortcut.
+toolbar.toggle_shortcut:
+  css:
+    theme:
+      css/admin_toolbar.sticky_behavior.css: {}
+      css/admin_toolbar.toggle_shortcut.css: {}
+  js:
+    js/admin_toolbar.toggle_shortcut.js: {}
+  dependencies:
+    - admin_toolbar/toolbar.tree

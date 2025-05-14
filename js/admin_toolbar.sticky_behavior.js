@@ -32,6 +32,14 @@
           let lastScrollTop = 0;
 
           window.addEventListener('scroll', () => {
+            if (
+              localStorage.getItem(
+                'Drupal.adminToolbar.toggleToolbarHidden',
+              ) === 'true'
+            ) {
+              // If the toolbar is hidden, do not execute the scroll logic.
+              return;
+            }
             // Get the current scrollTop position from the document.
             const { scrollTop } = document.scrollingElement;
             // Ensure user scrolled more than delta. The abs() is used to

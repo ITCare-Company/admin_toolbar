@@ -97,6 +97,14 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('sticky_behavior') ?: 'enabled',
     ];
 
+    // Checkbox field to enable/disable the shortcut for toggling the toolbar.
+    $form['sticky_options_wrapper']['enable_toggle_shortcut'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide or show the toolbar with shortcut (Alt + p)'),
+      '#description' => $this->t('If set, the toolbar will be hidden or visible when the user presses the keys: "Alt + p".<br/>Disable this setting if it conflicts with any existing keyboard configuration.'),
+      '#default_value' => $config->get('enable_toggle_shortcut'),
+    ];
+
     /* Add hoverIntent form settings. */
 
     // Add hoverIntent behavior wrapper as a 'fieldset' so it stays displayed.
@@ -174,6 +182,7 @@ class AdminToolbarSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('admin_toolbar.settings')
+      ->set('enable_toggle_shortcut', $form_state->getValue('enable_toggle_shortcut'))
       ->set('menu_depth', $form_state->getValue('menu_depth'))
       ->set('sticky_behavior', $form_state->getValue('sticky_behavior'))
       ->set('hoverintent_behavior', $form_state->getValue('hoverintent_behavior'))

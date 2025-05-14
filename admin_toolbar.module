@@ -34,6 +34,7 @@ function admin_toolbar_toolbar_alter(&$items) {
     default:
       break;
   }
+  // Add the hoverIntent behavior library if enabled.
   $hoverintent_behavior = $admin_toolbar_config->get('hoverintent_behavior');
   if ($hoverintent_behavior['enabled'] === TRUE) {
     // Use the hoverIntent plugin library.
@@ -44,6 +45,11 @@ function admin_toolbar_toolbar_alter(&$items) {
   else {
     // Use default Admin Toolbar hover library.
     $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree.hover';
+  }
+
+  // Add the toggle toolbar keyboard shortcut library if enabled.
+  if ($admin_toolbar_config->get('enable_toggle_shortcut')) {
+    $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.toggle_shortcut';
   }
 }
 
