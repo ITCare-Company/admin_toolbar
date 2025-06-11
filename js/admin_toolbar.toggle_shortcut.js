@@ -38,7 +38,9 @@
 
         // Shortcut 'Alt + p' will toggle the display of the toolbar.
         document.addEventListener('keydown', (event) => {
-          if (event.altKey && event.key === 'p') {
+          if (event.altKey && (event.key === 'p' || event.keyCode === 80)) {
+            // Prevent transmitting keypress.
+            event.preventDefault();
             // Toggle the display of the toolbar.
             this.toggle();
           }
