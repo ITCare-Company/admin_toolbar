@@ -54,6 +54,9 @@ class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
     // Log in as an admin user to test admin pages.
     $this->drupalLogin($this->adminUser);
 
+    // Assert that special menu items are present in the HTML.
+    $assert->responseContains('class="toolbar-icon toolbar-icon-admin-toolbar-tools-flush"');
+
     // Test the 'Admin Toolbar Tools settings' page form submission and fields.
     $this->drupalGet('admin/config/user-interface/admin-toolbar-tools');
     // Submit the form with default values.

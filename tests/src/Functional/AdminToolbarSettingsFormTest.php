@@ -21,6 +21,8 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
    */
   protected static $modules = [
     'admin_toolbar',
+    // Enable the 'user' module to be able to test a link under config.
+    'user',
   ];
 
   /**
@@ -40,6 +42,8 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
       'access toolbar',
       'access administration pages',
       'administer site configuration',
+      // This permission is needed to display the link to be tested.
+      'administer account settings',
     ];
     $this->adminUser = $this->drupalCreateUser($permissions);
   }
@@ -53,6 +57,9 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
 
     // Log in as an admin user to test admin pages.
     $this->drupalLogin($this->adminUser);
+
+    // Assert the account settings link under config, has the expected classes.
+    $assert->responseContains('class="toolbar-icon toolbar-icon-user-admin-index"');
 
     // Test the 'Admin Toolbar settings' page form submission and fields.
     $this->drupalGet('admin/config/user-interface/admin-toolbar');
