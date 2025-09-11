@@ -194,7 +194,7 @@ class ToolbarController extends ControllerBase {
 
     // @todo Remove deprecated code when support for core:10.2 is dropped.
     if (floatval(\Drupal::VERSION) < 10.2) {
-      // @phpstan-ignore function.notFound
+      // @phpstan-ignore-next-line
       _drupal_flush_css_js();
     }
     else {
