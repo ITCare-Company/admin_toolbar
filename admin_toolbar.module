@@ -96,7 +96,9 @@ function toolbar_tools_menu_navigation_links(array $tree) {
     // @phpstan-ignore offsetAssign.dimType
     $element->options['attributes']['class'][] = 'toolbar-icon';
     $string = strtolower(str_replace(['.', ' ', '_'], ['-', '-', '-'], $definition['id']));
+    // @phpstan-ignore assign.propertyType
     $element->options['attributes']['class'][] = Html::cleanCssIdentifier('toolbar-icon-' . $string);
+    // @phpstan-ignore assign.propertyType
     $element->options['attributes']['title'] = $link->getDescription();
   }
   return $tree;
