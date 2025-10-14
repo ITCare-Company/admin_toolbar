@@ -38,7 +38,7 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
   protected $userWithAccess;
 
   /**
-   * A test user without the 'Use Admin Toolbar search' permission..
+   * A test user without the 'Use Admin Toolbar search' permission.
    *
    * @var \Drupal\user\UserInterface
    */
