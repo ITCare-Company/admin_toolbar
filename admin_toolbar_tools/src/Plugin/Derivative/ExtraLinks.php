@@ -131,6 +131,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'title' => $this->t('All types'),
           'route_name' => 'entity.' . $content_entity_bundle . '.collection',
           'parent' => 'entity.' . $content_entity_bundle . '.collection',
+          // Ensure the 'All types' link is always the first of the list.
           'weight' => -999,
         ] + $base_plugin_definition;
       }
@@ -306,6 +307,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'title' => $this->t('Edit permissions'),
         'route_name' => 'entity.user_role.edit_permissions_form',
         'parent' => $base_plugin_definition['id'] . ':entity.user_role.edit_form.' . $role->id(),
+        // Ensure the 'Edit permissions' link displays first.
+        'weight' => -1,
         'route_parameters' => ['user_role' => $role->id()],
       ] + $base_plugin_definition;
       if ($role->id() != 'anonymous' && $role->id() != 'authenticated') {
@@ -313,6 +316,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'title' => $this->t('Delete'),
           'route_name' => 'entity.user_role.delete_form',
           'parent' => $base_plugin_definition['id'] . ':entity.user_role.edit_form.' . $role->id(),
+          // Ensure the 'Delete' link displays last.
+          'weight' => 3,
           'route_parameters' => ['user_role' => $role->id()],
         ] + $base_plugin_definition;
       }
@@ -321,6 +326,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'title' => $this->t('Devel'),
           'route_name' => 'entity.user_role.devel_load',
           'parent' => $base_plugin_definition['id'] . ':entity.user_role.edit_form.' . $role->id(),
+          'weight' => 2,
           'route_parameters' => ['user_role' => $role->id()],
         ] + $base_plugin_definition;
       }
@@ -380,7 +386,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
         'title' => $this->t('Add menu'),
         'route_name' => 'entity.menu.add_form',
         'parent' => 'entity.menu.collection',
-        'weight' => -2,
+        'weight' => -1,
       ] + $base_plugin_definition;
       // Adds links to /admin/structure/menu.
       $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
@@ -391,7 +397,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'title' => $this->t('All menus'),
           'route_name' => 'entity.menu.collection',
           'parent' => 'entity.menu.collection',
-          'weight' => -1,
+          // Ensure the 'All menus' link is always the first of the list.
+          'weight' => -2,
         ] + $base_plugin_definition;
       }
       $weight = 0;
@@ -427,6 +434,8 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
             'title' => $this->t('Delete'),
             'route_name' => 'entity.menu.delete_form',
             'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
+            // Ensure the 'Delete' link displays last.
+            'weight' => 2,
             'route_parameters' => ['menu' => $menu_id],
           ] + $base_plugin_definition;
         }
@@ -435,6 +444,7 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
             'title' => $this->t('Devel'),
             'route_name' => 'entity.menu.devel_load',
             'parent' => $base_plugin_definition['id'] . ':entity.menu.edit_form.' . $menu_id,
+            'weight' => 1,
             'route_parameters' => ['menu' => $menu_id],
           ] + $base_plugin_definition;
         }
