@@ -22,6 +22,7 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'admin_toolbar',
     'admin_toolbar_search',
     'node',
     'media',
