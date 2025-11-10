@@ -24,7 +24,7 @@ class AdminToolbarSearchTest extends AdminToolbarSearchTestBase {
     $this->drupalLogin($this->userWithAccess);
     /** @var \Drupal\FunctionalJavascriptTests\JSWebAssert $assert_session */
     $assert_session = $this->assertSession();
-    $assert_session->responseContains('admin.toolbar_search.css');
+    $assert_session->responseContains('admin_toolbar_search.css');
     $assert_session->responseContains('admin_toolbar_search.js');
     $assert_session->waitForElementVisible('css', $search_tab);
     $assert_session->waitForElementVisible('css', $search_toolbar_item);
@@ -48,7 +48,7 @@ class AdminToolbarSearchTest extends AdminToolbarSearchTestBase {
 
     $this->drupalLogin($this->noAccessUser);
     $assert_session = $this->assertSession();
-    $assert_session->responseNotContains('admin.toolbar_search.css');
+    $assert_session->responseNotContains('admin_toolbar_search.css');
     $assert_session->responseNotContains('admin_toolbar_search.js');
     $assert_session->elementNotExists('css', $search_tab);
     $assert_session->elementNotExists('css', $search_toolbar_item);
