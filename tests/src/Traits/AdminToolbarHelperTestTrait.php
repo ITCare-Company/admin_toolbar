@@ -75,7 +75,7 @@ trait AdminToolbarHelperTestTrait {
     // Assert whether the link selected with the CSS expression exists in the
     // admin toolbar.
     $this->assertSession()
-      ->elementExists('css', 'div[id="' . $this->testAdminToolbarHtmlIds['admin_tray'] . '"] li' . $link_position_conditions . '[class*="menu-item"] a' . $link_css_conditions);
+      ->elementExists('css', 'div[id="' . $this->testAdminToolbarHtmlIds['admin_tray'] . '"] li' . $link_position_conditions . '[class*="menu-item"] > a' . $link_css_conditions);
   }
 
   /**

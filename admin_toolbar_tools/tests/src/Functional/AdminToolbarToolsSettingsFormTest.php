@@ -26,6 +26,7 @@ class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'admin_toolbar',
     'admin_toolbar_tools',
     // Enable the 'menu_ui' module to be able to test the 'All menus' link.
     'menu_ui',
@@ -94,7 +95,7 @@ class AdminToolbarToolsSettingsFormTest extends BrowserTestBase {
 
     // Ensure Admin Toolbar Tools is correctly loaded with the 'Tools' menu link
     // displayed first with the correct icon in the toolbar and its CSS file.
-    $this->assertAdminToolbarMenuLinkExists('/', 'Tools', 1, 'toolbar-icon toolbar-icon-admin-toolbar-tools-help');
+    $this->assertAdminToolbarMenuLinkExists('/', 'Front page', 1, 'toolbar-icon toolbar-icon-admin-toolbar-tools-help');
     // Check the CSS file of the module is loaded as expected.
     $admin_toolbar_tools_css = 'admin_toolbar_tools/css/admin_toolbar_tools.css';
     $assert->responseContains($admin_toolbar_tools_css);

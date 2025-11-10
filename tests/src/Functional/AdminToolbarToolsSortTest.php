@@ -20,6 +20,7 @@ class AdminToolbarToolsSortTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'admin_toolbar',
     'admin_toolbar_tools',
     'menu_ui',
     'media',
