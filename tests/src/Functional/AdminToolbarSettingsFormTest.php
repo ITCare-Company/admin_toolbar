@@ -21,8 +21,6 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
    */
   protected static $modules = [
     'admin_toolbar',
-    // Enable the 'user' module to be able to test a link under config.
-    'user',
   ];
 
   /**
@@ -42,7 +40,7 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
       'access toolbar',
       'access administration pages',
       'administer site configuration',
-      // This permission is needed to display the link to be tested.
+      // This permission is needed to display the user admin links to be tested.
       'administer account settings',
     ];
     $this->adminUser = $this->drupalCreateUser($permissions);
@@ -50,6 +48,9 @@ class AdminToolbarSettingsFormTest extends BrowserTestBase {
 
   /**
    * Test backend admin toolbar settings form fields and submission.
+   *
+   * Login as an admin user, go to the 'Admin Toolbar settings' form, change
+   * all the values, submit the form and check the expected values are applied.
    */
   public function testAdminToolbarSettingsForm(): void {
     /** @var \Drupal\Tests\WebAssert $assert */
