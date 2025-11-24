@@ -205,7 +205,8 @@ class AdminToolbarSearchSettingsFormTest extends BrowserTestBase {
     /* Test module's primary local tasks (tabs). */
 
     // Check the three modules local tasks (tabs) are displayed as expected.
-    $local_tasks_regex = '/<div.*-primary-local-tasks.*>([\r\n].*)+<a.*>Toolbar settings<\/a>.*[\r\n].*<a.*>Search settings<\/a>.*[\r\n].*<a.*>Tools settings<\/a>.*[\r\n].*([\r\n].*)+<\/div>/';
+    // @todo Revert the changes from DO-3559521 when support from D9 is dropped.
+    $local_tasks_regex = '/<div.*-primary-local-tasks.*>([\r\n].*)+<a.*>Toolbar settings<\/a>.*[\r\n].*<a.*>Search settings(.*active tab.*)?<\/a>.*[\r\n].*<a.*>Tools settings<\/a>.*[\r\n].*([\r\n].*)+<\/div>/';
     $assert->responseMatches($local_tasks_regex);
 
     /* Test the permission: 'use admin toolbar search'. */
