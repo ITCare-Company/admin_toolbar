@@ -56,13 +56,6 @@ class ToolbarController extends ControllerBase {
   protected $cacheRender;
 
   /**
-   * A date time instance.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
    * A request stack symfony instance.
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
@@ -136,7 +129,6 @@ class ToolbarController extends ControllerBase {
     $instance->localTaskLinkManager = $container->get('plugin.manager.menu.local_task');
     $instance->localActionLinkManager = $container->get('plugin.manager.menu.local_action');
     $instance->cacheRender = $container->get('cache.render');
-    $instance->time = $container->get('datetime.time');
     $instance->requestStack = $container->get('request_stack');
     $instance->pluginCacheClearer = $container->get('plugin.cache_clearer');
     $instance->cacheMenu = $container->get('cache.menu');

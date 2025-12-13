@@ -23,68 +23,69 @@
       $(elements).each(function () {
         $self.links = [];
 
-        var $searchTab = $(this).find('#admin-toolbar-search-tab')
-        var $searchInput = $searchTab.find('#admin-toolbar-search-input');
+        var $searchInputs = $(this).find('#admin-toolbar-search-input, #admin-toolbar-search-field-input');
 
-        if ($searchInput.length === 0) {
+        if ($searchInputs.length === 0) {
           return;
         }
 
-        $searchInput.autocomplete({
-          minLength: 2,
-          position: { collision : 'fit' },
-          source: function (request, response) {
-            var data = $self.handleAutocomplete(request.term);
-            if (!$self.extraFetched && drupalSettings.adminToolbarSearch.loadExtraLinks) {
-              $.getJSON( Drupal.url('admin/admin-toolbar-search'), function ( data ) {
-                $(data).each(function () {
-                  var item = this;
-                  item.label = this.labelRaw + ' ' + this.value;
-                  $self.links.push(item);
+        $searchInputs.each(function (index, $searchInput) {
+          $($searchInput).autocomplete({
+            minLength: 2,
+            position: { collision : 'fit' },
+            source: function (request, response) {
+              var data = $self.handleAutocomplete(request.term);
+              if (!$self.extraFetched && drupalSettings.adminToolbarSearch.loadExtraLinks) {
+                $.getJSON( Drupal.url('admin/admin-toolbar-search'), function ( data ) {
+                  $(data).each(function () {
+                    var item = this;
+                    item.label = this.labelRaw + ' ' + this.value;
+                    $self.links.push(item);
+                  });
+
+                  $self.extraFetched = true;
+
+                  var results = $self.handleAutocomplete(request.term);
+                  response(results);
                 });
+              }
+              else {
+                response(data);
+              }
+            },
+            open: function () {
+              var zIndex = $('#toolbar-item-administration-tray')
+                .css('z-index') + 1;
+              $(this).autocomplete('widget').css('z-index', zIndex);
 
-                $self.extraFetched = true;
-
-                var results = $self.handleAutocomplete(request.term);
-                response(results);
-              });
-            }
-            else {
-              response(data);
-            }
-          },
-          open: function () {
-            var zIndex = $('#toolbar-item-administration-tray')
-              .css('z-index') + 1;
-            $(this).autocomplete('widget').css('z-index', zIndex);
-
-            return false;
-          },
-          select: function (event, ui) {
-            if (ui.item.value) {
-              location.href = ui.item.value;
               return false;
+            },
+            select: function (event, ui) {
+              if (ui.item.value) {
+                location.href = ui.item.value;
+                return false;
+              }
             }
-          }
-        }).data('ui-autocomplete')._renderItem = (function (ul, item) {
-          ul.addClass('admin-toolbar-search-autocomplete-list');
-          return $('<li>')
-            .append('<div ><a href="' + item.value + '">' + item.labelRaw + ' <span class="admin-toolbar-search-url">' + item.value + '</span></a></div>')
-            .appendTo(ul);
+          }).data('ui-autocomplete')._renderItem = (function (ul, item) {
+            ul.addClass('admin-toolbar-search-autocomplete-list');
+            return $('<li>')
+              .append('<div ><a href="' + item.value + '">' + item.labelRaw + ' <span class="admin-toolbar-search-url">' + item.value + '</span></a></div>')
+              .appendTo(ul);
+          });
         });
-
         // Populate the links for search results when the input is pressed.
-        $searchInput.focus(function () {
+        $searchInputs.focus(function () {
           Drupal.behaviors.adminToolbarSearch.populateLinks($self);
         });
 
-        // Show/hide search input field when mobile tab item is pressed.
-        $('#admin-toolbar-mobile-search-tab .toolbar-item', context).click(function (e) {
-          e.preventDefault();
-          $(this).toggleClass('is-active');
-          $searchTab.toggleClass('visible');
-          $searchInput.focus();
-        });
+        // Focus the search input field when the search tab is pressed.
+        context.querySelector('#admin-toolbar-search-tab .toolbar-item')
+          .addEventListener('click', (e) => {
+            e.preventDefault();
+            const searchTabTray = e.target.nextElementSibling;
+            searchTabTray.classList.toggle('is-active');
+            searchTabTray.querySelector('#admin-toolbar-search-input').focus();
+          });
       });
     },
     getItemLabel: function (item) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\admin_toolbar_search\FunctionalJavascript;
 
 /**
@@ -17,18 +19,16 @@ class AdminToolbarSearchTest extends AdminToolbarSearchTestBase {
    *   Nothing to return.
    */
   public function testToolbarSearch() {
-    $search_tab = '#admin-toolbar-search-tab';
-    $search_toolbar_item = '#toolbar-item-administration-search';
-    $search_tray = '#toolbar-item-administration-search-tray';
+    $search_field_tab = '#admin-toolbar-search-field-tab';
+    $search_field_input = '#admin-toolbar-search-field-input';
 
     $this->drupalLogin($this->userWithAccess);
     /** @var \Drupal\FunctionalJavascriptTests\JSWebAssert $assert_session */
     $assert_session = $this->assertSession();
     $assert_session->responseContains('admin_toolbar_search.css');
     $assert_session->responseContains('admin_toolbar_search.js');
-    $assert_session->waitForElementVisible('css', $search_tab);
-    $assert_session->waitForElementVisible('css', $search_toolbar_item);
-    $assert_session->waitForElementVisible('css', $search_tray);
+    $assert_session->waitForElementVisible('css', $search_field_tab);
+    $assert_session->waitForElementVisible('css', $search_field_input);
 
     $this->assertSuggestionContains('perform', 'admin/config/development/performance');
     $this->assertSuggestionContains('develop', 'admin/config/development/maintenance');

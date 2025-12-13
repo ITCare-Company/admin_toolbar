@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\admin_toolbar_search\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
@@ -117,8 +119,8 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
   protected function assertSuggestionContains($search, $contains) {
     $this->resetSearch();
     $page = $this->getSession()->getPage();
-    $page->fillField('admin-toolbar-search-input', $search);
-    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-input"]', ' ');
+    $page->fillField('admin-toolbar-search-field-input', $search);
+    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-field-input"]', ' ');
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === TRUE);
     });
@@ -143,8 +145,8 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
   protected function assertSuggestionNotContains($search, $contains) {
     $this->resetSearch();
     $page = $this->getSession()->getPage();
-    $page->fillField('admin-toolbar-search-input', $search);
-    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-input"]', ' ');
+    $page->fillField('admin-toolbar-search-field-input', $search);
+    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-field-input"]', ' ');
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === TRUE);
     });
@@ -166,8 +168,8 @@ abstract class AdminToolbarSearchTestBase extends WebDriverTestBase {
   protected function resetSearch() {
     $page = $this->getSession()->getPage();
     // Empty out the suggestions.
-    $page->fillField('admin-toolbar-search-input', '');
-    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-input"]', ' ');
+    $page->fillField('admin-toolbar-search-field-input', '');
+    $this->getSession()->getDriver()->keyDown('//input[@id="admin-toolbar-search-field-input"]', ' ');
     $page->waitFor(3, function () use ($page) {
       return ($page->find('css', 'ul.ui-autocomplete')->isVisible() === FALSE);
     });

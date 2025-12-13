@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\admin_toolbar_search\FunctionalJavascript;
 
 use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
