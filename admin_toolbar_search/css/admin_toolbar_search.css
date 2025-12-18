@@ -47,6 +47,12 @@
   max-height: 18.75rem;
   font-size: 0.8125rem;
 
+  &.ui-autocomplete {
+    /* override core 'toolbar.module.css' class '.toolbar .toolbar-tray' default
+      value of 'z-index:501', to prevent overlaps with other toolbar trays. */
+    z-index: 600;
+  }
+
   /* Styles for each suggestion item in the autocomplete list. */
   .ui-menu-item {
     /* Add a bit of vertical spacing between the list items. */
@@ -67,10 +73,6 @@
         /* Change link color on hover or when selected with keyboard. */
         color: white;
       }
-    }
-    /* Hide link URLs in the span tags within autocomplete suggestion items. */
-    .admin-toolbar-search-url {
-      display: none;
     }
   }
 }

@@ -185,7 +185,7 @@ class AdminToolbarToolsSearchTest extends AdminToolbarSearchTestBase {
 
     // Assert there is only one suggestion with a link to
     // /admin/structure/types/manage/article/fields.
-    $count = count($suggestions->findAll('xpath', '//span[contains(text(), "/admin/structure/types/manage/article/fields")]'));
+    $count = count($suggestions->findAll('xpath', '//a[contains(@href, "/admin/structure/types/manage/article/fields")]'));
     $this->assertEquals(1, $count);
 
     // Test that bundle within admin toolbar appears in search.
