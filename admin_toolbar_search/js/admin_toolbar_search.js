@@ -202,13 +202,6 @@
             searchInputField.addEventListener('focus', () => {
               // Populate only when links array is empty (only the first time).
               if (menuLinks.length === 0) {
-                // Exclude certain paths from the search results, such as the
-                // front page.
-                const getUrl = window.location;
-                const baseUrl = `${getUrl.protocol}//${getUrl.host}/`;
-                // Define paths to be excluded from the search results.
-                const excludedPaths = [Drupal.url(''), baseUrl];
-
                 // Collect all the links available in the admin toolbar trays
                 // ('.toolbar-tray') with the drupal custom data attribute:
                 // - 'data-drupal-link-system-path'.
@@ -217,10 +210,6 @@
                     `.toolbar-tray a[data-drupal-link-system-path]`,
                   )
                   .forEach((element) => {
-                    // Exclude links with URLs matching the excluded paths.
-                    if (excludedPaths.includes(element.href)) {
-                      return;
-                    }
                     // Save each link in the menuLinks array for filtering with
                     // autocomplete.
                     menuLinks.push({
