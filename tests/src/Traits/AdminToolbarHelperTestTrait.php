@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\admin_toolbar\Traits;
 
 /**
@@ -89,7 +91,7 @@ trait AdminToolbarHelperTestTrait {
    *
    * @throws \Behat\Mink\Exception\ExpectationException
    */
-  protected function assertAdminToolbarMenuLinkNotExists($link_url) {
+  protected function assertAdminToolbarMenuLinkNotExists(string $link_url) {
     // A simple xpath expression is enough here, since it should be less
     // restrictive, in terms of conditions.
     $this->assertSession()

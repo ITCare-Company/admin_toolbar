@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\admin_toolbar_search\Functional;
 
 use Drupal\admin_toolbar_search\Constants\AdminToolbarSearchConstants;

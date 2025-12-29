@@ -5,6 +5,8 @@
  * Integration of a JS autocomplete search text field in the admin toolbar.
  */
 
+declare(strict_types=1);
+
 use Drupal\admin_toolbar_search\Constants\AdminToolbarSearchConstants;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Url;
