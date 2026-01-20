@@ -20,8 +20,8 @@ function admin_toolbar_search_help($route_name) {
     case 'help.page.admin_toolbar_search':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Type text to quickly search for menu links in the Admin Toolbar!<br/>') . '</p>';
-      $output .= '<p>' . t('The Admin Toolbar Search module adds an easy-to-use JS autocomplete filter of the links in the Administration menu.<br/>It is very convenient for finding quickly an administration configuration page without knowing where its menu link could be in the Administration dropdown menu or the organization of the site.') . '</p>';
+      $output .= '<p>' . t('Type text to quickly search for menu links in the Admin Toolbar!<br>') . '</p>';
+      $output .= '<p>' . t('The Admin Toolbar Search module adds an easy-to-use JS autocomplete filter of the links in the Administration menu.<br>It is very convenient for finding quickly an administration configuration page without knowing where its menu link could be in the Administration dropdown menu or the organization of the site.') . '</p>';
 
       return $output;
   }
