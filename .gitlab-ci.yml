@@ -54,22 +54,22 @@ variables:
 #
 composer:
   after_script:
-    - composer require drupal/project_browser
+    - composer require drupal/automatic_updates drupal/project_browser
 composer (max PHP version):
   after_script:
-    - composer require drupal/project_browser
+    - composer require drupal/automatic_updates drupal/project_browser
 composer (previous minor):
   after_script:
-    - composer require drupal/project_browser
+    - composer require drupal/automatic_updates drupal/project_browser
 composer (next minor):
   after_script:
-    - composer require drupal/project_browser
+    - composer require drupal/automatic_updates drupal/project_browser
 composer (previous major):
   after_script:
-    - composer require drupal/project_browser
+    - composer require drupal/automatic_updates drupal/project_browser
 # composer (next major):
 #   after_script:
-#     - composer require drupal/project_browser
+#     - composer require drupal/automatic_updates drupal/project_browser
 
 # #
 # # CSPELL overrides and configuration.

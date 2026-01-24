@@ -192,6 +192,8 @@ class AdminToolbarToolsExtraLinksTest extends BrowserTestBase {
 
             // Special case for taxonomy vocabularies overview link.
             $test_entity_bundle_operation_key = str_replace('overview/', '', $test_entity_bundle_operation);
+            // Special case for media manage display link.
+            $test_entity_bundle_operation_key = str_replace('/default', '', $test_entity_bundle_operation_key);
             // Test the url of the entity bundle operation is found in the
             // menu links in the toolbar with the expected label and position.
             if (!empty(AdminToolbarToolsConstants::ENTITY_BUNDLE_OPERATIONS_LABELS[$test_entity_bundle_operation_key])) {
@@ -397,6 +399,8 @@ class AdminToolbarToolsExtraLinksTest extends BrowserTestBase {
               $replaced_string = str_replace('/', '\\\\\/', $entity_bundle_id . '/' . $test_entity_bundle_operation);
               // Special case for taxonomy vocabularies overview link.
               $test_entity_bundle_operation_key = str_replace('overview/', '', $test_entity_bundle_operation);
+              // Special case for media manage display link.
+              $test_entity_bundle_operation_key = str_replace('/default', '', $test_entity_bundle_operation_key);
               // Special case for taxonomy vocabularies 'overview' operation:
               // It should not have an operation label.
               $test_entity_bundle_operation_label = empty(AdminToolbarToolsConstants::ENTITY_BUNDLE_OPERATIONS_LABELS[$test_entity_bundle_operation_key]) ? '' : ' \\\\u003E ' . AdminToolbarToolsConstants::ENTITY_BUNDLE_OPERATIONS_LABELS[$test_entity_bundle_operation_key];

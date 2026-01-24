@@ -542,6 +542,36 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
       }
     }
 
+    // Automatic Updates module: Add extra menu links for the update routes.
+    // Support for these routes is dropped for core versions above 11.2,
+    // required by versions compatible with the module.
+    if ($this->moduleHandler->moduleExists('automatic_updates')) {
+      // Modules update routes, under 'Extend'.
+      if ($this->routeExists('automatic_updates.module_update')) {
+        $links['automatic_updates.module_update'] = [
+          'title' => $this->t('Update'),
+          'route_name' => 'automatic_updates.module_update',
+          'parent' => 'system.modules_list',
+        ] + $base_plugin_definition;
+      }
+      // Themes update routes, under 'Appearance'.
+      if ($this->routeExists('automatic_updates.theme_update')) {
+        $links['automatic_updates.theme_update'] = [
+          'title' => $this->t('Update'),
+          'route_name' => 'automatic_updates.theme_update',
+          'parent' => 'system.themes_page',
+        ] + $base_plugin_definition;
+      }
+      // General update status route, under 'Reports > Available updates'.
+      if ($this->routeExists('automatic_updates.update_form')) {
+        $links['automatic_updates.update_form'] = [
+          'title' => $this->t('Update'),
+          'route_name' => 'automatic_updates.update_form',
+          'parent' => 'update.status',
+        ] + $base_plugin_definition;
+      }
+    }
+
     // If module Devel is enabled.
     if ($this->moduleHandler->moduleExists('devel')) {
       $links['devel'] = [
