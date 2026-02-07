@@ -95,8 +95,8 @@ class AdminToolbarToolsSettingsForm extends ConfigFormBase {
     if ($this->moduleHandler->moduleExists('toolbar')) {
       $form['show_local_tasks'] = [
         '#type' => 'checkbox',
-        '#title' => $this->t('Enable/Disable local tasks display'),
-        '#description' => $this->t('Local tasks such as node edit and delete.'),
+        '#title' => $this->t('Enable local tasks display'),
+        '#description' => $this->t('Show local tasks such as node edit and delete.'),
         '#default_value' => $config->get('show_local_tasks'),
       ];
     }
