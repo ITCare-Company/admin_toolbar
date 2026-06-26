@@ -213,7 +213,7 @@ class SearchLinks {
             }
             // Add operation link: Devel.
             if ($this->moduleHandler->moduleExists('devel') && $this->routeExists('entity.' . $content_entity_bundle . '.devel_load')) {
-              $url = Url::fromRoute($route_name = 'entity.' . $content_entity_bundle . '.devel_load', $params);
+              $url = Url::fromRoute('entity.' . $content_entity_bundle . '.devel_load', $params);
               if ($url->access()) {
                 $url_string = $url->toString();
                 $links[] = [
