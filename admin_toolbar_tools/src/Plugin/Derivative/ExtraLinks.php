@@ -635,10 +635,12 @@ class ExtraLinks extends DeriverBase implements ContainerDeriverInterface {
           'parent' => 'entity.view.collection',
         ] + $base_plugin_definition;
       }
+      // Add a link to the Views fields report.
       $links['views_ui.field_list'] = [
         'title' => $this->t('Used in views'),
         'route_name' => 'views_ui.reports_fields',
-        'parent' => 'entity.field_storage_config.collection',
+        // Attach the link to the 'Reports' item if 'field_ui' is disabled.
+        'parent' => $this->moduleHandler->moduleExists('field_ui') ? 'entity.field_storage_config.collection' : 'system.admin_reports',
       ] + $base_plugin_definition;
     }
 
