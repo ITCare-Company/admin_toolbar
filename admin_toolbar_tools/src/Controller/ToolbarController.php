@@ -245,7 +245,7 @@ class ToolbarController extends ControllerBase {
    *   A redirect response to the previous page.
    */
   public function flushViews() {
-    views_invalidate_cache();
+    \Drupal\views\Views::invalidateCache();
     $this->messenger()->addMessage($this->t('Views cache cleared.'));
     return new RedirectResponse($this->reloadPage());
   }
