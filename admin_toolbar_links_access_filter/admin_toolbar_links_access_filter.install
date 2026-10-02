@@ -23,7 +23,7 @@ See issues: <a href=":issue_url1">#3463291</a> and <a href=":issue_url2">#348724
           ':issue_url1' => 'https://www.drupal.org/node/3463291',
           ':issue_url2' => 'https://www.drupal.org/node/3487246',
         ]),
-        'severity' => REQUIREMENT_ERROR,
+        'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Error : REQUIREMENT_ERROR),
       ];
     }
   }
